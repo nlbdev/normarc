@@ -847,28 +847,17 @@
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='d']">
-            <xsl:choose>
-                <xsl:when test="matches(text(),'.*[^\d-].*')">
-                    <xsl:variable name="sign" select="if (matches(text(),$YEAR_NEGATIVE)) then '-' else ''"/>
-                    <xsl:variable name="value" select="replace(text(), $YEAR_VALUE, '')"/>
-                    <meta property="birthDate" refines="#{$creator-id}">
-                        <xsl:value-of select="concat($sign,$value)"/>
-                    </meta>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:variable name="years" select="tokenize(text(),'-')"/>
-                    <xsl:if test="count($years) &gt; 0">
-                        <meta property="birthDate" refines="#{$creator-id}">
-                            <xsl:value-of select="$years[1]"/>
-                        </meta>
-                    </xsl:if>
-                    <xsl:if test="count($years) &gt; 1 and string-length($years[2]) &gt; 0">
-                        <meta property="deathDate" refines="#{$creator-id}">
-                            <xsl:value-of select="$years[2]"/>
-                        </meta>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:variable name="birthDeath" select="tokenize(nlb:parseBirthDeath(text()), ',')"/>
+            <xsl:if test="$birthDeath[1]">
+                <meta property="birthDate" refines="#{$creator-id}">
+                    <xsl:value-of select="$birthDeath[1]"/>
+                </meta>
+            </xsl:if>
+            <xsl:if test="$birthDeath[2]">
+                <meta property="deathDate" refines="#{$creator-id}">
+                    <xsl:value-of select="$birthDeath[2]"/>
+                </meta>
+            </xsl:if>
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='j']/tokenize(replace(text(),'[\.,? ]',''), '-')">
@@ -1373,28 +1362,17 @@
             </xsl:for-each>
     
             <xsl:for-each select="*:subfield[@code='d']">
-                <xsl:choose>
-                    <xsl:when test="matches(text(),'.*[^\d-].*')">
-                        <xsl:variable name="sign" select="if (matches(text(),$YEAR_NEGATIVE)) then '-' else ''"/>
-                        <xsl:variable name="value" select="replace(text(), $YEAR_VALUE, '')"/>
-                        <meta property="birthDate" refines="#{$subject-id}">
-                            <xsl:value-of select="concat($sign,$value)"/>
-                        </meta>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:variable name="years" select="tokenize(text(),'-')"/>
-                        <xsl:if test="count($years) &gt; 0">
-                            <meta property="birthDate" refines="#{$subject-id}">
-                                <xsl:value-of select="$years[1]"/>
-                            </meta>
-                        </xsl:if>
-                        <xsl:if test="count($years) &gt; 1 and string-length($years[2]) &gt; 0">
-                            <meta property="deathDate" refines="#{$subject-id}">
-                                <xsl:value-of select="$years[2]"/>
-                            </meta>
-                        </xsl:if>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:variable name="birthDeath" select="tokenize(nlb:parseBirthDeath(text()), ',')"/>
+                <xsl:if test="$birthDeath[1]">
+                    <meta property="birthDate" refines="#{$subject-id}">
+                        <xsl:value-of select="$birthDeath[1]"/>
+                    </meta>
+                </xsl:if>
+                <xsl:if test="$birthDeath[2]">
+                    <meta property="deathDate" refines="#{$subject-id}">
+                        <xsl:value-of select="$birthDeath[2]"/>
+                    </meta>
+                </xsl:if>
             </xsl:for-each>
     
             <xsl:for-each select="*:subfield[@code='j']/tokenize(replace(text(),'[\.,? ]',''), '-')">
@@ -1605,12 +1583,39 @@
         <xsl:variable name="subject-id" select="concat('subject-655-',1+count(preceding-sibling::*:datafield[@tag='655']))"/>
         
         <xsl:if test="*:subfield[@code='a']">
+            <xsl:variable name="mainGenre" select="*:subfield[@code='a']/text()"/>
+            <xsl:variable name="subGenre" as="xs:string*">
+                <xsl:for-each select="*:subfield[@code='x']">
+                    <xsl:sort/>
+                    <xsl:sequence select="text()"/>
+                </xsl:for-each>
+                <xsl:for-each select="*:subfield[@code='9']">
+                    <xsl:choose>
+                        <xsl:when test="normalize-space(.) = ('nno','nob','non','nor','n')">
+                            <xsl:sequence select="'Norsk'"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:sequence select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:variable>
+            <xsl:variable name="genre" select="if (count($subGenre)) then concat($mainGenre, ' (', string-join($subGenre,'/'), ')') else $mainGenre"/>
+            
             <meta property="dc:type.genre" id="{$subject-id}">
-                <xsl:value-of select="*:subfield[@code='a']/text()"/>
+                <xsl:value-of select="$genre"/>
             </meta>
             <meta property="dc:type.genre.no" refines="#{$subject-id}">
-                <xsl:value-of select="*:subfield[@code='a']/text()"/>
+                <xsl:value-of select="$genre"/>
             </meta>
+            <meta property="dc:type.mainGenre" refines="#{$subject-id}">
+                <xsl:value-of select="$mainGenre"/>
+            </meta>
+            <xsl:for-each select="$subGenre">
+                <meta property="dc:type.subGenre" refines="#{$subject-id}">
+                    <xsl:value-of select="."/>
+                </meta>
+            </xsl:for-each>
     
             <xsl:for-each select="*:subfield[@code='1']">
                 <meta property="dc:subject.dewey" refines="#{$subject-id}">
@@ -1791,28 +1796,17 @@
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='d']">
-            <xsl:choose>
-                <xsl:when test="matches(text(),'.*[^\d-].*')">
-                    <xsl:variable name="sign" select="if (matches(text(),$YEAR_NEGATIVE)) then '-' else ''"/>
-                    <xsl:variable name="value" select="replace(text(), $YEAR_VALUE, '')"/>
-                    <meta property="birthDate" refines="#{$contributor-id}">
-                        <xsl:value-of select="concat($sign,$value)"/>
-                    </meta>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:variable name="years" select="tokenize(text(),'-')"/>
-                    <xsl:if test="count($years) &gt; 0">
-                        <meta property="birthDate" refines="#{$contributor-id}">
-                            <xsl:value-of select="$years[1]"/>
-                        </meta>
-                    </xsl:if>
-                    <xsl:if test="count($years) &gt; 1 and string-length($years[2]) &gt; 0">
-                        <meta property="deathDate" refines="#{$contributor-id}">
-                            <xsl:value-of select="$years[2]"/>
-                        </meta>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:variable name="birthDeath" select="tokenize(nlb:parseBirthDeath(text()), ',')"/>
+            <xsl:if test="$birthDeath[1]">
+                <meta property="birthDate" refines="#{$contributor-id}">
+                    <xsl:value-of select="$birthDeath[1]"/>
+                </meta>
+            </xsl:if>
+            <xsl:if test="$birthDeath[2]">
+                <meta property="deathDate" refines="#{$contributor-id}">
+                    <xsl:value-of select="$birthDeath[2]"/>
+                </meta>
+            </xsl:if>
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='j']/tokenize(replace(text(),'[\.,? ]',''), '-')">
@@ -2005,28 +1999,17 @@
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='d']">
-            <xsl:choose>
-                <xsl:when test="matches(text(),'.*[^\d-].*')">
-                    <xsl:variable name="sign" select="if (matches(text(),$YEAR_NEGATIVE)) then '-' else ''"/>
-                    <xsl:variable name="value" select="replace(text(), $YEAR_VALUE, '')"/>
-                    <meta property="birthDate" refines="#{$creator-id}">
-                        <xsl:value-of select="concat($sign,$value)"/>
-                    </meta>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:variable name="years" select="tokenize(text(),'-')"/>
-                    <xsl:if test="count($years) &gt; 0">
-                        <meta property="birthDate" refines="#{$creator-id}">
-                            <xsl:value-of select="$years[1]"/>
-                        </meta>
-                    </xsl:if>
-                    <xsl:if test="count($years) &gt; 1 and string-length($years[2]) &gt; 0">
-                        <meta property="deathDate" refines="#{$creator-id}">
-                            <xsl:value-of select="$years[2]"/>
-                        </meta>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:variable name="birthDeath" select="tokenize(nlb:parseBirthDeath(text()), ',')"/>
+            <xsl:if test="$birthDeath[1]">
+                <meta property="birthDate" refines="#{$creator-id}">
+                    <xsl:value-of select="$birthDeath[1]"/>
+                </meta>
+            </xsl:if>
+            <xsl:if test="$birthDeath[2]">
+                <meta property="deathDate" refines="#{$creator-id}">
+                    <xsl:value-of select="$birthDeath[2]"/>
+                </meta>
+            </xsl:if>
         </xsl:for-each>
     
         <xsl:for-each select="*:subfield[@code='j']/tokenize(replace(text(),'[\.,? ]',''), '-')">
@@ -2086,7 +2069,7 @@
     <xsl:variable name="PSEUDONYM_REPLACE" select="'pse[uv]d.*?f.*?\s+(.*)$'"/>
     <xsl:variable name="FIRST_LAST_NAME" select="'^(.*\S.*)\s+(\S+)\s*$'"/>
     <xsl:variable name="YEAR" select="'.*[^\d-].*'"/>
-    <xsl:variable name="YEAR_NEGATIVE" select="'.*f.*Kr.*'"/>
+    <xsl:variable name="YEAR_NEGATIVE" select="'.*f.*(Kr.*)?'"/>
     <xsl:variable name="YEAR_VALUE" select="'[^\d]'"/>
     <xsl:variable name="AVAILABLE" select="'^.*?(\d+)[\./]+(\d+)[\./]+(\d+).*?$'"/>
     <xsl:variable name="DEWEY" select="'^.*?(\d+\.?\d*).*?$'"/>
@@ -2423,5 +2406,36 @@
         </xsl:choose>
     </xsl:function>
     
-</xsl:stylesheet>
+    <xsl:function name="nlb:parseBirthDeath">
+        <xsl:param name="value"/>
+        
+        <xsl:variable name="split" select="tokenize($value,'-')"/>
+        
+        <xsl:choose>
+            <xsl:when test="count($split) gt 2">
+                <xsl:value-of select="','"/>
+                
+            </xsl:when>
+            <xsl:when test="count($split) = 2">
+                <xsl:variable name="sign_death" select="if (matches($split[2],$YEAR_NEGATIVE)) then '-' else ''"/>
+                <xsl:variable name="year_death" select="replace($split[2], '^[^\d]*(\d+)([^\d].*)?$', '$1')"/>
+                <xsl:variable name="year_death" select="if (matches($year_death,'^\d+$')) then $year_death else ''"/>
+                
+                <xsl:variable name="sign_birth" select="if (matches($split[1],$YEAR_NEGATIVE)) then '-' else $sign_death"/>
+                <xsl:variable name="year_birth" select="replace($split[1], '^[^\d]*(\d+)([^\d].*)?$', '$1')"/>
+                <xsl:variable name="year_birth" select="if (matches($year_birth,'^\d+$')) then $year_birth else ''"/>
+                
+                <xsl:value-of select="concat($sign_birth,$year_birth,',',$sign_death,$year_death)"/>
+                
+            </xsl:when>
+            <xsl:when test="count($split) = 1">
+                <xsl:variable name="sign" select="if (matches($split[1],$YEAR_NEGATIVE)) then '-' else ''"/>
+                <xsl:variable name="year" select="replace($split[1], '^[^\d]*(\d+)([^\d].*)?$', '$1')"/>
+                <xsl:variable name="year" select="if (matches($year,'^\d+$')) then $year else ''"/>
+                
+                <xsl:value-of select="concat($sign,$year,',')"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:function>
     
+</xsl:stylesheet>
