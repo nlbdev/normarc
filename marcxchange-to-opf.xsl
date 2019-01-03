@@ -280,6 +280,10 @@
         </xsl:if>
     </xsl:template>
     
+    <xsl:template match="*:controlfield[@tag='003']">
+        <!-- Ignoreres. Dette er noe som ble brukt "i riktig gamle dager". -->
+    </xsl:template>
+    
     <xsl:template match="*:controlfield[@tag='007']">
         <!--<xsl:message select="'NORMARC-felt ignorert: 007 FYSISK BESKRIVELSE AV DOKUMENTET'"/>-->
     </xsl:template>
@@ -924,6 +928,12 @@
         </xsl:for-each>
     </xsl:template>
     
+    <xsl:template match="*:datafield[@tag='048']">
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'instrument'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+    
     <!-- 050 - 099 KLASSIFIKASJONSKODER -->
     
     <xsl:template match="*:datafield[@tag='082']">
@@ -1005,6 +1015,14 @@
         <xsl:for-each select="*:subfield[@code='3']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'bibliofil-id'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
         </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='130']">
+        <xsl:choose>
+            <xsl:when test="*:subfield[@code='a']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/></xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
     
     <!-- 2XX TITTEL-, ANSVARS- OG UTGIVELSESOPPLYSNINGER -->
@@ -1233,7 +1251,7 @@
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='505']">
-        <!-- what's 505$a? prodnote? -->
+        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.content'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='511']">
@@ -1259,8 +1277,20 @@
         </xsl:for-each>
     </xsl:template>
     
+    <xsl:template match="*:datafield[@tag='522']">
+        <!-- Ignoreres. Dette er noe som ble brukt "i riktig gamle dager". -->
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='523']">
+        <!-- Ignoreres. Dette er noe som ble brukt "i riktig gamle dager". -->
+    </xsl:template>
+    
     <xsl:template match="*:datafield[@tag='533']">
         <!--<xsl:message select="'NORMARC-felt ignorert: 533 FYSISK BESKRIVELSE'"/>-->
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='537']">
+        <!-- Duplikat av 505. Ignoreres. -->
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='539']">
@@ -1666,6 +1696,46 @@
         </xsl:if>
     </xsl:template>
     
+    <xsl:template match="*:datafield[@tag='694']">
+        <!-- På gamle slettede kassetter står det i mange tilfeller teksten "Uten Daisy" i dette feltet. Ignoreres. -->
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='695']">
+        <xsl:variable name="subject-id" select="concat('subject-695-',1+count(preceding-sibling::*:datafield[@tag='695']))"/>
+        
+        <xsl:if test="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            
+            <xsl:for-each select="*:subfield[@code='3']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'bibliofil-id'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='696']">
+        <xsl:variable name="subject-id" select="concat('subject-696-',1+count(preceding-sibling::*:datafield[@tag='696']))"/>
+        
+        <xsl:if test="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            
+            <xsl:for-each select="*:subfield[@code='3']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'bibliofil-id'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='697']">
+        <xsl:variable name="subject-id" select="concat('subject-697-',1+count(preceding-sibling::*:datafield[@tag='697']))"/>
+        
+        <xsl:if test="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            
+            <xsl:for-each select="*:subfield[@code='3']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'bibliofil-id'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
     <xsl:template match="*:datafield[@tag='699']">
         <xsl:variable name="subject-id" select="concat('subject-699-',1+count(preceding-sibling::*:datafield[@tag='699']))"/>
         
@@ -1913,6 +1983,18 @@
     </xsl:template>
     
     <!-- 9XX HENVISNINGER -->
+    <xsl:template match="*:datafield[@tag=('900','950')]">
+        <xsl:variable name="preceding-datafield" select="(preceding-sibling::* except preceding-sibling::*:datafield[starts-with(@tag,'9')])[last()]"/>
+        <xsl:variable name="preceding-datafield-refines" as="element()*">
+            <xsl:apply-templates select="$preceding-datafield"/>
+        </xsl:variable>
+        <xsl:variable name="preceding-datafield-refines" as="xs:string" select="($preceding-datafield-refines[@property='bibliofil-id']/@refines)[1]"/>
+        <xsl:if test="$preceding-datafield-refines">
+            <xsl:for-each select="*:subfield[@code='~']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'bibliofil-id.reference'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$preceding-datafield-refines"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
     
     <!-- TODO: 911c and 911d (TIGAR project) -->
     

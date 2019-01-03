@@ -840,5 +840,40 @@
             </metadata>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="900 og 950 (brukes egentlig bare i autoritetsregistertabellen)" pending="TODO">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:datafield tag="100" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="a" type="LONGTEXT">Ragde, Anne Birkefeldt</marcxchange:subfield>
+                    <marcxchange:subfield code="j" type="VARCHAR(73)">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="%" type="CHAR(2)">  </marcxchange:subfield>
+                    <marcxchange:subfield code="3" type="INT">10856500</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="900" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a" type="VARCHAR(46)">Birkefeldt Ragde, Anne</marcxchange:subfield>
+                    <marcxchange:subfield code="%" type="CHAR(2)"> 0</marcxchange:subfield>
+                    <marcxchange:subfield code="3" type="INT">10856501</marcxchange:subfield>
+                    <marcxchange:subfield code="~" type="INT">15538600</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="950" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a" type="VARCHAR(46)">Ragde, Anne B.</marcxchange:subfield>
+                    <marcxchange:subfield code="%" type="CHAR(2)"> 0</marcxchange:subfield>
+                    <marcxchange:subfield code="3" type="INT">10856502</marcxchange:subfield>
+                    <marcxchange:subfield code="~" type="INT">17941800</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected">
+            <metadata>
+                <dc:creator id="creator-1">Ragde, Anne Birkefeldt</dc:creator>
+                <meta property="bibliofil-id" refines="#creator-1">10856500</meta>
+                <meta property="nationality" refines="#creator-1">no</meta>
+                <meta property="bibliofil-id.reference" refines="#creator-1">15538600</meta>
+                <meta property="bibliofil-id.reference" refines="#creator-1">17941800</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
 
 </x:description>
