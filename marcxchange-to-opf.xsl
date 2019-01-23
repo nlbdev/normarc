@@ -1028,7 +1028,7 @@
     <!-- 2XX TITTEL-, ANSVARS- OG UTGIVELSESOPPLYSNINGER -->
     
     <xsl:template match="*:datafield[@tag='240']">
-        <xsl:for-each select="*:subfield[@code='a']">
+        <xsl:for-each select="(*:subfield[@code='a'])[1]">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
