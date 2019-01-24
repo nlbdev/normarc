@@ -1249,7 +1249,9 @@
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='505']">
-        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.content'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.content'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+        </xsl:for-each>
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='511']">
