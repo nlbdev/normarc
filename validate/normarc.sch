@@ -22,6 +22,11 @@
     <let name="is-translated" value="boolean(//marcxchange:datafield[@tag='041']/marcxchange:subfield[@code='h']
                                            | //marcxchange:datafield[@tag='574']/marcxchange:subfield[@code='a']
                                            | //marcxchange:datafield[@tag='700']/marcxchange:subfield[@code='e' and text() = 'overs.'])"/>
+    <let name="explain-why-translated" value="concat('Boken er oversatt fordi ', string-join((
+        if (exists(//marcxchange:datafield[@tag='041']/marcxchange:subfield[@code='h'])) then '*041$h finnes' else (),
+        if (exists(//marcxchange:datafield[@tag='574']/marcxchange:subfield[@code='a'])) then '*574$a finnes' else (),
+        if (exists(//marcxchange:datafield[@tag='700']/marcxchange:subfield[@code='e' and text() = 'overs.'])) then 'det finnes en oversetter i *700' else ()
+    ), ' og '), '.')"/>
     <let name="is-audiobook" value="exists(//marcxchange:datafield[@tag='019']/marcxchange:subfield[@code='b' and tokenize(text(),',') = ('dc','dj')])"/>
     <let name="library" value="(//marcxchange:datafield[@tag='850']/marcxchange:subfield[@code='a']/text()/lower-case(.))[1]"/>
     
@@ -190,9 +195,9 @@
     <pattern>
         <title>Oversatte utgaver</title>
         <rule context="marcxchange:record[$identifier and $is-translated]">
-            <assert test="exists(marcxchange:datafield[@tag='041']/marcxchange:subfield[@code='h']) or starts-with($identifier,'5')">For oversatte utgaver må originalspråk være definert i *041$h (med mindre boknummeret starter med "5").</assert>
-            <assert test="exists(marcxchange:datafield[@tag='574']/marcxchange:subfield[@code='a']) or starts-with($identifier,'5')">For oversatte utgaver må originaltittel være definert i *574$a.</assert>
-            <assert test="marcxchange:datafield[@tag='700']/marcxchange:subfield[@code='e']/text() = 'overs.'">For oversatte utgaver må det være definert en oversetter i *700 ($e må være "overs.").</assert>
+            <assert test="exists(marcxchange:datafield[@tag='041']/marcxchange:subfield[@code='h']) or starts-with($identifier,'5')">For oversatte utgaver må originalspråk være definert i *041$h (med mindre boknummeret starter med "5"). <value-of select="$explain-why-translated"/></assert>
+            <assert test="exists(marcxchange:datafield[@tag='574']/marcxchange:subfield[@code='a']) or starts-with($identifier,'5')">For oversatte utgaver må originaltittel være definert i *574$a. <value-of select="$explain-why-translated"/></assert>
+            <assert test="marcxchange:datafield[@tag='700']/marcxchange:subfield[@code='e']/text() = 'overs.'">For oversatte utgaver må det være definert en oversetter i *700 ($e må være "overs."). <value-of select="$explain-why-translated"/></assert>
         </rule>
     </pattern>
     
