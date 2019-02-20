@@ -12,7 +12,7 @@
     <ns prefix="DIAG" uri="http://www.loc.gov/zing/sru/diagnostics/"/>
     <ns prefix="marcxchange" uri="info:lc/xmlns/marcxchange-v1"/>
     
-    <let name="identifier" value="string((//marcxchange:record/marcxchange:controlfield[@tag='001'])[1])"/>
+    <let name="identifier" value="replace(string((//marcxchange:record/marcxchange:controlfield[@tag='001'])[1]), '^[ 0]+', '')"/>
     <let name="is-publication" value="//marcxchange:record/marcxchange:controlfield[@tag='001']/substring(text(),1,1) = ('1','2','3','4','6','7','8','9')"/>
     <let name="is-magazine" value="//marcxchange:datafield[@tag='019']/marcxchange:subfield[@code='b']/text() = 'jp' or //marcxchange:datafield[@tag='650']/marcxchange:subfield[@code='a']/text() = 'Tidsskrifter'"/>
     <let name="is-newspaper" value="//marcxchange:datafield[@tag='019']/marcxchange:subfield[@code='b']/text() = 'jn' or //marcxchange:datafield[@tag='650']/marcxchange:subfield[@code='a']/text() = 'Avis'"/>
