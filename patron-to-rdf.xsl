@@ -185,7 +185,17 @@
     </xsl:template>
     
     <xsl:template match="datafield[@tag='466']" mode="lmarc">
-        <!-- NOTE: 466$a handled by the template "institution-and-disability" -->
+        <xsl:for-each select="subfield">
+            <xsl:choose>
+                <xsl:when test="@code = 'b' and text() = 'PR'">
+                    <xsl:call-template name="lmarc">
+                        <xsl:with-param name="name" select="'production_right'"/>
+                        <xsl:with-param name="value" select="'true'"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <!-- NOTE: 466$a handled by the template "institution-and-disability" -->
+            </xsl:choose>
+        </xsl:for-each>
     </xsl:template>
     
     <xsl:template match="datafield[@tag='468']" mode="lmarc">
