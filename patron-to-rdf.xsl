@@ -173,12 +173,20 @@
     <xsl:template match="datafield[@tag='465']" mode="lmarc">
         <xsl:for-each select="subfield">
             <xsl:choose>
+                <xsl:when test="@code = 'e' and text() = '1'">
+                    <xsl:call-template name="lmarc">
+                        <xsl:with-param name="name" select="'automated_loans'"/>
+                        <xsl:with-param name="value" select="'true'"/>
+                    </xsl:call-template>
+                </xsl:when>
+                
                 <xsl:when test="@code = 'h' and text() = 'P'">
                     <xsl:call-template name="lmarc">
                         <xsl:with-param name="name" select="'braille_patron'"/>
                         <xsl:with-param name="value" select="'true'"/>
                     </xsl:call-template>
                 </xsl:when>
+                
                 <!-- NOTE: 465$d handled by the template "institution-and-disability" -->
             </xsl:choose>
         </xsl:for-each>
@@ -193,6 +201,7 @@
                         <xsl:with-param name="value" select="'true'"/>
                     </xsl:call-template>
                 </xsl:when>
+                
                 <!-- NOTE: 466$a handled by the template "institution-and-disability" -->
             </xsl:choose>
         </xsl:for-each>
