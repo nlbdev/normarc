@@ -313,9 +313,10 @@
             </xsl:if>
         </xsl:if>
         
+        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRanges" as="xs:string*">
             <xsl:sequence select="if ($POS22 = 'a') then '17-INF' else ()"/>
-            <xsl:for-each select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')">
+            <xsl:for-each select="$tag019a">
                 <xsl:choose>
                     <xsl:when test=".='a'">
                         <xsl:sequence select="'0-5'"/>
@@ -343,21 +344,21 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'typicalAgeRange'"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
         </xsl:if>
         
-        <!-- 
-            - if 008 POS 22 is 'a', or ageRangeFrom > 13, then use "Adult"
-            - if ageRangeFrom = 13, then use "Adolescent"
-            - if ageRangeFrom < 13, then use "Child"
+        <!--
+            - if 008 POS 22 is 'a', then use "Adult"
+            - else if 019$a contains 'mu', then use "Adolescent"
+            - else, use "Child"
         -->
         <xsl:choose>
-            <xsl:when test="$ageRangeFrom and $ageRangeFrom gt 13 or $POS22='a'">
+            <xsl:when test="$POS22='a'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'audience'"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$ageRangeFrom and $ageRangeFrom = 13">
+            <xsl:when test="$tag019a = 'mu'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'audience'"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$ageRangeFrom and $ageRangeFrom lt 13 or $POS22='j'">
+            <xsl:otherwise>
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'audience'"/><xsl:with-param name="value" select="'Child'"/></xsl:call-template>
-            </xsl:when>
+            </xsl:otherwise>
         </xsl:choose>
     
         <xsl:choose>

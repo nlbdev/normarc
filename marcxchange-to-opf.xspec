@@ -1114,4 +1114,68 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="audiences">
+        <x:scenario label="adult">
+            <x:context>
+                <marcxchange:record format="normarc" type="Bibliographic">
+                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected">
+                <metadata>
+                    <dc:language>nob</dc:language>
+                    <meta property="dc:date.registered">2017-12-20</meta>
+                    <meta property="dc:type.fiction">true</meta>
+                    <meta property="dc:type.genre">Fiction</meta>
+                    <meta property="dc:type.genre">Non-biography</meta>
+                    <meta property="audience">Adult</meta>
+                    <meta property="typicalAgeRange">17-</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+        
+        <x:scenario label="adolescent">
+            <x:context>
+                <marcxchange:record format="normarc" type="Bibliographic">
+                    <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
+                    <marcxchange:datafield tag="019">
+                        <marcxchange:subfield code="a">u,mu</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected">
+                <metadata>
+                    <dc:language>nob</dc:language>
+                    <meta property="dc:date.registered">2017-12-20</meta>
+                    <meta property="dc:type.fiction">true</meta>
+                    <meta property="dc:type.genre">Fiction</meta>
+                    <meta property="dc:type.genre">Non-biography</meta>
+                    <meta property="audience">Adolescent</meta>
+                    <meta property="typicalAgeRange">11-16</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+        
+        <x:scenario label="child">
+            <x:context>
+                <marcxchange:record format="normarc" type="Bibliographic">
+                    <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected">
+                <metadata>
+                    <dc:language>nob</dc:language>
+                    <meta property="dc:date.registered">2017-12-20</meta>
+                    <meta property="dc:type.fiction">true</meta>
+                    <meta property="dc:type.genre">Fiction</meta>
+                    <meta property="dc:type.genre">Non-biography</meta>
+                    <meta property="audience">Child</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+    </x:scenario>
+    
 </x:description>
