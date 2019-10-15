@@ -1335,7 +1335,12 @@
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='591']">
-        <!--<xsl:message select="'NORMARC-felt ignorert: 591 LOKALE NOTER'"/>-->
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:variable name="ordered" select="nlb:parseDate(text())"/>
+            <xsl:if test="$ordered">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.ordered'"/><xsl:with-param name="value" select="$ordered"/></xsl:call-template>
+            </xsl:if>
+        </xsl:for-each>
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='592']">

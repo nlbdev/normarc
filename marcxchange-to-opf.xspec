@@ -1178,4 +1178,28 @@
         </x:scenario>
     </x:scenario>
     
+    <x:scenario label="date sent to production / ordered">
+        <x:context>
+            <marcxchange:record format="normarc" type="Bibliographic">
+                <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
+                <marcxchange:datafield tag="591">
+                    <marcxchange:subfield code="a">06.08.2001</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected">
+            <metadata>
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.ordered">2001-08-06</meta>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="typicalAgeRange">17-</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>
