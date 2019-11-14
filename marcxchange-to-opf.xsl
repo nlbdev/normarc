@@ -1114,7 +1114,10 @@
         </xsl:for-each>
         
         <xsl:for-each select="*:subfield[@code='n']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
+            <xsl:if test="matches($position, '^\d+$')">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="$position"/></xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
         
         <xsl:for-each select="*:subfield[@code='p']">
@@ -1912,7 +1915,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.part.subTitle.other'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='n']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
+                <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
+                <xsl:if test="matches($position, '^\d+$')">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="$position"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='p']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.part.subTitle'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
