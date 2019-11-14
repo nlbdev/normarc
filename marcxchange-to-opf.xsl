@@ -1083,9 +1083,11 @@
             </xsl:for-each>
         </xsl:if>
         
-        <!-- https://github.com/nlbdev/normarc/issues/5 -->
         <xsl:for-each select="*:subfield[@code='n']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
+            <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
+            <xsl:if test="matches($position, '^\d+$')">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'position'"/><xsl:with-param name="value" select="$position"/></xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
         
         <xsl:for-each select="*:subfield[@code='p']">
@@ -1238,11 +1240,14 @@
             </xsl:if>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='v']">
-            <xsl:call-template name="meta">
-                <xsl:with-param name="property" select="'series.position'"/>
-                <xsl:with-param name="value" select="text()"/>
-                <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
-            </xsl:call-template>
+            <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
+            <xsl:if test="matches($position, '^\d+$')">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'series.position'"/>
+                    <xsl:with-param name="value" select="$position"/>
+                    <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
+                </xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
     </xsl:template>
     
