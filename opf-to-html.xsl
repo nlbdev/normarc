@@ -11,12 +11,13 @@
     
     <xsl:import href="marcrel.xsl"/>
     
-    <xsl:output indent="no"/>
+    <xsl:output indent="no" omit-xml-declaration="yes"/>
+    
+    <xsl:template match="/text()"/>
     
     <xsl:template match="/*">
         <xsl:for-each select="//opf:metadata">
-            <xsl:text><![CDATA[
-    ]]></xsl:text>
+            <xsl:text><![CDATA[    ]]></xsl:text>
             <head>
                 <!-- Copy namespaces from @prefix -->
                 <xsl:if test="ancestor-or-self::*/@prefix">

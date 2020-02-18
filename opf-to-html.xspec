@@ -40,8 +40,7 @@
       </meta> <!-- Bibliofil@360081 *520$a -->
 </metadata></x:context>
 
-        <x:expect label="The result should be as expected" xml:space="preserve">
-    <head xmlns="http://www.w3.org/1999/xhtml">
+        <x:expect label="The result should be as expected" xml:space="preserve">    <head xmlns="http://www.w3.org/1999/xhtml">
         <meta charset="utf-8"/>
         <title>Rampete Robins forundringspakke</title> <!-- Bibliofil@561702 *245$a -->
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -103,9 +102,7 @@
 
     </metadata></x:context>
         
-        <x:expect label="The result should be as expected" xml:space="preserve">
-    
-    <head xmlns="http://www.w3.org/1999/xhtml" xmlns:nlbprod="http://www.nlb.no/production" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <x:expect label="The result should be as expected" xml:space="preserve">    <head xmlns="http://www.w3.org/1999/xhtml" xmlns:nlbprod="http://www.nlb.no/production" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
