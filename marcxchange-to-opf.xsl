@@ -230,7 +230,7 @@
         </xsl:for-each>
         
         <xsl:if test="$include-source-reference-as-comments and @nlb:metadata-source and parent::*">
-            <xsl:text>  </xsl:text>
+            <xsl:text> </xsl:text>
             <xsl:comment select="concat(' ', @nlb:metadata-source, ' ')"/>
         </xsl:if>
     </xsl:template>
