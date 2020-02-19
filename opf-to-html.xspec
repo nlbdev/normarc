@@ -107,10 +107,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
         <!-- Boknummer for EPUB-utgaven -->
-        <meta name="dc:identifier" content="558237" /> <!-- Boknummer for andre utgaver -->
+        <meta name="dc:identifier" content="558237" />
         
         <!-- Boknummer for andre utgaver -->
-        <meta name="nlbprod:identifier.epub" content="558237" /> <!-- Metadata for åndsverket og EPUB-utgaven -->
+        <meta name="nlbprod:identifier.epub" content="558237" />
         
         <!-- Metadata for åndsverket og EPUB-utgaven -->
         <meta name="dc:language" content="en" /> <!-- Bibliofil@115437 *008 -->

@@ -111,7 +111,8 @@
             </xsl:otherwise>
         </xsl:choose>
         <xsl:variable name="comment" select="(if ($meta/following-sibling::*) then $meta/following-sibling::comment() intersect $meta/following-sibling::*[1]/preceding-sibling::comment() else $meta/following-sibling::comment())[1]" as="comment()?"/>
-        <xsl:if test="$comment">
+        <xsl:variable name="space" select="string-join($meta/following-sibling::text() intersect $comment/preceding-sibling::text(), '')" as="xs:string"/>
+        <xsl:if test="$comment and matches($space, '^ *$')">
             <xsl:text> </xsl:text>
             <xsl:copy-of select="$comment"/>
         </xsl:if>
