@@ -74,6 +74,9 @@
         <xsl:variable name="metadata" as="element()">
             <metadata>
                 <xsl:namespace name="dc" select="'http://purl.org/dc/elements/1.1/'"/>
+                <xsl:if test="$include-source-reference">
+                    <xsl:namespace name="nlb" select="'http://www.nlb.no/'"/>
+                </xsl:if>
                 <xsl:variable name="with-duplicates" as="element()*">
                     <xsl:apply-templates select="node()"/>
                 </xsl:variable>
@@ -209,9 +212,10 @@
         <xsl:for-each select="$context">
             <xsl:element name="{name()}" exclude-result-prefixes="#all">
                 <xsl:copy-of select="@* except @nlb:metadata-source" exclude-result-prefixes="#all"/>
-                
+
                 <xsl:if test="$include-source-reference">
-                    <xsl:apply-templates select="@*"/>
+                    <xsl:copy-of select="namespace::*[name() = 'nlb']"/>
+                    <xsl:copy-of select="@nlb:metadata-source" exclude-result-prefixes="#all"/>
                 </xsl:if>
                 
                 <xsl:for-each select="node()">
