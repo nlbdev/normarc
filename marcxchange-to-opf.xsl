@@ -23,37 +23,40 @@
     <xsl:param name="include-source-reference-as-comments" select="false()" as="xs:boolean"/>
     <xsl:param name="identifier" select="''" as="xs:string"/>
     <xsl:param name="prefix-everything" select="false()" as="xs:boolean"/>
-
+    <xsl:param name="verbose" select="false()" as="xs:boolean"/>
+    
     <xsl:template match="@*|node()">
-        <xsl:choose>
-            <xsl:when test="self::*[@tag]">
-                <xsl:message>
-                    <xsl:text>Ingen regel for NORMARC-felt: </xsl:text>
-                    <xsl:value-of select="@tag"/>
-                    <xsl:text> (boknummer: </xsl:text>
-                    <xsl:value-of select="../*[@tag='001']/text()"/>
-                    <xsl:text>)</xsl:text>
-                </xsl:message>
-            </xsl:when>
-            <xsl:when test="self::*[@code]">
-                <xsl:message>
-                    <xsl:text>Ingen regel for NORMARC-delfelt: </xsl:text>
-                    <xsl:value-of select="parent::*/@tag"/>
-                    <xsl:text> $</xsl:text>
-                    <xsl:value-of select="@code"/>
-                    <xsl:text> (boknummer: </xsl:text>
-                    <xsl:value-of select="../../*[@tag='001']/text()"/>
-                    <xsl:text>)</xsl:text>
-                </xsl:message>
-            </xsl:when>
-            <xsl:when test="self::*">
-                <!--<xsl:message
-                    select="concat('marcxchange-to-opf.xsl: no match for element &quot;',concat('/',string-join((ancestor-or-self::*)/concat(name(),'[',count(preceding-sibling::*)+1,']'),'/')),'&quot; with attributes: ',string-join(for $attribute in @* return concat($attribute/name(),'=&quot;',$attribute,'&quot;'),' '))"
-                />-->
-            </xsl:when>
-        </xsl:choose>
+        <xsl:if test="$verbose = true()">
+            <xsl:choose>
+                <xsl:when test="self::*[@tag]">
+                    <xsl:message>
+                        <xsl:text>Ingen regel for NORMARC-felt: </xsl:text>
+                        <xsl:value-of select="@tag"/>
+                        <xsl:text> (boknummer: </xsl:text>
+                        <xsl:value-of select="../*[@tag='001']/text()"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:message>
+                </xsl:when>
+                <xsl:when test="self::*[@code]">
+                    <xsl:message>
+                        <xsl:text>Ingen regel for NORMARC-delfelt: </xsl:text>
+                        <xsl:value-of select="parent::*/@tag"/>
+                        <xsl:text> $</xsl:text>
+                        <xsl:value-of select="@code"/>
+                        <xsl:text> (boknummer: </xsl:text>
+                        <xsl:value-of select="../../*[@tag='001']/text()"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:message>
+                </xsl:when>
+                <xsl:when test="self::*">
+                    <xsl:message
+                        select="concat('marcxchange-to-opf.xsl: no match for element &quot;',concat('/',string-join((ancestor-or-self::*)/concat(name(),'[',count(preceding-sibling::*)+1,']'),'/')),'&quot; with attributes: ',string-join(for $attribute in @* return concat($attribute/name(),'=&quot;',$attribute,'&quot;'),' '))"
+                    />
+                </xsl:when>
+            </xsl:choose>
+        </xsl:if>
     </xsl:template>
-
+    
     <xsl:template match="/*" priority="2">
         <xsl:text>    </xsl:text>
         <xsl:variable name="result" as="element()*">

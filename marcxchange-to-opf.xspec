@@ -7,6 +7,8 @@
                xmlns="http://www.idpf.org/2007/opf"
                stylesheet="marcxchange-to-opf.xsl">
     
+    <x:param name="verbose" select="true()"/>
+    
     <x:scenario label="parse birthDate/deathDate - #1">
         <x:call function="nlb:parseBirthDeath">
             <x:param name="value" select="'(1546-1601)'"/>
