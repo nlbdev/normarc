@@ -289,8 +289,8 @@
         <xsl:param name="meta-set" required="yes" as="element()*"/>
         <xsl:param name="id" required="yes" as="xs:string"/>
         <xsl:variable name="idref" select="concat('#',$id)"/>
-        <xsl:for-each select="$meta-set[self::meta[@refines=$idref]]">
-            <xsl:sort select="@property"/>
+        <xsl:for-each select="$meta-set[self::*[@refines=$idref]]">
+            <xsl:sort select="(@property, name())[1]"/>
             <xsl:copy-of select="." exclude-result-prefixes="#all"/>
             <xsl:if test="@id">
                 <xsl:call-template name="copy-meta-refines">
@@ -1456,6 +1456,28 @@
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="replace(text(),'^\s*Ori?ginaltit\w*\s*:?\s*','')"/></xsl:call-template>
         </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='582']">
+        <xsl:variable name="position" select="xs:string(1+count(preceding-sibling::*:datafield[@tag='582']))"/>
+        <xsl:variable name="deliveryFormat-id" select="concat('deliveryFormat-582-',$position)"/>
+        <xsl:variable name="identifier" select="string-join((*:subfield[@code='f'][1]/text(), *:subfield[@code='d'][1]/text()), '_')"/>
+        
+        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('hasDeliveryMethod')"/><xsl:with-param name="value" select="$identifier"/><xsl:with-param name="id" select="$deliveryFormat-id"/></xsl:call-template>
+        
+        <xsl:for-each select="*:subfield[@code='f'][1]">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:for-each select="*:subfield[@code='d'][1]">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deliveryMethod')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:for-each select="*:subfield[@code='a'][1]">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('name')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="$position"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='590']">
