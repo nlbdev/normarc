@@ -207,12 +207,12 @@
         <meta property="schema:bookEdition.original">1</meta>
         <meta property="schema:fileSize">458148548</meta>
         <meta property="schema:hasDeliveryMethod" id="deliveryFormat-582-1">epub_dl</meta>
-        <dc:format refines="#deliveryFormat-582-1">epub</dc:format>
+        <meta property="dc:format" refines="#deliveryFormat-582-1">epub</meta>
         <meta property="schema:deliveryMethod" refines="#deliveryFormat-582-1">dl</meta>
         <meta property="schema:name" refines="#deliveryFormat-582-1">EPUB</meta>
         <meta property="schema:position" refines="#deliveryFormat-582-1">1</meta>
         <meta property="schema:hasDeliveryMethod" id="deliveryFormat-582-2">html_dl</meta>
-        <dc:format refines="#deliveryFormat-582-2">html</dc:format>
+        <meta property="dc:format" refines="#deliveryFormat-582-2">html</meta>
         <meta property="schema:deliveryMethod" refines="#deliveryFormat-582-2">dl</meta>
         <meta property="schema:name" refines="#deliveryFormat-582-2">HTML</meta>
         <meta property="schema:position" refines="#deliveryFormat-582-2">2</meta>
