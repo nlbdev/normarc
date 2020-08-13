@@ -1613,7 +1613,7 @@
 
     <xsl:template match="*:datafield[@tag='599']">
         <xsl:choose>
-            <xsl:when test="*:subfield[@code='a']/text() = 'EPUB-nr' and exists(*:subfield[@code='b'])">
+            <xsl:when test="exists(*:subfield[@code='b']) and (*:subfield[@code='a']/text() = ('EPUB-nr', 'EPUB', 'DTB-nr') or not(exists(*:subfield[@code='a'])) and matches(*:subfield[@code='b'][1]/text(), '^\d{6}$'))">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('epub-nr')"/><xsl:with-param name="value" select="(*:subfield[@code='b'])[1]/text()"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
