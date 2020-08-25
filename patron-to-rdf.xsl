@@ -288,7 +288,7 @@
         <xsl:param name="lmarc465d" as="xs:string*"/>
         <xsl:param name="lmarc466a" as="xs:string*"/>
         
-        <xsl:if test="$lmarc402a = 'HER' or $lmarc465d = 'TS'">
+        <xsl:if test="upper-case($lmarc402a) = 'HER' or $lmarc465d = 'TS'">
             <xsl:call-template name="lmarc">
                 <xsl:with-param name="name" select="'test_patron'"/>
                 <xsl:with-param name="value" select="'true'"/>
