@@ -2037,7 +2037,7 @@
         </xsl:for-each>
 
         <xsl:if test="*:subfield[@code='a']">
-            <xsl:variable name="contributor-id" select="concat('contributor-700-',1+count(preceding-sibling::*:datafield[@tag='700']))"/>
+            <xsl:variable name="contributor-id" select="concat('contributor-710-',1+count(preceding-sibling::*:datafield[@tag='710']))"/>
 
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:contributor'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$contributor-id"/></xsl:call-template>
 
