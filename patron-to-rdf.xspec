@@ -79,7 +79,7 @@
                                 <subfield code="c" type="VARCHAR(8)">jobb</subfield>
                             </datafield>
                             <datafield tag="240" ind1=" " ind2=" ">
-                                <subfield code="a" type="VARCHAR(28)">93222222</subfield>
+                                <subfield code="a" type="VARCHAR(28)">+93222222</subfield>
                                 <subfield code="c" type="VARCHAR(8)">mobilsms</subfield>
                             </datafield>
                             <datafield tag="250" ind1=" " ind2=" ">
@@ -335,8 +335,8 @@
                         <nlbbib:lmarc_libraryAccess rdf:name="Statped"/>
                         <nlbbib:lmarc_melding rdf:name="Fiktiv f.dato.&#xA;linje 2&#xA;linje 3"/>
                         <nlbbib:lmarc_tlf rdf:name="93200000"/>
-                        <nlbbib:lmarc_tlf_jobb rdf:name="93211111"/>
-                        <nlbbib:lmarc_tlf_mobilsms rdf:name="93222222"/>
+                        <nlbbib:lmarc_tlf_jobb rdf:name="932 11 111"/>
+                        <nlbbib:lmarc_tlf_mobilsms rdf:name="+93222222"/>
                         <nlbbib:lmarc_kindle_email rdf:name="my-kindle-address@kindle.com"/>
                         <nlbbib:lmarc_pin rdf:name="1234"/>
                         <nlbbib:lmarc_pin_date rdf:name="2011-03-03"/>

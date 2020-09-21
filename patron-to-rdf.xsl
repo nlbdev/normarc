@@ -161,7 +161,7 @@
         <xsl:for-each select="subfield">
             <xsl:choose>
                 <xsl:when test="@code = 'a'">
-                    <xsl:variable name="tlf" select="replace(normalize-space(), '[^\d]', '')"/>
+                    <xsl:variable name="tlf" select="replace(normalize-space(), '(^\s+|\s+$)', '')"/>
                     <xsl:variable name="type" select="((../subfield[@code = 'c'])[1]/normalize-space(), '')[1]"/>
                     <xsl:call-template name="lmarc">
                         <xsl:with-param name="name" select="if ($type = '') then 'tlf' else concat('tlf_', $type)"/>
