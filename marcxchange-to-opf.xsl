@@ -1480,7 +1480,7 @@
         </xsl:for-each>
         
         <xsl:for-each select="*:subfield[@code='d'][1]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deliveryMethod')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deliveryMethod')"/><xsl:with-param name="value" select="substring(text(), 1, 2)"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
         </xsl:for-each>
         
         <xsl:for-each select="*:subfield[@code='a'][1]">
