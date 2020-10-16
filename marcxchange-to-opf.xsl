@@ -415,6 +415,7 @@
 
     <xsl:template match="*:controlfield[@tag='008']">
         <xsl:variable name="POS00-05" select="substring(text(),1,6)"/>
+        <xsl:variable name="POS21" select="substring(text(),22,1)"/>
         <xsl:variable name="POS22" select="substring(text(),23,1)"/>
         <xsl:variable name="POS33" select="substring(text(),34,1)"/>
         <xsl:variable name="POS34" select="substring(text(),35,1)"/>
@@ -437,7 +438,29 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
             </xsl:if>
         </xsl:if>
-
+        
+        <xsl:choose>
+            <xsl:when test="$POS21 = 'a'"><!-- "Årbok": Not in use; ignore for now --></xsl:when>
+            <xsl:when test="$POS21 = 'm'"><!-- "Monografiserie": Not in use; ignore for now --></xsl:when>
+            <xsl:when test="$POS21 = 'n'">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Avis'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Newspaper'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('newspaper')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$POS21 = 'p'">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Tidsskrift'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Magazine'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('magazine')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
+        </xsl:choose>
+        
         <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRanges" as="xs:string*">
             <xsl:sequence select="if ($POS22 = 'a') then '17-INF' else ()"/>
