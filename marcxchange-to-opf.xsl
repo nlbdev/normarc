@@ -1493,21 +1493,24 @@
         <xsl:variable name="contributor-id" select="concat('contributor-511-',1+count(preceding-sibling::*:datafield[@tag='511']))"/>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:variable name="contributor-name" select="text()"/>
-            <xsl:call-template name="meta">
-                <xsl:with-param name="property" select="'dc:contributor.narrator'"/>
-                <xsl:with-param name="value" select="$contributor-name"/>
-                <xsl:with-param name="id" select="$contributor-id"/>
-            </xsl:call-template>
-
-            <xsl:variable name="pos" select="position()"/>
-            <xsl:for-each select="../*:subfield[@code=('3', '_')][position() = $pos]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$contributor-id"/></xsl:call-template>
-            </xsl:for-each>
-
-            <xsl:if test="contains(lower-case($contributor-name), 'talesyntese')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.tts'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+            
+            <xsl:if test="$contributor-name != 'NLB'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'dc:contributor.narrator'"/>
+                    <xsl:with-param name="value" select="$contributor-name"/>
+                    <xsl:with-param name="id" select="$contributor-id"/>
+                </xsl:call-template>
+                
+                <xsl:variable name="pos" select="position()"/>
+                <xsl:for-each select="../*:subfield[@code=('3', '_')][position() = $pos]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$contributor-id"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:if test="contains(lower-case($contributor-name), 'talesyntese')">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.tts'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                </xsl:if>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
