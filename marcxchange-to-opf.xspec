@@ -304,6 +304,7 @@
                 <marcxchange:subfield code="c">Nina Skauge</marcxchange:subfield>
                 <marcxchange:subfield code="n">2</marcxchange:subfield>
                 <marcxchange:subfield code="p">[Tittel for del av verk]</marcxchange:subfield>
+                <marcxchange:subfield code="w">[Sorteringsnøkkel for tittel for del av verk]</marcxchange:subfield>
             </marcxchange:datafield>
             
             <marcxchange:datafield tag="250" ind1=" " ind2=" ">
@@ -352,10 +353,12 @@
             <dc:language>eng</dc:language>
             <dc:language>sve</dc:language>
             
-            <dc:title>Tommy flytter</dc:title>
+            <dc:title id="title-245-1">Tommy flytter</dc:title>
+            <meta property="sortingKey" refines="#title-245-1">Sorteringsnøkkel for tittel for del av verk</meta>
             <meta property="dc:title.subTitle">Tigergjengen</meta>
             <meta property="position">2</meta>
             <meta property="dc:title.part">Tittel for del av verk</meta>
+            <meta property="sortingKey">Sorteringsnøkkel for tittel for del av verk</meta>
             
             <meta property="bookEdition">3. utgave</meta>
             <meta property="bookEdition.history">Første gang utgitt 1968</meta>
@@ -382,6 +385,7 @@
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:title>Tommy flytter</dc:title>
         <meta property="bookEdition">1</meta>
+        <meta property="sortingKey">Tommy flytter</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -457,8 +461,12 @@
                     <marcxchange:subfield code="h">engtib</marcxchange:subfield>
                 </marcxchange:datafield>
                 
+                <marcxchange:datafield tag="240" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="a">La Mucama de Omicunle</marcxchange:subfield>
+                </marcxchange:datafield>
+                
                 <marcxchange:datafield tag="574" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">Originaltittel:  La Mucama de Omicunle</marcxchange:subfield>
+                    <marcxchange:subfield code="a">Originaltittel:  (denne brukes kun når ikke *240 finnes)</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="596" ind1=" " ind2=" ">
@@ -480,6 +488,7 @@
         <meta property="dc:publisher.location.original">Oslo</meta>
         <meta property="dc:publisher.original">Cappelen Damm akademisk</meta>
         <meta property="dc:title.original">La Mucama de Omicunle</meta>
+        <meta property="dc:title.original.alternative">(denne brukes kun når ikke *240 finnes)</meta>
         <meta property="bookEdition.original">3. utg.</meta>
         <meta property="isbn.original">978-82-02-53797-5</meta>
     </metadata></x:expect>
@@ -502,6 +511,8 @@
                     <marcxchange:subfield code="q">Norsk Lyd- og blindeskriftbibliotek</marcxchange:subfield>
                     <marcxchange:subfield code="3">18158500</marcxchange:subfield>
                 </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
             </marcxchange:record>
         </x:context>
         
@@ -514,6 +525,8 @@
         
         <dc:creator id="creator-2">NLB</dc:creator>
         <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="sortingKey">Dalai Lama</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -573,28 +586,48 @@
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
+                    <marcxchange:subfield code="3">123</marcxchange:subfield>
+                </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
+                
+                <marcxchange:datafield tag="700" ind1="1" ind2="0">
+                    <marcxchange:subfield code="a">Alice</marcxchange:subfield>
+                    <marcxchange:subfield code="e">medf.</marcxchange:subfield>
+                    <marcxchange:subfield code="3">123</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
+                    <marcxchange:subfield code="3">456</marcxchange:subfield>  <!-- different author with the same name -->
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
+                    <marcxchange:subfield code="3">789</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">red.</marcxchange:subfield>
+                    <marcxchange:subfield code="3">789</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:creator id="creator-1">Alice</dc:creator>
-        <dc:contributor id="contributor-700-1">Alice</dc:contributor>
+        <meta property="bibliofil-id" refines="#creator-1">123</meta>
+        <dc:creator id="contributor-700-1">Alice</dc:creator>
+        <meta property="bibliofil-id" refines="#contributor-700-1">123</meta>
+        <dc:creator id="contributor-700-2">Alice</dc:creator>
+        <meta property="bibliofil-id" refines="#contributor-700-2">456</meta>
         
-        <dc:contributor id="contributor-700-2">Bob</dc:contributor>
-        <meta property="dc:contributor.editor">Bob</meta>
+        <dc:creator id="contributor-700-3">Bob</dc:creator>
+        <meta property="bibliofil-id" refines="#contributor-700-3">789</meta>
+        <meta property="dc:contributor.editor" id="contributor-700-4">Bob</meta>
+        <meta property="bibliofil-id" refines="#contributor-700-4">789</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="sortingKey">Alice</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -665,7 +698,7 @@
             </marcxchange:record>
         </x:context>
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:contributor id="contributor-700-1">Sødal, Helje Kringlebotn</dc:contributor>
+        <dc:creator id="contributor-700-1">Sødal, Helje Kringlebotn</dc:creator>
         <meta property="bibliofil-id" refines="#contributor-700-1">17265000</meta>
         <meta property="birthDate" refines="#contributor-700-1">1962</meta>
         <meta property="dc:contributor.editor" id="contributor-700-2">Sødal, Helje Kringlebotn</meta>
@@ -835,6 +868,9 @@
                     <marcxchange:subfield code="%">  </marcxchange:subfield>
                     <marcxchange:subfield code="3">10856500</marcxchange:subfield>
                 </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
+                
                 <marcxchange:datafield tag="900" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Birkefeldt Ragde, Anne</marcxchange:subfield>
                     <marcxchange:subfield code="%"> 0</marcxchange:subfield>

@@ -92,6 +92,13 @@
                     <xsl:for-each select="$with-duplicates">
                         <xsl:variable name="position" select="position()"/>
                         <xsl:choose>
+                            <xsl:when test="@id">
+                                <!-- don't remove duplicates if the duplicate has an id attribute  -->
+                                <xsl:copy exclude-result-prefixes="#all">
+                                    <xsl:copy-of select="@*" exclude-result-prefixes="#all"/>
+                                    <xsl:copy-of select="node()" exclude-result-prefixes="#all"/>
+                                </xsl:copy>
+                            </xsl:when>
                             <xsl:when test="self::dc:*">
                                 <xsl:if test="not($with-duplicates[position() &lt; $position and name()=current()/name() and text()=current()/text() and string(@refines)=string(current()/@refines)])">
                                     <xsl:copy exclude-result-prefixes="#all">
@@ -1089,8 +1096,9 @@
     <!-- 1XX HOVEDORDNINGSORD -->
 
     <xsl:template match="*:datafield[@tag='100']">
-        <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110']))"/>
+        <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
+        <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
 
         <xsl:if test="$name">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="$name"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
@@ -1110,6 +1118,10 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
+            
+            <xsl:if test="$sortingKey">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="$sortingKey"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>                
+            </xsl:if>
 
             <xsl:for-each select="*:subfield[@code='d']">
                 <xsl:variable name="birthDeath" select="tokenize(nlb:parseBirthDeath(text()), ',')"/>
@@ -1136,7 +1148,9 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='110']">
-        <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110']))"/>
+        <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
+        <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
+        
         <xsl:choose>
             <xsl:when test="*:subfield[@code='a']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
@@ -1148,7 +1162,44 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="*:subfield[@code='b'][1]/text()"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
+        
+        <xsl:if test="$sortingKey">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="$sortingKey"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>                
+        </xsl:if>
+        
+        <xsl:for-each select="*:subfield[@code='c']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('location')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:for-each select="*:subfield[@code='d']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('date')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
 
+        <xsl:for-each select="*:subfield[@code=('3', '_')]">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='111']">
+        <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
+        <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
+        
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="."/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:if test="$sortingKey">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="$sortingKey"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>                
+        </xsl:if>
+        
+        <xsl:for-each select="*:subfield[@code='c']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('location')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
+        
+        <xsl:for-each select="*:subfield[@code='d']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('date')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+        </xsl:for-each>
+        
         <xsl:for-each select="*:subfield[@code=('3', '_')]">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
         </xsl:for-each>
@@ -1164,7 +1215,7 @@
 
     <xsl:template match="*:datafield[@tag='240']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -1174,18 +1225,29 @@
                 <xsl:apply-templates select="../../*[@tag = ('008', '041')]"/>
             </xsl:variable>
             <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
+            <xsl:variable name="title-id" select="concat('title-245-',1+count(preceding-sibling::*:datafield[@tag='245']))"/>
+            <xsl:variable name="title-sortingKey" select="(../*:subfield[@code='w'])[1]"/>
             
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:title'"/>
                 <xsl:with-param name="context" select="."/>
                 <xsl:with-param name="value" select="nlb:identifier-in-title(text(), $language)"/>
+                <xsl:with-param name="id" select="if ($title-sortingKey) then $title-id else ()"/>
             </xsl:call-template>
+            
+            <xsl:for-each select="$title-sortingKey">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
+                    <xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/>
+                    <xsl:with-param name="refines" select="$title-id"/>
+                </xsl:call-template>
+            </xsl:for-each>
         </xsl:for-each>
 
         <xsl:for-each select="*:subfield[@code='b']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
         </xsl:for-each>
-
+        
         <xsl:variable name="format019" as="element()*">
             <xsl:apply-templates select="../*:datafield[@tag='019']"/>
         </xsl:variable>
@@ -1211,18 +1273,32 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="$position"/></xsl:call-template>
             </xsl:if>
         </xsl:for-each>
-
-        <xsl:for-each select="*:subfield[@code='p']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.part',if (count(../*:datafield[@tag='740']/*:subfield[@code='a']) eq 0) then '' else '.other')"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
-        </xsl:for-each>
-
-        <xsl:for-each select="*:subfield[@code='w']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.part.sortingKey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+        
+        <xsl:for-each select="(*:subfield[@code='p'])[1]">
+            <xsl:call-template name="meta">
+                <xsl:with-param name="property" select="concat('dc:title.part',if (count(../*:datafield[@tag='740']/*:subfield[@code='a']) eq 0) then '' else '.other')"/>
+                <xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/>
+            </xsl:call-template>
         </xsl:for-each>
 
         <!-- *245 finnes alltid, men ikke alltid *250. Opprett bookEdition herifra dersom *250 ikke definerer bookEdition. -->
         <xsl:if test="count(../*:datafield[@tag='250']/*:subfield[@code='a']) = 0">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bookEdition')"/><xsl:with-param name="value" select="'1'"/></xsl:call-template>
+        </xsl:if>
+        
+        <!-- The main sorting key for this record -->
+        <xsl:variable name="sortingKey" select="(
+            ../*:datafield[@tag='100' or @tag='110' or @tag='111' or @tag='130']/*:subfield[@code='w'],
+            ../*:datafield[@tag='100' or @tag='110' or @tag='111' or @tag='130']/*:subfield[@code='a'],
+            *:subfield[@code='w'],
+            *:subfield[@code='a']
+        )[1]"/>
+        <xsl:if test="$sortingKey">
+            <xsl:call-template name="meta">
+                <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
+                <xsl:with-param name="value" select="replace($sortingKey/text(),'[\[\]]','')"/>
+                <xsl:with-param name="context" select="$sortingKey"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1463,8 +1539,9 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='574']">
+        <xsl:variable name="property" select="if (../*:datafield[@tag='240']) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="replace(text(),'^\s*Ori?ginaltit\w*\s*:?\s*','')"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="replace(text(),'^\s*Ori?ginaltit\w*\s*:?\s*','')"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
     
@@ -1981,9 +2058,6 @@
 
         <xsl:if test="$name">
             <xsl:variable name="role" select="nlb:parseRole(concat('',(*:subfield[@code='e'], *:subfield[@code='r'], *:subfield[@code='x'])[1]/text()))"/>
-            <xsl:variable name="role" select="if ($role='dc:creator') then 'dc:contributor.other' else $role">
-                <!-- because 700 never is the main author -->
-            </xsl:variable>
 
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="$role"/>
@@ -2037,12 +2111,12 @@
         </xsl:for-each>
 
         <xsl:if test="*:subfield[@code='a']">
-            <xsl:variable name="contributor-id" select="concat('contributor-710-',1+count(preceding-sibling::*:datafield[@tag='710']))"/>
+            <xsl:variable name="creator-id" select="concat('creator-710-',1+count(preceding-sibling::*:datafield[@tag='710']))"/>
 
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:contributor'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$contributor-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
 
             <xsl:for-each select="*:subfield[@code=('3', '_')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$contributor-id"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
             </xsl:for-each>
         </xsl:if>
     </xsl:template>
@@ -2072,7 +2146,7 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.part.subTitle'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='w']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.part.sortingKey'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$title-id"/></xsl:call-template>
             </xsl:for-each>
         </xsl:if>
     </xsl:template>
@@ -2522,7 +2596,7 @@
                 <xsl:value-of select="'dc:contributor.commentator'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(bidrag|medarb|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
-                <xsl:value-of select="'dc:contributor'"/>
+                <xsl:value-of select="'dc:creator'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(lest|fort|presentert).*')">
                 <!-- Narrator -->
@@ -2612,7 +2686,7 @@
             <xsl:when test="not($prefix-everything)">
                 <xsl:value-of select="$property"/>
             </xsl:when>
-            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','normarc-id','pseudonym','epub-nr')">
+            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','normarc-id','pseudonym','epub-nr','sortingKey')">
                 <xsl:value-of select="concat('nlbbib:', $property)"/>
             </xsl:when>
             <xsl:otherwise>
