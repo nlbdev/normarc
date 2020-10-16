@@ -1220,11 +1220,12 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='245']">
+        <xsl:variable name="language">
+            <xsl:apply-templates select="../*[@tag = ('008', '041')]"/>
+        </xsl:variable>
+        <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
+        
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="language">
-                <xsl:apply-templates select="../../*[@tag = ('008', '041')]"/>
-            </xsl:variable>
-            <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
             <xsl:variable name="title" select="replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', '')"/>
             <xsl:variable name="title-id" select="concat('title-245-',1+count(preceding-sibling::*:datafield[@tag='245']))"/>
             <xsl:variable name="title-sortingKey" select="(../*:subfield[@code='w'])[1]"/>
@@ -1232,14 +1233,14 @@
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:title'"/>
                 <xsl:with-param name="context" select="."/>
-                <xsl:with-param name="value" select="nlb:identifier-in-title($title, $language)"/>
+                <xsl:with-param name="value" select="nlb:identifier-in-title($title, $language, false())"/>
                 <xsl:with-param name="id" select="if ($title-sortingKey) then $title-id else ()"/>
             </xsl:call-template>
             
             <xsl:for-each select="$title-sortingKey">
                 <xsl:call-template name="meta">
                     <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
-                    <xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/>
+                    <xsl:with-param name="value" select="nlb:identifier-in-title(replace(text(),'[\[\]]',''), $language, true())"/>
                     <xsl:with-param name="refines" select="$title-id"/>
                 </xsl:call-template>
             </xsl:for-each>
@@ -1297,7 +1298,7 @@
         <xsl:if test="$sortingKey">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
-                <xsl:with-param name="value" select="replace($sortingKey/text(),'[\[\]]','')"/>
+                <xsl:with-param name="value" select="nlb:identifier-in-title(replace($sortingKey/text(),'[\[\]]',''), $language, true())"/>
                 <xsl:with-param name="context" select="$sortingKey"/>
             </xsl:call-template>
         </xsl:if>
@@ -2702,6 +2703,7 @@
     <xsl:function name="nlb:identifier-in-title">
         <xsl:param name="title" as="xs:string"/>
         <xsl:param name="language" as="xs:string"/>
+        <xsl:param name="sortable" as="xs:boolean"/>
         
         <xsl:choose>
             <xsl:when test="string-length($identifier) = 12 and xs:integer(substring($identifier, 9, 2)) le 12">
@@ -2711,6 +2713,10 @@
                 <xsl:variable name="day" select="substring($identifier, 11, 2)"/>
                 
                 <xsl:choose>
+                    <xsl:when test="$sortable">
+                        <xsl:value-of select="concat($title, ', ', $year, '-', $month, '-', string(xs:integer($day)))"/>
+                    </xsl:when>
+                    
                     <xsl:when test="$language = ('no', 'nor', 'nb', 'nob', 'nn', 'nnn')">
                         <xsl:variable name="month-name" select="if ($month = '01') then 'januar'
                                                                 else if ($month = '02') then 'februar'
@@ -2761,7 +2767,15 @@
                 <xsl:variable name="number" select="substring($identifier, 7, 2)"/>
                 <xsl:variable name="year" select="substring($identifier, 9, 4)"/>
                 
-                <xsl:value-of select="concat($title, ', ', string(xs:integer($number)), '/', $year)"/>
+                <xsl:choose>
+                    <xsl:when test="$sortable">
+                        <xsl:value-of select="concat($title, ', ', $year, '-', string(xs:integer($number)))"/>
+                    </xsl:when>
+                    
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($title, ', ', string(xs:integer($number)), '/', $year)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             
             <xsl:otherwise>

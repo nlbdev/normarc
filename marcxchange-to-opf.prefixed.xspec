@@ -202,6 +202,7 @@
         <meta property="nlbbib:bibliofil-id" refines="#subject-655-1">20157000</meta>
         <meta property="dc:type.literaryForm" id="literary-form-019d-1">Roman</meta>
         <meta property="nlbbib:normarc-id" refines="#literary-form-019d-1">R</meta>
+        <meta property="nlbbib:sortingKey">Hunter, Erin</meta>
         <meta property="schema:audience">Child</meta>
         <meta property="schema:bookEdition">1</meta>
         <meta property="schema:bookEdition.original">1</meta>
