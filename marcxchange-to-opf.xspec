@@ -1312,4 +1312,26 @@
     </metadata></x:expect>
     </x:scenario>
     
+    <x:scenario label="Fjerne kolon, bindestrek og lignende fra slutten av hovedtittel">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:datafield tag="245" ind1=" " ind2="1">
+                    <marcxchange:subfield code="a">Aktiv læring :</marcxchange:subfield>
+                    <marcxchange:subfield code="h">daisy 2.02</marcxchange:subfield>
+                    <marcxchange:subfield code="b">et bidrag til variasjon</marcxchange:subfield>
+                    <marcxchange:subfield code="c">Thorsteinn Sigurjonsson, Dag Andre Nilsen, Tor Solbakken</marcxchange:subfield>
+                    <marcxchange:subfield code="w">ktiv læring :</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
+        <dc:title id="title-245-1">Aktiv læring</dc:title>
+        <meta property="sortingKey" refines="#title-245-1">ktiv læring :</meta>
+        <meta property="dc:title.subTitle">et bidrag til variasjon</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="sortingKey">ktiv læring :</meta>
+    </metadata></x:expect>
+    </x:scenario>
+    
 </x:description>

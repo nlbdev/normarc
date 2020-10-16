@@ -1225,13 +1225,14 @@
                 <xsl:apply-templates select="../../*[@tag = ('008', '041')]"/>
             </xsl:variable>
             <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
+            <xsl:variable name="title" select="replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', '')"/>
             <xsl:variable name="title-id" select="concat('title-245-',1+count(preceding-sibling::*:datafield[@tag='245']))"/>
             <xsl:variable name="title-sortingKey" select="(../*:subfield[@code='w'])[1]"/>
             
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:title'"/>
                 <xsl:with-param name="context" select="."/>
-                <xsl:with-param name="value" select="nlb:identifier-in-title(text(), $language)"/>
+                <xsl:with-param name="value" select="nlb:identifier-in-title($title, $language)"/>
                 <xsl:with-param name="id" select="if ($title-sortingKey) then $title-id else ()"/>
             </xsl:call-template>
             
