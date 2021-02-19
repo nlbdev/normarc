@@ -188,4 +188,23 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="regression test for language=fre">
+        <x:context>
+            <opf:metadata>
+                <dc:language content="fre"/>
+            </opf:metadata>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected">
+            <opf:metadata>
+                <dc:language content="fr">
+                    <opf:meta name="dc:language.name.english" content="French"/>
+                    <opf:meta name="dc:language.name.native" content="français"/>
+                    <opf:meta name="dc:language.name.native" content="langue française"/>
+                    <opf:meta name="dc:language.name.norwegian" content="Fransk"/>
+                </dc:language>
+            </opf:metadata>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>
