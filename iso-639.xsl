@@ -26,7 +26,7 @@
     <xsl:template match="dc:language | dc:language.original | opf:meta[(@property, @name)='dc:language.original']">
         <xsl:variable name="preceding-whitespace" select="preceding-sibling::text()[1]"/>
         <xsl:variable name="language" select="tokenize((@schema:name, @content, text())[1],'-')[1]"/>
-        <xsl:variable name="language" select="$iso-639//language[(iso-639-3/text(), iso-639-2T/tokenize(text(), '/'), iso-639-1/text()) = $language]"/>
+        <xsl:variable name="language" select="$iso-639//language[(iso-639-3/text(), iso-639-2B/text(), iso-639-2T/tokenize(text(), '/'), iso-639-1/text()) = $language]"/>
         <xsl:variable name="original" select="if (ends-with((@property, @name, name())[1], '.original')) then '.original' else ''"/>
         <xsl:variable name="nested" select="if (exists(@content)) then true() else false()"/>
         
