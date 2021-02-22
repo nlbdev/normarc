@@ -356,6 +356,7 @@
             <dc:title id="title-245-1">Tommy flytter</dc:title>
             <meta property="sortingKey" refines="#title-245-1">Sorteringsnøkkel for tittel for del av verk</meta>
             <meta property="dc:title.subTitle">Tigergjengen</meta>
+            <meta property="nlbbib:responsibilityStatement">Nina Skauge</meta>
             <meta property="position">2</meta>
             <meta property="dc:title.part">Tittel for del av verk</meta>
             <meta property="sortingKey">Sorteringsnøkkel for tittel for del av verk</meta>
@@ -1329,6 +1330,7 @@
         <dc:title id="title-245-1">Aktiv læring</dc:title>
         <meta property="sortingKey" refines="#title-245-1">ktiv læring :</meta>
         <meta property="dc:title.subTitle">et bidrag til variasjon</meta>
+        <meta property="nlbbib:responsibilityStatement">Thorsteinn Sigurjonsson, Dag Andre Nilsen, Tor Solbakken</meta>
         <meta property="bookEdition">1</meta>
         <meta property="sortingKey">ktiv læring :</meta>
     </metadata></x:expect>

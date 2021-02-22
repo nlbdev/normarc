@@ -18,6 +18,7 @@
     
     <!-- Metadata for åndsverket og utgavene -->
     <dc:title>Rampete Robins forundringspakke</dc:title> <!-- Bibliofil@561702 *245$a -->
+    <meta property="nlbbib:responsibilityStatement">Simon Francesca ; oversatt av Dagny Holm</meta> <!-- Bibliofil@561702 *245$c -->
     <dc:language>nb-NO</dc:language> <!-- Bibliofil@561702 *008 -->
     <dc:creator>Francesca Simon</dc:creator> <!-- Bibliofil@561702 *100 -->
     <dc:contributor opf:role="nrt">NLB</dc:contributor> <!-- Bibliofil@561702 *511$a -->
@@ -58,6 +59,7 @@
         <meta name="nlbprod:identifier.external" content="910702"/> <!-- Quickbase Record@561702 Tilvekstnummer ekstern produksjon -->
         
         <!-- Metadata for åndsverket og utgavene -->
+        <meta name="nlbbib:responsibilityStatement" content="Simon Francesca ; oversatt av Dagny Holm"/> <!-- Bibliofil@561702 *245$c -->
         <meta name="dc:language" content="nb-NO"/> <!-- Bibliofil@561702 *008 -->
         <meta name="dc:creator" content="Francesca Simon"/> <!-- Bibliofil@561702 *100 -->
         <meta name="dc:contributor.narrator" content="NLB"/> <!-- Bibliofil@561702 *511$a -->

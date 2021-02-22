@@ -23,6 +23,7 @@
                 <rdf:Description rdf:about="urn:isbn:9788280876652">
                     <rdf:type rdf:resource="http://schema.org/CreativeWork"/>
                     <dc:title>Ved vannkanten</dc:title>
+                    <nlbbib:responsibilityStatement>Sara Gruen ; oversatt av Hedda Vormeland</nlbbib:responsibilityStatement>
                     <dc:creator schema:name="Sara Gruen">
                         <nlbbib:bibliofil-id>19083400</nlbbib:bibliofil-id>
                         <schema:file-as>Gruen, Sara</schema:file-as>
@@ -117,6 +118,7 @@
             <RDF>
                 <CreativeWork about="urn:isbn:9788280876652">
                     <title name="Ved vannkanten"/>
+                    <responsibilityStatement name="Sara Gruen ; oversatt av Hedda Vormeland"/>
                     <creator name="Sara Gruen">
                         <bibliofil-id name="19083400"/>
                         <file-as name="Gruen, Sara"/>

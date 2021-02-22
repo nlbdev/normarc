@@ -1272,6 +1272,10 @@
         <xsl:for-each select="*:subfield[@code='b']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
         </xsl:for-each>
+
+        <xsl:for-each select="*:subfield[@code='c']">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'nlbbib:responsibilityStatement'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+        </xsl:for-each>
         
         <xsl:variable name="format019" as="element()*">
             <xsl:apply-templates select="../*:datafield[@tag='019']"/>

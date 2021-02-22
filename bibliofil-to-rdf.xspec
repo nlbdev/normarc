@@ -94,6 +94,7 @@
                 <dc:title content="dc:title"/>
                 <meta name="dc:title.original" content="dc:title.original"/>
                 <meta name="dc:title.subTitle" content="dc:title.subTitle"/>
+                <meta name="nlbbib:responsibilityStatement" content="Simon Francesca ; oversatt av Dagny Holm"/>
             </opf:metadata>
         </x:context>
         <x:expect label="the metadata should be extracted as expected">
@@ -103,6 +104,7 @@
                     <dc:title>dc:title</dc:title>
                     <dc:title.original>dc:title.original</dc:title.original>
                     <dc:title.subTitle>dc:title.subTitle</dc:title.subTitle>
+                    <nlbbib:responsibilityStatement>Simon Francesca ; oversatt av Dagny Holm</nlbbib:responsibilityStatement>
                 </rdf:Description>
                 <rdf:Description rdf:ID="...">
                     <rdf:type rdf:resource="http://schema.org/Book"/>

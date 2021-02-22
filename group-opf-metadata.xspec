@@ -14,6 +14,7 @@
             <meta property="nationality" refines="#creator-1">gb</meta>  <!-- Bibliofil@627958 *100$j -->
             <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">DAISY 2.02</dc:format>  <!-- Bibliofil@627958 *019$b -->
             <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">nob</dc:language>  <!-- Bibliofil@627958 *008 -->
+            <meta property="responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
             <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/" id="publisher-260-1">Norsk lyd- og blindeskriftbibliotek</dc:publisher>  <!-- Bibliofil@627958 *260$b -->
             <meta property="bibliofil-id" refines="#publisher-260-1">17192400</meta>  <!-- Bibliofil@627958 *260$3 -->
             <meta property="dc:contributor.narrator" id="contributor-511-1">Elisabeth Vatn</meta>  <!-- Bibliofil@627958 *511$a -->
@@ -98,6 +99,7 @@ møter de en stamme villkatter som har sine egne forfedres profeti å oppfylle.<
         <meta property="bibliofil-id" refines="#creator-1">20931800</meta>  <!-- Bibliofil@627958 *100$3 -->
         <meta property="nationality" refines="#creator-1">gb</meta>  <!-- Bibliofil@627958 *100$j -->
         <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">nob</dc:language>  <!-- Bibliofil@627958 *008 -->
+        <meta property="responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
         <meta property="dc:type.genre">Fiction</meta>  <!-- Bibliofil@627958 *008 -->
         <meta property="dc:type.genre">Non-biography</meta>  <!-- Bibliofil@627958 *008 -->
         <meta property="dc:type.genre" id="subject-655-1">Fantasy</meta>  <!-- Bibliofil@627958 *655 -->

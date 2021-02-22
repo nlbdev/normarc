@@ -22,7 +22,7 @@
     <xsl:template match="opf:metadata">
         <xsl:variable name="metadata" select="." as="element()"/>
         
-        <xsl:variable name="creativeWorkProperties" select="('dc:title', 'dc:creator', 'dc:language', 'dc:contributor', 'schema:bookEdition', 'dc:subject', 'dc:type.genre', 'dc:type.fiction', 'dc:type.literaryForm',
+        <xsl:variable name="creativeWorkProperties" select="('dc:title', 'dc:creator', 'dc:language', 'dc:contributor', 'responsibilityStatement', 'schema:bookEdition', 'dc:subject', 'dc:type.genre', 'dc:type.fiction', 'dc:type.literaryForm',
                                                              'series.issn', 'series.position', 'periodical', 'periodicity', 'magazine', 'newspaper',
                                                              .//*[starts-with(@name,'dc:title.') and not(ends-with(@name, '.part') or contains(@name, '.part.'))]/string(@name),
                                                              .//*[starts-with(@name,'dc:contributor.') and not(@name='dc:contributor.narrator')]/string(@name),
