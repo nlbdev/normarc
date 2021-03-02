@@ -269,7 +269,7 @@
     </x:scenario>
     
     <x:scenario label="Tittel" pending="">
-        <x:context>
+        <x:context xml:space="preserve">
             <!-- TODO -->
         </x:context>
         <x:expect label="the metadata should be extracted as expected">
@@ -278,7 +278,7 @@
     </x:scenario>
     
     <x:scenario label="Forfatter(e)" pending="">
-        <x:context>
+        <x:context xml:space="preserve">
             <!-- TODO -->
         </x:context>
         <x:expect label="the metadata should be extracted as expected">
@@ -287,7 +287,7 @@
     </x:scenario>
     
     <x:scenario label="Informasjon om den trykte boka">
-        <x:context>
+        <x:context xml:space="preserve">
             <!-- ett språk -->
             <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
             
@@ -375,7 +375,7 @@
     </x:scenario>
     
     <x:scenario label="Manglende utgave">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="245" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Tommy flytter</marcxchange:subfield>
@@ -391,7 +391,7 @@
     </x:scenario>
     
     <x:scenario label="Manglende ISBN">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="020" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">0</marcxchange:subfield>
@@ -414,7 +414,7 @@
     </x:scenario>
     
     <x:scenario label="Bruk forlag fra eldste utgave som inneholder årstall">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="260" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Trondheim</marcxchange:subfield>
@@ -456,7 +456,7 @@
     </x:scenario>
     
     <x:scenario label="Informasjon om originalboka">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="041" ind1=" " ind2=" ">
                     <marcxchange:subfield code="h">engtib</marcxchange:subfield>
@@ -496,7 +496,7 @@
     </x:scenario>
     
     <x:scenario label="Forfatter(e)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Dalai Lama</marcxchange:subfield>
@@ -532,7 +532,7 @@
     </x:scenario>
     
     <x:scenario label="For oversatte bøker: Navn på oversetter(e)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="700" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Windt-Val, Benedicta</marcxchange:subfield>
@@ -549,7 +549,7 @@
     </x:scenario>
     
     <x:scenario label="Navn på innleser(e)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Fornavn Etternavn</marcxchange:subfield>
@@ -572,7 +572,7 @@
     </x:scenario>
     
     <x:scenario label="Bibliotek">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:datafield tag="850" ind1=" " ind2=" ">
                 <marcxchange:subfield code="a">NLB/L</marcxchange:subfield>
             </marcxchange:datafield>
@@ -583,7 +583,7 @@
     </x:scenario>
     
     <x:scenario label="Bidragsyter med flere roller">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
@@ -633,7 +633,7 @@
     </x:scenario>
     
     <x:scenario label="Flere originalforlag">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="596" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Melhus</marcxchange:subfield>
@@ -661,7 +661,7 @@
     </x:scenario>
     
     <x:scenario label="Filesize in bytes.">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="856" ind1=" " ind2=" ">
                     <marcxchange:subfield code="u">URN:NBN:no-nb_nlb_</marcxchange:subfield>
@@ -682,7 +682,7 @@
     </x:scenario>
     
     <x:scenario label="Contributor with multiple roles (see #45)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="700" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Sødal, Helje Kringlebotn</marcxchange:subfield>
@@ -709,7 +709,7 @@
     </x:scenario>
     
     <x:scenario label="Braille double line spacing and single sided printing">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="594" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Åpen linjeavstand</marcxchange:subfield>
@@ -725,7 +725,7 @@
     </x:scenario>
     
     <x:scenario label="Default library for 5xx-books should be NLB (also include Namespace Identifier (NID) 'NBN' for national bibliography numbers as dc:soure.urn-nbn)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="001">500000</marcxchange:controlfield>
             </marcxchange:record>
@@ -738,7 +738,7 @@
     </x:scenario>
     
     <x:scenario label="The default library should not be used if *850$a is defined">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="001">500000</marcxchange:controlfield>
                 <marcxchange:datafield tag="850" ind1=" " ind2=" ">
@@ -754,7 +754,7 @@
     </x:scenario>
     
     <x:scenario label="There should be no default library for books other than 5xx-books">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="001">000000</marcxchange:controlfield>
             </marcxchange:record>
@@ -766,7 +766,7 @@
     </x:scenario>
     
     <x:scenario label="When record is marked as deleted, it should be provided as 'availability' metadata">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="000">     d</marcxchange:controlfield>
             </marcxchange:record>
@@ -777,7 +777,7 @@
     </x:scenario>
     
     <x:scenario label="Samme format i både 019$c og 245$h">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                     <marcxchange:subfield code="b">dc,dj</marcxchange:subfield>
@@ -804,7 +804,7 @@
     </x:scenario>
     
     <x:scenario label="Forskjellig format i 019$c og 245$h">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                     <marcxchange:subfield code="b">c</marcxchange:subfield>
@@ -827,7 +827,7 @@
     </x:scenario>
     
     <x:scenario label="Bruk registreringsdato som tilgjengeliggjøringsdato for katalogposter eldre enn år 2000">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="008">971220                a          10nob</marcxchange:controlfield>
             </marcxchange:record>
@@ -846,7 +846,7 @@
     </x:scenario>
     
     <x:scenario label="EPUB-nr i *599">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="599" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">EPUB-nr</marcxchange:subfield>
@@ -861,7 +861,7 @@
     </x:scenario>
     
     <x:scenario label="900 og 950 (brukes egentlig bare i autoritetsregistertabellen)" pending="TODO">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Ragde, Anne Birkefeldt</marcxchange:subfield>
@@ -898,7 +898,7 @@
     
     <x:scenario label="regression: XTTE0570: A sequence of more than one item is not allowed as the value of parameter $value">
         <!-- *130$a i autoritetsregisteret (aut) -->
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
                 <marcxchange:datafield tag="130" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Don Giovanni, klaver, sopran, Batti, Batti o bel Masetto740</marcxchange:subfield>
@@ -917,7 +917,7 @@
     
     <x:scenario label="Student audience">
         <x:scenario label="850$a">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
                     
@@ -942,7 +942,7 @@
         </x:scenario>
         
         <x:scenario label="019$d">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
                     
@@ -967,7 +967,7 @@
         </x:scenario>
         
         <x:scenario label="019$d with bibliofilId - 1">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                         <marcxchange:subfield code="d">N</marcxchange:subfield>
@@ -982,7 +982,7 @@
         </x:scenario>
         
         <x:scenario label="019$d with bibliofilId - 2">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                         <marcxchange:subfield code="d">BD</marcxchange:subfield>
@@ -999,7 +999,7 @@
         </x:scenario>
         
         <x:scenario label="019$d with bibliofilId - 3">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                         <marcxchange:subfield code="d">RS</marcxchange:subfield>
@@ -1017,7 +1017,7 @@
     </x:scenario>
     
     <x:scenario label="Child audience">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
                 <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
                 
@@ -1039,7 +1039,7 @@
     </x:scenario>
     
     <x:scenario label="Både dc,dj og jp i 019$b">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                     <marcxchange:subfield code="b">dc,dj</marcxchange:subfield>
@@ -1068,7 +1068,7 @@
     </x:scenario>
     
     <x:scenario label="access modes (text / audio)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
                 <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
                 
@@ -1094,7 +1094,7 @@
     </x:scenario>
     
     <x:scenario label="TTS">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
                 <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
                 
@@ -1120,7 +1120,7 @@
     
     <x:scenario label="audiences">
         <x:scenario label="adult">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
                 </marcxchange:record>
@@ -1138,7 +1138,7 @@
         </x:scenario>
         
         <x:scenario label="adolescent">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
                     <marcxchange:datafield tag="019">
@@ -1159,7 +1159,7 @@
         </x:scenario>
         
         <x:scenario label="child">
-            <x:context>
+            <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
                     <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
                 </marcxchange:record>
@@ -1177,7 +1177,7 @@
     </x:scenario>
     
     <x:scenario label="date sent to production / ordered">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
                 <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
                 <marcxchange:datafield tag="591">
@@ -1199,7 +1199,7 @@
     </x:scenario>
     
     <x:scenario label="parsing of volumes">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:datafield tag="300" ind1=" " ind2=" ">
                 <marcxchange:subfield code="a">13 hefter (972 s.)</marcxchange:subfield>
             </marcxchange:datafield>
@@ -1212,7 +1212,7 @@
     </x:scenario>
     
     <x:scenario label="allow ISO-formatted date as available date">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:datafield tag="592" ind1=" " ind2=" ">
                 <marcxchange:subfield code="a">2016-10-04</marcxchange:subfield>
             </marcxchange:datafield>
@@ -1225,7 +1225,7 @@
     
     
     <x:scenario label="handle a sequence of values when building metadata (also prints a warning)">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:datafield tag="653" ind1=" " ind2=" ">
                 <marcxchange:subfield code="a">first value</marcxchange:subfield>
                 <marcxchange:subfield code="a">second value</marcxchange:subfield>
@@ -1239,7 +1239,7 @@
     </x:scenario>
     
     <x:scenario label="distribution methods and formats in *582">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="582" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">EPUB</marcxchange:subfield>
@@ -1314,7 +1314,7 @@
     </x:scenario>
     
     <x:scenario label="Fjerne kolon, bindestrek og lignende fra slutten av hovedtittel">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:datafield tag="245" ind1=" " ind2="1">
                     <marcxchange:subfield code="a">Aktiv læring :</marcxchange:subfield>
