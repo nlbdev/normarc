@@ -543,6 +543,20 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
+        
+        <xsl:if test="$POS34 = ('1', 'a', 'b', 'c', 'd')">
+            <xsl:variable name="subject-id" select="'subject-008'"/>
+            <xsl:variable name="bibliofil-id" select="'19880600'"/>  <!-- unfortunately hardcoded here - if we had a good way to do it  we could look for *655$aBiografisk in data.aut.txt and use $_ from there. -->
+            
+            <xsl:variable name="context" select="."/>
+            <xsl:variable name="mainGenre" select="'Biografisk'"/>
+            <xsl:variable name="genre" select="$mainGenre"/>
+            
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre.no'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.mainGenre'"/><xsl:with-param name="value" select="$mainGenre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="$bibliofil-id"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+        </xsl:if>
 
         <xsl:choose>
             <xsl:when test="normalize-space($POS35-37) and normalize-space($POS35-37) != 'mul'">
