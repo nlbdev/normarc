@@ -760,8 +760,8 @@
             </marcxchange:record>
         </x:context>
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:identifier id="pub-id">000000</dc:identifier>
-        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_000000</meta>
+        <dc:identifier id="pub-id">0</dc:identifier>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_0</meta>
     </metadata></x:expect>
     </x:scenario>
     

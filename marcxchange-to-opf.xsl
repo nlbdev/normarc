@@ -331,7 +331,7 @@
         <xsl:variable name="dublin-core" select="$property = ('dc:contributor', 'dc:coverage', 'dc:creator', 'dc:date', 'dc:description', 'dc:format', 'dc:identifier',
                                                               'dc:language', 'dc:publisher', 'dc:relation', 'dc:rights', 'dc:source', 'dc:subject', 'dc:title', 'dc:type')" as="xs:boolean"/>
 
-        <xsl:variable name="identifier001" as="xs:string?" select="($context/(../* | ../../*)[self::*:controlfield[@tag='001']])[1]/text()"/>
+        <xsl:variable name="identifier001" as="xs:string?" select="($context/(../* | ../../*)[self::*:controlfield[@tag='001']])[1]/replace(text(), '^0+(.)', '$1')"/>
         <xsl:variable name="tag" select="($context/../@tag, $context/@tag, '???')[1]"/>
         <xsl:variable name="metadata-source-text" select="concat('Bibliofil', if ($identifier001) then concat('@',$identifier001) else '', ' *', $tag, if ($context/@code) then concat('$',$context/@code) else '')"/>
         <xsl:variable name="metadata-source-text" select="concat($metadata-source-text, if ($identifier001 != $identifier and $property = ('dc:identifier', 'dc:title') and not($refines)) then ' + dc:identifier' else '')"/>
@@ -376,7 +376,7 @@
     </xsl:template>
 
     <xsl:template match="*:controlfield[@tag='001']">
-        <xsl:variable name="edition-identifier" select="if ($identifier) then $identifier else text()"/>
+        <xsl:variable name="edition-identifier" select="if ($identifier) then $identifier else replace(text(), '^0+(.)', '$1')"/>
 
         <xsl:call-template name="meta">
             <xsl:with-param name="property" select="'dc:identifier'"/>
