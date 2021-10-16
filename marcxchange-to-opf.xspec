@@ -356,9 +356,9 @@
             <dc:title id="title-245-1">Tommy flytter</dc:title>
             <meta property="sortingKey" refines="#title-245-1">Sorteringsnøkkel for tittel for del av verk</meta>
             <meta property="dc:title.subTitle">Tigergjengen</meta>
-            <meta property="nlbbib:responsibilityStatement">Nina Skauge</meta>
-            <meta property="position">2</meta>
             <meta property="dc:title.part">Tittel for del av verk</meta>
+            <meta property="position">2</meta>
+            <meta property="nlbbib:responsibilityStatement">Nina Skauge</meta>
             <meta property="sortingKey">Sorteringsnøkkel for tittel for del av verk</meta>
             
             <meta property="bookEdition">3. utgave</meta>
@@ -1364,6 +1364,398 @@
         <meta property="audience">Adult</meta>
         <meta property="typicalAgeRange">17-</meta>
     </metadata></x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Subtitles, part titles and part positions">
+        <x:scenario label="full example">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:datafield tag="245" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">*245$a - main title</marcxchange:subfield>
+                        <marcxchange:subfield code="b">*245$b</marcxchange:subfield>
+                        <marcxchange:subfield code="n">Part 123</marcxchange:subfield>
+                        <marcxchange:subfield code="p">*245$p</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">*740$a - other title</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">*740$a - part title</marcxchange:subfield>
+                        <marcxchange:subfield code="n">Part 456</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">*740$a - another part title</marcxchange:subfield>
+                        <marcxchange:subfield code="n">Part 789</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+    <metadata>
+        <dc:title>*245$a - main title</dc:title>
+        <meta property="dc:title.part">*740$a - part title</meta>
+        <meta property="dc:title.part.other">*245$p</meta>
+        <meta property="dc:title.subTitle">*245$b</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="position">456</meta>
+        <meta property="position.other">123</meta>
+        <meta property="sortingKey">*245$a - main title</meta>
+    </metadata>
+            </x:expect>
+        </x:scenario>
+        
+        <x:scenario label="Real example: 3222">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0003222</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Arv og gjeld. Nye veier</marcxchange:subfield>
+                        <marcxchange:subfield code="b">[bind 3]</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Karin Bang</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Nye veier</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">3222</dc:identifier>
+                    <dc:title>Arv og gjeld. Nye veier</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_3222</meta>
+                    <meta property="dc:title.part">Nye veier</meta>
+                    <meta property="dc:title.subTitle">bind 3</meta>
+                    <meta property="nlbbib:responsibilityStatement">Karin Bang</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Arv og gjeld. Nye veier</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 4682">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0004682</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Utvalgte noveller</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Torborg Nedreaas</marcxchange:subfield>
+                        <marcxchange:subfield code="h">kassetter</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Achtung gnädiges Fräulein</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                        <marcxchange:subfield code="w">Achtung gnædiges Fræulein</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Allikevel</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Bruddstykker av en tavle</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Den lille historien om et par sko</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                        <marcxchange:subfield code="w">Lille historien om et par sko</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Gjengjeldelsens lov</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Har du skrevet til Julia?</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Kall meg Line-mor</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                        <marcxchange:subfield code="w">Kall meg Line mor</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Livsens potet</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">På den trettende dag</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="0" ind2="0">
+                        <marcxchange:subfield code="a">Smørblomst i september</marcxchange:subfield>
+                        <marcxchange:subfield code="e">delt.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">4682</dc:identifier>
+                    <dc:title>Utvalgte noveller</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_4682</meta>
+                    <meta property="dc:title.part" id="title-740-1">Achtung gnädiges Fräulein</meta>
+                    <meta property="sortingKey" refines="#title-740-1">Achtung gnædiges Fræulein</meta>
+                    <meta property="nlbbib:responsibilityStatement">Torborg Nedreaas</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Utvalgte noveller</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 9162">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0009162</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Kleopatra</marcxchange:subfield>
+                        <marcxchange:subfield code="b">[bind 1]</marcxchange:subfield>
+                        <marcxchange:subfield code="p">Nilens datter</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Margaret George ; oversatt av Mona Lyche Ramberg</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Nilens datter</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">The memoirs of Cleopatra</marcxchange:subfield>
+                        <marcxchange:subfield code="e">Orig.t.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1="1" ind2="4">
+                        <marcxchange:subfield code="a">The Memoirs of Cleopatra</marcxchange:subfield>
+                        <marcxchange:subfield code="w">Memoirs of Cleopatra</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">9162</dc:identifier>
+                    <dc:title>Kleopatra</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_9162</meta>
+                    <meta property="dc:title.part">Nilens datter</meta>
+                    <meta property="dc:title.subTitle">bind 1</meta>
+                    <meta property="nlbbib:responsibilityStatement">Margaret George ; oversatt av Mona Lyche Ramberg</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Kleopatra</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 106645">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0106645</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Trash Bazooka</marcxchange:subfield>
+                        <marcxchange:subfield code="b">femte bok</marcxchange:subfield>
+                        <marcxchange:subfield code="c">av Frank Miguel Wedding; Redigert av Jon Ewo</marcxchange:subfield>
+                        <marcxchange:subfield code="p">Operasjon sluttspill</marcxchange:subfield>
+                        <marcxchange:subfield code="h">punktskrift</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">106645</dc:identifier>
+                    <dc:title>Trash Bazooka</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_106645</meta>
+                    <meta property="dc:title.part">Operasjon sluttspill</meta>
+                    <meta property="dc:title.subTitle">femte bok</meta>
+                    <meta property="nlbbib:responsibilityStatement">av Frank Miguel Wedding; Redigert av Jon Ewo</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Trash Bazooka</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 108763">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0108763</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Animorphs</marcxchange:subfield>
+                        <marcxchange:subfield code="c">K.A. Applegate ; oversatt av Jørn Roeim</marcxchange:subfield>
+                        <marcxchange:subfield code="h">punktskrift</marcxchange:subfield>
+                        <marcxchange:subfield code="n">16</marcxchange:subfield>
+                        <marcxchange:subfield code="p">Advarselen</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Animorphs : the Warning</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">108763</dc:identifier>
+                    <dc:title>Animorphs</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108763</meta>
+                    <meta property="dc:title.subTitle">Advarselen</meta>
+                    <meta property="nlbbib:responsibilityStatement">K.A. Applegate ; oversatt av Jørn Roeim</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="position">16</meta>
+                    <meta property="sortingKey">Animorphs</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 108880">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0108880</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Radio Moskva</marcxchange:subfield>
+                        <marcxchange:subfield code="b">nordmenn i Sovjet-propagandaens tjeneste</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Morten Jentoft</marcxchange:subfield>
+                        <marcxchange:subfield code="h">punktskrift</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">108880</dc:identifier>
+                    <dc:title>Radio Moskva</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108880</meta>
+                    <meta property="dc:title.subTitle">nordmenn i Sovjet-propagandaens tjeneste</meta>
+                    <meta property="nlbbib:responsibilityStatement">Morten Jentoft</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Radio Moskva</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 109100">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0109100</marcxchange:controlfield>
+                    <marcxchange:datafield tag="015" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">9807124</marcxchange:subfield>
+                        <marcxchange:subfield code="b">BibliofilID</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="245" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Tvillingfeber</marcxchange:subfield>
+                        <marcxchange:subfield code="b">roman</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Brit Bildøen</marcxchange:subfield>
+                        <marcxchange:subfield code="h">punktskrift</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">109100</dc:identifier>
+                    <dc:title>Tvillingfeber</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_109100</meta>
+                    <meta property="dc:title.subTitle">roman</meta>
+                    <meta property="nlbbib:responsibilityStatement">Brit Bildøen</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="sortingKey">Tvillingfeber</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 111889">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0111889</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Tørk aldri tårer uten hansker</marcxchange:subfield>
+                        <marcxchange:subfield code="b">kjærligheten</marcxchange:subfield>
+                        <marcxchange:subfield code="n">1</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Jonas Gardell ; oversatt av John Erik Frydenlund</marcxchange:subfield>
+                        <marcxchange:subfield code="h">punktskrift</marcxchange:subfield>
+                        <marcxchange:subfield code="p">Kjærligheten</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Torka aldrig tårar utan handskar</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">111889</dc:identifier>
+                    <dc:title>Tørk aldri tårer uten hansker</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_111889</meta>
+                    <meta property="dc:title.part">Kjærligheten</meta>
+                    <meta property="dc:title.subTitle">kjærligheten</meta>
+                    <meta property="nlbbib:responsibilityStatement">Jonas Gardell ; oversatt av John Erik Frydenlund</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="position">1</meta>
+                    <meta property="sortingKey">Tørk aldri tårer uten hansker</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 375940">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0375940</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Alle tiders kjærlighet</marcxchange:subfield>
+                        <marcxchange:subfield code="b">kjærligheten går gjennom alle tider</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Kerstin Gier ; oversatt av Henning Hagerup</marcxchange:subfield>
+                        <marcxchange:subfield code="n">1</marcxchange:subfield>
+                        <marcxchange:subfield code="p">Rubinrød</marcxchange:subfield>
+                        <marcxchange:subfield code="h">elektronisk ressurs</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Rubinrot. Liebe geht durch alle Zeiten.</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">375940</dc:identifier>
+                    <dc:title>Alle tiders kjærlighet</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_375940</meta>
+                    <meta property="dc:title.part">Rubinrød</meta>
+                    <meta property="dc:title.subTitle">kjærligheten går gjennom alle tider</meta>
+                    <meta property="nlbbib:responsibilityStatement">Kerstin Gier ; oversatt av Henning Hagerup</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="position">1</meta>
+                    <meta property="sortingKey">Alle tiders kjærlighet</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
+
+        <x:scenario label="Real example: 802093">
+            <x:context xml:space="preserve">
+                <marcxchange:record>
+                    <marcxchange:controlfield tag="001">0802093</marcxchange:controlfield>
+                    <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                        <marcxchange:subfield code="a">Merlin</marcxchange:subfield>
+                        <marcxchange:subfield code="b">Legenden om Atlantis</marcxchange:subfield>
+                        <marcxchange:subfield code="c">Oversatt av Lars-Toralf Storstrand</marcxchange:subfield>
+                        <marcxchange:subfield code="h">daisy 2.02</marcxchange:subfield>
+                        <marcxchange:subfield code="n">3</marcxchange:subfield>
+                        <marcxchange:subfield code="p">[Pendragons krøniker]</marcxchange:subfield>
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="740" ind1=" " ind2=" ">
+                        <marcxchange:subfield code="a">Taliesin, The Sun Bull</marcxchange:subfield>
+                    </marcxchange:datafield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*">
+                <metadata>
+                    <dc:identifier id="pub-id">802093</dc:identifier>
+                    <dc:title>Merlin</dc:title>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_802093</meta>
+                    <meta property="dc:title.part">Pendragons krøniker</meta>
+                    <meta property="dc:title.subTitle">Legenden om Atlantis</meta>
+                    <meta property="nlbbib:responsibilityStatement">Oversatt av Lars-Toralf Storstrand</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="position">3</meta>
+                    <meta property="sortingKey">Merlin</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
     </x:scenario>
     
 </x:description>
