@@ -646,5 +646,33 @@
             </rdf:RDF>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="nlbbib:exclude-from-recommendations">
+        <x:context>
+            <opf:metadata>
+                <dc:identifier content="617429"/>
+                <meta name="isbn" content="1234-56-5555"/>
+                <meta name="isbn.original" content="1234-56-7890"/>
+                <meta name="nlbbib:exclude-from-recommendations" content="true"/>
+            </opf:metadata>
+        </x:context>
+        <x:expect label="the metadata should be extracted as expected">
+            <rdf:RDF>
+                <rdf:Description rdf:about="urn:isbn:1234567890">
+                    <rdf:type rdf:resource="http://schema.org/CreativeWork"/>
+                    <schema:isbn>1234-56-7890</schema:isbn>
+                    <dc:source>urn:isbn:1234567890</dc:source>
+                    <nlbbib:exclude-from-recommendations>true</nlbbib:exclude-from-recommendations>
+                </rdf:Description>
+                <rdf:Description rdf:about="urn:nbn:no-nb_nlb_617429">
+                    <rdf:type rdf:resource="http://schema.org/Book"/>
+                    <schema:exampleOfWork rdf:resource="urn:isbn:1234567890"/>
+                    <owl:sameAs rdf:resource="urn:isbn:1234565555"/>
+                    <dc:identifier>617429</dc:identifier>
+                    <schema:isbn>1234-56-5555</schema:isbn>
+                </rdf:Description>
+            </rdf:RDF>
+        </x:expect>
+    </x:scenario>
 
 </x:description>

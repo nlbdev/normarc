@@ -22,8 +22,9 @@
     <xsl:template match="opf:metadata">
         <xsl:variable name="metadata" select="." as="element()"/>
         
-        <xsl:variable name="creativeWorkProperties" select="('dc:title', 'dc:creator', 'dc:language', 'dc:contributor', 'nlbbib:responsibilityStatement', 'schema:bookEdition', 'dc:subject', 'dc:type.genre', 'dc:type.fiction', 'dc:type.literaryForm',
+        <xsl:variable name="creativeWorkProperties" select="('dc:title', 'dc:creator', 'dc:language', 'dc:contributor', 'responsibilityStatement', 'dc:subject', 'dc:type.genre', 'dc:type.fiction', 'dc:type.literaryForm',
                                                              'series.issn', 'series.position', 'periodical', 'periodicity', 'magazine', 'newspaper',
+                                                             'audience', 'typicalAgeRange', 'exclude-from-recommendations',
                                                              .//*[starts-with(@name,'dc:title.') and not(ends-with(@name, '.part') or contains(@name, '.part.'))]/string(@name),
                                                              .//*[starts-with(@name,'dc:contributor.') and not(@name='dc:contributor.narrator')]/string(@name),
                                                              .//*[starts-with(@name,'dc:subject.')]/string(@name))"/>
@@ -83,7 +84,7 @@
             </xsl:call-template>
             <xsl:for-each select="$creativeWorkProperties">
                 <xsl:variable name="property" select="." as="xs:string"/>
-                <xsl:variable name="elements" select="$metadata/*[not(@refines) and $property = (name(), @property)]" as="element()*"/>
+                <xsl:variable name="elements" select="$metadata/*[not(@refines) and $property = (name(), @property, tokenize(@property, ':')[last()])]" as="element()*"/>
                 
                 <xsl:for-each select="$elements">
                     <xsl:call-template name="copy-element">
@@ -100,7 +101,7 @@
             </xsl:call-template>
             <xsl:for-each select="$metadata/*[not(@refines)]">
                 <xsl:variable name="property" select="(@property, name())[1]" as="xs:string"/>
-                <xsl:if test="not($property = $creativeWorkProperties) and not($property = 'dc:identifier')">
+                <xsl:if test="not(($property, tokenize($property, ':')[last()]) = $creativeWorkProperties) and not($property = 'dc:identifier')">
                     <xsl:call-template name="copy-element">
                         <xsl:with-param name="metadata" select="$metadata"/>
                         <xsl:with-param name="element" select="."/>

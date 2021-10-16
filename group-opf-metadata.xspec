@@ -14,7 +14,7 @@
             <meta property="nationality" refines="#creator-1">gb</meta>  <!-- Bibliofil@627958 *100$j -->
             <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">DAISY 2.02</dc:format>  <!-- Bibliofil@627958 *019$b -->
             <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">nob</dc:language>  <!-- Bibliofil@627958 *008 -->
-            <meta property="nlbbib:responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
+            <meta property="responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
             <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/" id="publisher-260-1">Norsk lyd- og blindeskriftbibliotek</dc:publisher>  <!-- Bibliofil@627958 *260$b -->
             <meta property="bibliofil-id" refines="#publisher-260-1">17192400</meta>  <!-- Bibliofil@627958 *260$3 -->
             <meta property="dc:contributor.narrator" id="contributor-511-1">Elisabeth Vatn</meta>  <!-- Bibliofil@627958 *511$a -->
@@ -99,7 +99,7 @@ møter de en stamme villkatter som har sine egne forfedres profeti å oppfylle.<
         <meta property="bibliofil-id" refines="#creator-1">20931800</meta>  <!-- Bibliofil@627958 *100$3 -->
         <meta property="nationality" refines="#creator-1">gb</meta>  <!-- Bibliofil@627958 *100$j -->
         <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">nob</dc:language>  <!-- Bibliofil@627958 *008 -->
-        <meta property="nlbbib:responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
+        <meta property="responsibilityStatement">Erin Hunter ; oversatt av Tora Larsen Morset</meta>  <!-- Bibliofil@627958 *245$c -->
         <meta property="dc:type.genre">Fiction</meta>  <!-- Bibliofil@627958 *008 -->
         <meta property="dc:type.genre">Non-biography</meta>  <!-- Bibliofil@627958 *008 -->
         <meta property="dc:type.genre" id="subject-655-1">Fantasy</meta>  <!-- Bibliofil@627958 *655 -->
@@ -107,9 +107,10 @@ møter de en stamme villkatter som har sine egne forfedres profeti å oppfylle.<
         <meta property="dc:type.genre.no" refines="#subject-655-1">Fantasy</meta>  <!-- Bibliofil@627958 *655 -->
         <meta property="dc:type.mainGenre" refines="#subject-655-1">Fantasy</meta>  <!-- Bibliofil@627958 *655 -->
         <meta property="dc:type.fiction">true</meta>
-        
         <meta property="dc:type.literaryForm" id="literary-form-019d-1">Roman</meta>  <!-- Bibliofil@627958 *019$d -->
         <meta property="normarc-id" refines="#literary-form-019d-1">R</meta>  <!-- Bibliofil@627958 *019$d -->
+        <meta property="audience">Child</meta>  <!-- Bibliofil@627958 *008 -->
+        <meta property="typicalAgeRange">11-12</meta>  <!-- Bibliofil@627958 *008 -->
         
         <!-- Metadata for DAISY 2.02-utgaven -->
         <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">DAISY 2.02</dc:format>  <!-- Bibliofil@627958 *019$b -->
@@ -154,7 +155,6 @@ møter de en stamme villkatter som har sine egne forfedres profeti å oppfylle.<
         <meta property="dc:identifier.series.sequel" refines="#series-sequel-1">627961</meta>  <!-- Bibliofil@627958 *785$w -->
         <meta property="dc:identifier.series.sequel.uri" refines="#series-sequel-1">urn:NBN:no-nb_nlb_627961</meta>  <!-- Bibliofil@627958 *785$w -->
         <meta property="dc:type.audio">true</meta>  <!-- Bibliofil@627958 *019$b -->
-        <meta property="audience">Child</meta>  <!-- Bibliofil@627958 *008 -->
         <meta property="bookEdition">1</meta>  <!-- Bibliofil@627958 *245 -->
         <meta property="bookEdition.original">1</meta>  <!-- Bibliofil@627958 *596 -->
         <meta property="fileSize">458148548</meta>  <!-- Bibliofil@627958 *856$s -->
@@ -172,7 +172,6 @@ møter de en stamme villkatter som har sine egne forfedres profeti å oppfylle.<
         <meta property="isbn.original">978-82-93304-70-8</meta>  <!-- Bibliofil@627958 *596$f -->
         <meta property="library">NLB</meta>  <!-- Bibliofil@627958 *850$a -->
         <meta property="position">2</meta>  <!-- Bibliofil@627958 *245$n -->
-        <meta property="typicalAgeRange">11-12</meta>  <!-- Bibliofil@627958 *008 -->
         
         
     </metadata></x:expect>
