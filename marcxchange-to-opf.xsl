@@ -1720,6 +1720,11 @@
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'WIPS'"/></xsl:call-template>
                 </xsl:when>
             </xsl:choose>
+            
+            <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('exclude-from-recommendations')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+            </xsl:if>
+            
             <xsl:variable name="tag592">
                 <xsl:apply-templates select="../../*:datafield[@tag='592']"/>
             </xsl:variable>
@@ -2731,7 +2736,7 @@
             <xsl:when test="not($prefix-everything)">
                 <xsl:value-of select="$property"/>
             </xsl:when>
-            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','normarc-id','pseudonym','epub-nr','sortingKey')">
+            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','normarc-id','pseudonym','epub-nr','sortingKey','exclude-from-recommendations')">
                 <xsl:value-of select="concat('nlbbib:', $property)"/>
             </xsl:when>
             <xsl:otherwise>

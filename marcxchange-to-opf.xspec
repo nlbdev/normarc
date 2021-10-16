@@ -1758,4 +1758,20 @@
         </x:scenario>
     </x:scenario>
     
+    <x:scenario label="'anbefales ikke automatisk' in *598$a">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="598" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="a">anbefales ikke automatisk</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <metadata>
+                <meta property="exclude-from-recommendations">true</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
+        
 </x:description>
