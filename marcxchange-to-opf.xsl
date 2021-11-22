@@ -1719,6 +1719,9 @@
                 <xsl:when test="contains(text(),'INNKJØPT')">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'WIPS'"/></xsl:call-template>
                 </xsl:when>
+                <xsl:when test="contains(text(),'NEDLASTET')">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'ABC'"/></xsl:call-template>
+                </xsl:when>
             </xsl:choose>
             
             <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
