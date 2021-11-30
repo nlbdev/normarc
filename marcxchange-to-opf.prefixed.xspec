@@ -85,14 +85,14 @@
                                     <marcxchange:subfield code="a">Originaltittel: Moonrise</marcxchange:subfield>
                                 </marcxchange:datafield>
                                 <marcxchange:datafield tag="582" ind1=" " ind2=" ">
-                                    <marcxchange:subfield code="a">EPUB</marcxchange:subfield>
-                                    <marcxchange:subfield code="d">dl</marcxchange:subfield>
-                                    <marcxchange:subfield code="f">epub</marcxchange:subfield>
+                                    <marcxchange:subfield code="a">dl</marcxchange:subfield>
+                                    <marcxchange:subfield code="d">epub</marcxchange:subfield>
+                                    <marcxchange:subfield code="f">EPUB</marcxchange:subfield>
                                 </marcxchange:datafield>
                                 <marcxchange:datafield tag="582" ind1=" " ind2=" ">
-                                    <marcxchange:subfield code="a">HTML</marcxchange:subfield>
-                                    <marcxchange:subfield code="d">dl</marcxchange:subfield>
-                                    <marcxchange:subfield code="f">html</marcxchange:subfield>
+                                    <marcxchange:subfield code="a">dl</marcxchange:subfield>
+                                    <marcxchange:subfield code="d">html</marcxchange:subfield>
+                                    <marcxchange:subfield code="f">HTML</marcxchange:subfield>
                                 </marcxchange:datafield>
                                 <marcxchange:datafield tag="592" ind1=" " ind2=" ">
                                     <marcxchange:subfield code="a">31/10/2017</marcxchange:subfield>
@@ -183,7 +183,6 @@
         <meta property="dc:subject.keyword" id="subject-692-1">Katter</meta>
         <meta property="nlbbib:bibliofil-id" refines="#subject-692-1">19736100</meta>
         <meta property="dc:title.original">Moonrise</meta>
-        <meta property="dc:title.part">Moonrise</meta>
         <meta property="dc:title.series" id="series-title-1">Kattekrigerne Serie 2</meta>
         <meta property="nlbbib:series.position" refines="#series-title-1">2</meta>
         <meta property="dc:title.series.preceding" id="series-preceding-1">Midnatt</meta>
