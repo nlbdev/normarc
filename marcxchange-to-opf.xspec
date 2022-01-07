@@ -1790,5 +1790,37 @@
             </metadata>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="'NEDLASTET' in *598$a">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="245" ind1="1" ind2="0">
+                    <marcxchange:subfield code="a">Åndsverkets tittel</marcxchange:subfield>
+                    <marcxchange:subfield code="b">Åndsverkets undertittel</marcxchange:subfield>
+                    <marcxchange:subfield code="p">Utgavens deltittel</marcxchange:subfield>
+                </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="440" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="a">Seriens tittel</marcxchange:subfield>
+                    <marcxchange:subfield code="p">Underseriens tittel</marcxchange:subfield>
+                    <marcxchange:subfield code="v">Fritekstangivelse av posision i serien</marcxchange:subfield>
+                    <marcxchange:subfield code="_">1234</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <metadata>
+                <dc:title>Åndsverkets tittel</dc:title>
+                <meta property="dc:title.part">Utgavens deltittel</meta>
+                <meta property="dc:title.series" id="series-title-1">Seriens tittel</meta>
+                <meta property="dc:title.subSeries" refines="#series-title-1">Underseriens tittel</meta>
+                <meta property="series.position" refines="#series-title-1">Fritekstangivelse av posision i serien</meta>
+                <meta property="dc:title.subTitle">Åndsverkets undertittel</meta>
+                <meta property="bookEdition">1</meta>
+                <meta property="sortingKey">Åndsverkets tittel</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
         
 </x:description>

@@ -1485,11 +1485,10 @@
             </xsl:if>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='v']">
-            <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
-            <xsl:if test="matches($position, '^\d+$')">
+            <xsl:if test="not(starts-with(text(), '['))">
                 <xsl:call-template name="meta">
                     <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
-                    <xsl:with-param name="value" select="$position"/>
+                    <xsl:with-param name="value" select="text()"/>
                     <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
                 </xsl:call-template>
             </xsl:if>
