@@ -388,10 +388,12 @@
             <xsl:with-param name="property" select="'dc:source.urn-nbn'"/>
             <xsl:with-param name="value" select="concat('urn:nbn:no-nb_nlb_', $edition-identifier)"/>
         </xsl:call-template>
-
-        <xsl:if test="starts-with(string($edition-identifier), '5') and not(exists(../*:datafield[@tag='850']/*:subfield[@code='a']))">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('library')"/><xsl:with-param name="value" select="'NLB'"/></xsl:call-template>
-        </xsl:if>
+        
+        <xsl:call-template name="meta">
+            <xsl:with-param name="property" select="nlb:prefixed-property('library')"/>
+            <xsl:with-param name="value" select="nlb:parseLibrary850a($edition-identifier, .)"/>
+            <xsl:with-param name="context" select="(../*:datafield[@tag='850']/*:subfield[@code='a'], .)[1]"/>
+        </xsl:call-template>
 
         <xsl:if test="matches(string($edition-identifier), '^\d{12}$')">
             <xsl:variable name="year" select="substring($edition-identifier,9)"/>
@@ -2305,7 +2307,6 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Textbook'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('educationalUse')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:if>
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('library')"/><xsl:with-param name="value" select="tokenize(text(),'/')[1]"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -2827,6 +2828,36 @@
             
             <xsl:otherwise>
                 <xsl:value-of select="$title"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <xsl:function name="nlb:parseLibrary850a" as="xs:string">
+        <xsl:param name="identifier" as="xs:string"/>
+        <xsl:param name="tag001" as="element()"/>
+        
+        <xsl:variable name="library" select="string(($tag001/../*:datafield[@tag='850']/*:subfield[@code='a'])[1])" as="xs:string"/>
+        <xsl:choose>
+            <xsl:when test="contains(upper-case($library), 'NLB')">
+                <xsl:value-of select="'NLB'"/>
+            </xsl:when>
+            <xsl:when test="contains(upper-case($library), 'KABB')">
+                <xsl:value-of select="'KABB'"/>
+            </xsl:when>
+            <xsl:when test="contains(upper-case($library), 'STATPED')">
+                <xsl:value-of select="'StatPed'"/>
+            </xsl:when>
+            <xsl:when test="string-length($identifier) lt 6">
+                <xsl:value-of select="'NLB'"/>
+            </xsl:when>
+            <xsl:when test="substring($identifier, 1, 2) = ('80', '81', '82', '83', '84')">
+                <xsl:value-of select="'KABB'"/>
+            </xsl:when>
+            <xsl:when test="substring($identifier, 1, 2) = ('85', '86', '87', '88')">
+                <xsl:value-of select="'StatPed'"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="'NLB'"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:function>

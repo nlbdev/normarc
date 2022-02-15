@@ -572,14 +572,744 @@
     </x:scenario>
     
     <x:scenario label="Bibliotek">
-        <x:context xml:space="preserve">
-            <marcxchange:datafield tag="850" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">NLB/L</marcxchange:subfield>
-            </marcxchange:datafield>
-        </x:context>
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <meta property="library">NLB</meta>
-        </x:expect>
+        <x:scenario label="1: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">1</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="2: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">2</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="4: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">4</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="8: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">8</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="9: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">9</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="10: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">10</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="30: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">30</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="52: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">52</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="60: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">60</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="70: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">70</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="80: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">80</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="81: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">81</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="82: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">82</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="83: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">83</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="88: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">88</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="840: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">840</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="861: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">861</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="870: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">870</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="891: 'NLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">891</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="5543: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">5543</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="9170: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">9170</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="9329: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">9329</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="10778: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">10778</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="20948: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">20948</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="35875: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">35875</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="38179: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">38179</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="55211: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">55211</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="100196: '1NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">100196</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">1NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="100883: '2NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">100883</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">2NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="101081: 'ÏNLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">101081</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">ÏNLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="102498: 'eNLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">102498</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">eNLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="102926: 'zNLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">102926</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">zNLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="103033: 'xNLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">103033</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">xNLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="103161: 'NLB/OB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">103161</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/OB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="103451: ']NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">103451</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">]NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="103662: '[NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">103662</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">[NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="105656: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">105656</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="105661: 'NLB(B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">105661</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB(B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="105872: 'NLB/P'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">105872</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/P</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="105939: 'NLB/b'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">105939</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/b</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="105990: 'NLB/ BL'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">105990</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/ BL</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="108089: 'NLB/'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">108089</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="108105: 'NLBL'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">108105</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLBL</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="200596: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">200596</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="201380: ''NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">201380</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">"'NLB/S"</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="208298: '[NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">208298</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">[NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="364176: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">364176</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="380916: 'NLB/'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">380916</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="400001: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">400001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="400003: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">400003</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="550001: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">550001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="550488: 'NLBB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">550488</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLBB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="550615: 'NLB/'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">550615</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="559599: 'NLB/BNLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">559599</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/BNLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="609170: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">609170</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="612594: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">612594</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="612829: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">612829</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="623705: 'NLBL'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">623705</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLBL</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="624094: 'NLBB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">624094</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLBB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="700001: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">700001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="700004: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">700004</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="700098: 'NLB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">700098</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850000: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850000</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850014: 'NLB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850014</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="900005: 'NLB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">900005</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NLB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850511: 'StatPed'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850511</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">StatPed</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="861001: 'StatPed'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">861001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">StatPed</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="900001: 'StatPed'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">900001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">StatPed</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850029: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850029</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="860000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">860000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="870000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">870000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="880000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">880000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="800001: 'KABB'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">800001</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">KABB</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="800103: 'KABB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">800103</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">KABB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="849952: 'KABB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">849952</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">KABB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="899999: 'KABB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">899999</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">KABB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="900037: 'KABB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">900037</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">KABB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="803224: 'kabb'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">803224</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">kabb</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="800000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">800000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="810000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">810000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="820000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">820000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="830000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">830000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="840000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">840000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">KABB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="3: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">3</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="560: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">560</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="2342: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">2342</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="9401: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">9401</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="10839: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">10839</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="102029: 'LB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">102029</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">LB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="107230: 'DEICHM'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">107230</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">DEICHM</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="208743: 'LB/S'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">208743</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">LB/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="209250: 'Askeland, Guri Aga'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">209250</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">Askeland, Guri Aga</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="381524: 'NL'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">381524</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">NL</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="400004: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">400004</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="550325: 'LB/B'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">550325</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">LB/B</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="558245: 'N'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">558245</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">N</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="612353: 'DEICHM'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">612353</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">DEICHM</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="619662: 'BLB/L'">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">619662</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">BLB/L</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="628097: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">628097</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="700006: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">700006</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="8: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">8</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="85: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">85</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="8500: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">8500</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="85000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">85000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">NLB</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="850000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">850000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="8500000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">8500000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
+        <x:scenario label="85000000: (mangler)">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">85000000</marcxchange:controlfield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
+        </x:scenario>
     </x:scenario>
     
     <x:scenario label="Bidragsyter med flere roller">
@@ -750,18 +1480,6 @@
         <dc:identifier id="pub-id">500000</dc:identifier>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_500000</meta>
         <meta property="library">StatPed</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="There should be no default library for books other than 5xx-books">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:controlfield tag="001">000000</marcxchange:controlfield>
-            </marcxchange:record>
-        </x:context>
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:identifier id="pub-id">0</dc:identifier>
-        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_0</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -936,7 +1654,6 @@
         <meta property="dc:type.genre">Textbook</meta>
         <meta property="audience">Adult</meta>
         <meta property="educationalUse">true</meta>
-        <meta property="library">NLB</meta>
         <meta property="typicalAgeRange">17-</meta>
     </metadata></x:expect>
         </x:scenario>
@@ -1392,8 +2109,7 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-    <metadata>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
         <dc:title>*245$a - main title</dc:title>
         <meta property="dc:title.part">*740$a - part title</meta>
         <meta property="dc:title.part.other">*245$p</meta>
@@ -1402,8 +2118,7 @@
         <meta property="position">456</meta>
         <meta property="position.other">123</meta>
         <meta property="sortingKey">*245$a - main title</meta>
-    </metadata>
-            </x:expect>
+    </metadata></x:expect>
         </x:scenario>
         
         <x:scenario label="Real example: 3222">
@@ -1422,18 +2137,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">3222</dc:identifier>
-                    <dc:title>Arv og gjeld. Nye veier</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_3222</meta>
-                    <meta property="dc:title.part">Nye veier</meta>
-                    <meta property="dc:title.subTitle">bind 3</meta>
-                    <meta property="nlbbib:responsibilityStatement">Karin Bang</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Arv og gjeld. Nye veier</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">3222</dc:identifier>
+        <dc:title>Arv og gjeld. Nye veier</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_3222</meta>
+        <meta property="dc:title.part">Nye veier</meta>
+        <meta property="dc:title.subTitle">bind 3</meta>
+        <meta property="nlbbib:responsibilityStatement">Karin Bang</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Arv og gjeld. Nye veier</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 4682">
@@ -1491,18 +2205,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">4682</dc:identifier>
-                    <dc:title>Utvalgte noveller</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_4682</meta>
-                    <meta property="dc:title.part" id="title-740-1">Achtung gnädiges Fräulein</meta>
-                    <meta property="sortingKey" refines="#title-740-1">Achtung gnædiges Fræulein</meta>
-                    <meta property="nlbbib:responsibilityStatement">Torborg Nedreaas</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Utvalgte noveller</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">4682</dc:identifier>
+        <dc:title>Utvalgte noveller</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_4682</meta>
+        <meta property="dc:title.part" id="title-740-1">Achtung gnädiges Fräulein</meta>
+        <meta property="sortingKey" refines="#title-740-1">Achtung gnædiges Fræulein</meta>
+        <meta property="nlbbib:responsibilityStatement">Torborg Nedreaas</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Utvalgte noveller</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 9162">
@@ -1529,18 +2242,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">9162</dc:identifier>
-                    <dc:title>Kleopatra</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_9162</meta>
-                    <meta property="dc:title.part">Nilens datter</meta>
-                    <meta property="dc:title.subTitle">bind 1</meta>
-                    <meta property="nlbbib:responsibilityStatement">Margaret George ; oversatt av Mona Lyche Ramberg</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Kleopatra</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">9162</dc:identifier>
+        <dc:title>Kleopatra</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_9162</meta>
+        <meta property="dc:title.part">Nilens datter</meta>
+        <meta property="dc:title.subTitle">bind 1</meta>
+        <meta property="nlbbib:responsibilityStatement">Margaret George ; oversatt av Mona Lyche Ramberg</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Kleopatra</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 106645">
@@ -1557,18 +2269,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">106645</dc:identifier>
-                    <dc:title>Trash Bazooka</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_106645</meta>
-                    <meta property="dc:title.part">Operasjon sluttspill</meta>
-                    <meta property="dc:title.subTitle">femte bok</meta>
-                    <meta property="nlbbib:responsibilityStatement">av Frank Miguel Wedding; Redigert av Jon Ewo</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Trash Bazooka</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">106645</dc:identifier>
+        <dc:title>Trash Bazooka</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_106645</meta>
+        <meta property="dc:title.part">Operasjon sluttspill</meta>
+        <meta property="dc:title.subTitle">femte bok</meta>
+        <meta property="nlbbib:responsibilityStatement">av Frank Miguel Wedding; Redigert av Jon Ewo</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Trash Bazooka</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 108763">
@@ -1588,18 +2299,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">108763</dc:identifier>
-                    <dc:title>Animorphs</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108763</meta>
-                    <meta property="dc:title.subTitle">Advarselen</meta>
-                    <meta property="nlbbib:responsibilityStatement">K.A. Applegate ; oversatt av Jørn Roeim</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="position">16</meta>
-                    <meta property="sortingKey">Animorphs</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">108763</dc:identifier>
+        <dc:title>Animorphs</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108763</meta>
+        <meta property="dc:title.subTitle">Advarselen</meta>
+        <meta property="nlbbib:responsibilityStatement">K.A. Applegate ; oversatt av Jørn Roeim</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="position">16</meta>
+        <meta property="sortingKey">Animorphs</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 108880">
@@ -1615,17 +2325,16 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">108880</dc:identifier>
-                    <dc:title>Radio Moskva</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108880</meta>
-                    <meta property="dc:title.subTitle">nordmenn i Sovjet-propagandaens tjeneste</meta>
-                    <meta property="nlbbib:responsibilityStatement">Morten Jentoft</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Radio Moskva</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">108880</dc:identifier>
+        <dc:title>Radio Moskva</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108880</meta>
+        <meta property="dc:title.subTitle">nordmenn i Sovjet-propagandaens tjeneste</meta>
+        <meta property="nlbbib:responsibilityStatement">Morten Jentoft</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Radio Moskva</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 109100">
@@ -1645,17 +2354,16 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">109100</dc:identifier>
-                    <dc:title>Tvillingfeber</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_109100</meta>
-                    <meta property="dc:title.subTitle">roman</meta>
-                    <meta property="nlbbib:responsibilityStatement">Brit Bildøen</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="sortingKey">Tvillingfeber</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">109100</dc:identifier>
+        <dc:title>Tvillingfeber</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_109100</meta>
+        <meta property="dc:title.subTitle">roman</meta>
+        <meta property="nlbbib:responsibilityStatement">Brit Bildøen</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="sortingKey">Tvillingfeber</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 111889">
@@ -1676,19 +2384,18 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">111889</dc:identifier>
-                    <dc:title>Tørk aldri tårer uten hansker</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_111889</meta>
-                    <meta property="dc:title.part">Kjærligheten</meta>
-                    <meta property="dc:title.subTitle">kjærligheten</meta>
-                    <meta property="nlbbib:responsibilityStatement">Jonas Gardell ; oversatt av John Erik Frydenlund</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="position">1</meta>
-                    <meta property="sortingKey">Tørk aldri tårer uten hansker</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">111889</dc:identifier>
+        <dc:title>Tørk aldri tårer uten hansker</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_111889</meta>
+        <meta property="dc:title.part">Kjærligheten</meta>
+        <meta property="dc:title.subTitle">kjærligheten</meta>
+        <meta property="nlbbib:responsibilityStatement">Jonas Gardell ; oversatt av John Erik Frydenlund</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="position">1</meta>
+        <meta property="sortingKey">Tørk aldri tårer uten hansker</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 375940">
@@ -1709,19 +2416,18 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">375940</dc:identifier>
-                    <dc:title>Alle tiders kjærlighet</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_375940</meta>
-                    <meta property="dc:title.part">Rubinrød</meta>
-                    <meta property="dc:title.subTitle">kjærligheten går gjennom alle tider</meta>
-                    <meta property="nlbbib:responsibilityStatement">Kerstin Gier ; oversatt av Henning Hagerup</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="position">1</meta>
-                    <meta property="sortingKey">Alle tiders kjærlighet</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">375940</dc:identifier>
+        <dc:title>Alle tiders kjærlighet</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_375940</meta>
+        <meta property="dc:title.part">Rubinrød</meta>
+        <meta property="dc:title.subTitle">kjærligheten går gjennom alle tider</meta>
+        <meta property="nlbbib:responsibilityStatement">Kerstin Gier ; oversatt av Henning Hagerup</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">NLB</meta>
+        <meta property="position">1</meta>
+        <meta property="sortingKey">Alle tiders kjærlighet</meta>
+    </metadata></x:expect>
         </x:scenario>
 
         <x:scenario label="Real example: 802093">
@@ -1742,19 +2448,18 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*">
-                <metadata>
-                    <dc:identifier id="pub-id">802093</dc:identifier>
-                    <dc:title>Merlin</dc:title>
-                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_802093</meta>
-                    <meta property="dc:title.part">Pendragons krøniker</meta>
-                    <meta property="dc:title.subTitle">Legenden om Atlantis</meta>
-                    <meta property="nlbbib:responsibilityStatement">Oversatt av Lars-Toralf Storstrand</meta>
-                    <meta property="bookEdition">1</meta>
-                    <meta property="position">3</meta>
-                    <meta property="sortingKey">Merlin</meta>
-                </metadata>
-            </x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:identifier id="pub-id">802093</dc:identifier>
+        <dc:title>Merlin</dc:title>
+        <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_802093</meta>
+        <meta property="dc:title.part">Pendragons krøniker</meta>
+        <meta property="dc:title.subTitle">Legenden om Atlantis</meta>
+        <meta property="nlbbib:responsibilityStatement">Oversatt av Lars-Toralf Storstrand</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="library">KABB</meta>
+        <meta property="position">3</meta>
+        <meta property="sortingKey">Merlin</meta>
+    </metadata></x:expect>
         </x:scenario>
     </x:scenario>
     
