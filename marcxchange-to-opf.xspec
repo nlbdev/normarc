@@ -443,12 +443,10 @@
         <meta property="bibliofil-id" refines="#publisher-260-2">19295500</meta>
         <meta property="dc:date.issued">2015</meta>
         <meta property="dc:publisher.location">Oslo</meta>
-        
         <meta property="dc:publisher.other" id="publisher-260-1">Tapir</meta>
         <meta property="bibliofil-id" refines="#publisher-260-1">123456789</meta>
         <meta property="dc:date.issued" refines="#publisher-260-1">2018</meta>
         <meta property="dc:publisher.location" refines="#publisher-260-1">Trondheim</meta>
-        
         <meta property="dc:publisher.other" id="publisher-260-3">Tanum</meta>
         <meta property="bibliofil-id" refines="#publisher-260-3">987654321</meta>
         <meta property="dc:publisher.location" refines="#publisher-260-3">Bergen</meta>
@@ -523,7 +521,6 @@
         <meta property="birthDate" refines="#creator-1">1935</meta>
         <meta property="honorificSuffix" refines="#creator-1">XIV</meta>
         <meta property="nationality" refines="#creator-1">tib</meta>
-        
         <dc:creator id="creator-2">NLB</dc:creator>
         <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
         <meta property="bookEdition">1</meta>
@@ -565,7 +562,6 @@
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <meta property="dc:contributor.narrator" id="contributor-511-1">Fornavn Etternavn</meta>
         <meta property="bibliofil-id" refines="#contributor-511-1">19209901</meta>
-        
         <meta property="dc:contributor.narrator" id="contributor-511-2">Fry, Stephen</meta>
         <meta property="bibliofil-id" refines="#contributor-511-2">17738500</meta>
     </metadata></x:expect>
@@ -1352,7 +1348,6 @@
         <meta property="bibliofil-id" refines="#contributor-700-1">123</meta>
         <dc:creator id="contributor-700-2">Alice</dc:creator>
         <meta property="bibliofil-id" refines="#contributor-700-2">456</meta>
-        
         <dc:creator id="contributor-700-3">Bob</dc:creator>
         <meta property="bibliofil-id" refines="#contributor-700-3">789</meta>
         <meta property="dc:contributor.editor" id="contributor-700-4">Bob</meta>
@@ -1509,7 +1504,6 @@
         
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:format>DAISY 2.02</dc:format>
-        
         <meta property="dc:format.other">Audio recording</meta>
         <meta property="dc:format.other">Compact Disk</meta>
         <meta property="dc:format.other">Other voice/other</meta>
@@ -1536,7 +1530,6 @@
         
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:format>Braille</dc:format>
-        
         <meta property="dc:format.no">Punktskrift</meta>
         <meta property="dc:format.other">Sheet music</meta>
         <meta property="dc:format.other.no">Musikktrykk</meta>
@@ -1767,7 +1760,6 @@
         
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:format>DAISY 2.02</dc:format>
-        
         <meta property="dc:format.other">Audio recording</meta>
         <meta property="dc:format.other">Compact Disk</meta>
         <meta property="dc:format.other">Other voice/other</meta>
@@ -1997,31 +1989,26 @@
         <meta refines="#deliveryFormat-582-1" property="deliveryMethod">dl</meta>
         <meta refines="#deliveryFormat-582-1" property="name">EPUB</meta>
         <meta refines="#deliveryFormat-582-1" property="position">1</meta>
-        
         <meta property="hasDeliveryMethod" id="deliveryFormat-582-2">html_dl</meta>
         <meta refines="#deliveryFormat-582-2" property="dc:format">html</meta>
         <meta refines="#deliveryFormat-582-2" property="deliveryMethod">dl</meta>
         <meta refines="#deliveryFormat-582-2" property="name">HTML</meta>
         <meta refines="#deliveryFormat-582-2" property="position">2</meta>
-        
         <meta property="hasDeliveryMethod" id="deliveryFormat-582-3">epub_no</meta>
         <meta refines="#deliveryFormat-582-3" property="dc:format">epub</meta>
         <meta refines="#deliveryFormat-582-3" property="deliveryMethod">no</meta>
         <meta refines="#deliveryFormat-582-3" property="name">Legg til på bokhylla</meta>
         <meta refines="#deliveryFormat-582-3" property="position">3</meta>
-        
         <meta property="hasDeliveryMethod" id="deliveryFormat-582-4">mobi_dl</meta>
         <meta refines="#deliveryFormat-582-4" property="dc:format">mobi</meta>
         <meta refines="#deliveryFormat-582-4" property="deliveryMethod">dl</meta>
         <meta refines="#deliveryFormat-582-4" property="name">Mobi / Kindle Format</meta>
         <meta refines="#deliveryFormat-582-4" property="position">4</meta>
-        
         <meta property="hasDeliveryMethod" id="deliveryFormat-582-5">mobi_ki</meta>
         <meta refines="#deliveryFormat-582-5" property="dc:format">mobi</meta>
         <meta refines="#deliveryFormat-582-5" property="deliveryMethod">ki</meta>
         <meta refines="#deliveryFormat-582-5" property="name">Send til Kindle</meta>
         <meta refines="#deliveryFormat-582-5" property="position">5</meta>
-        
         <meta property="hasDeliveryMethod" id="deliveryFormat-582-6">epub_st</meta>
         <meta refines="#deliveryFormat-582-6" property="dc:format">epub</meta>
         <meta refines="#deliveryFormat-582-6" property="deliveryMethod">st</meta>
@@ -2472,11 +2459,9 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <metadata>
-                <meta property="exclude-from-recommendations">true</meta>
-            </metadata>
-        </x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <meta property="exclude-from-recommendations">true</meta>
+    </metadata></x:expect>
     </x:scenario>
     
     <x:scenario label="'NEDLASTET' in *598$a">
@@ -2488,12 +2473,10 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <metadata>
-                <meta property="dc:date.available">2021-11-22</meta>
-                <meta property="external-production">ABC</meta>
-            </metadata>
-        </x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <meta property="dc:date.available">2021-11-22</meta>
+        <meta property="external-production">ABC</meta>
+    </metadata></x:expect>
     </x:scenario>
     
     <x:scenario label="'NEDLASTET' in *598$a">
@@ -2514,18 +2497,16 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <metadata>
-                <dc:title>Åndsverkets tittel</dc:title>
-                <meta property="dc:title.part">Utgavens deltittel</meta>
-                <meta property="dc:title.series" id="series-title-1">Seriens tittel</meta>
-                <meta property="dc:title.subSeries" refines="#series-title-1">Underseriens tittel</meta>
-                <meta property="series.position" refines="#series-title-1">Fritekstangivelse av posision i serien</meta>
-                <meta property="dc:title.subTitle">Åndsverkets undertittel</meta>
-                <meta property="bookEdition">1</meta>
-                <meta property="sortingKey">Åndsverkets tittel</meta>
-            </metadata>
-        </x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
+        <dc:title>Åndsverkets tittel</dc:title>
+        <meta property="dc:title.part">Utgavens deltittel</meta>
+        <meta property="dc:title.series" id="series-title-1">Seriens tittel</meta>
+        <meta property="dc:title.subSeries" refines="#series-title-1">Underseriens tittel</meta>
+        <meta property="series.position" refines="#series-title-1">Fritekstangivelse av posision i serien</meta>
+        <meta property="dc:title.subTitle">Åndsverkets undertittel</meta>
+        <meta property="bookEdition">1</meta>
+        <meta property="sortingKey">Åndsverkets tittel</meta>
+    </metadata></x:expect>
     </x:scenario>
         
 </x:description>

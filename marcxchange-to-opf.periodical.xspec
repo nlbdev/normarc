@@ -11,7 +11,7 @@
     <x:param name="include-source-reference" select="'true'"/>
     
     <x:scenario label="Bruk boknummer for å lage utgivelsesår for utgaven og originalen">
-        <x:context>
+        <x:context xml:space="preserve">
             <marcxchange:record>
                 <marcxchange:controlfield tag="001">612345</marcxchange:controlfield>
                 <marcxchange:datafield tag="596" ind1=" " ind2=" ">
@@ -20,13 +20,14 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
+        <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
         <dc:identifier nlb:metadata-source="Bibliofil@612345 *001 + dc:identifier" id="pub-id">612345022018</dc:identifier>
         <meta nlb:metadata-source="Bibliofil@612345 *001" property="dc:date.issued">2018</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *001" property="dc:date.issued.original">2018</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *001" property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_612345022018</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *596" property="bookEdition.original">1</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *596$f" property="issn.original">0018-2842</meta>
+        <meta nlb:metadata-source="Bibliofil@612345 *001" property="library">NLB</meta>
     </metadata></x:expect>
     </x:scenario>
     
