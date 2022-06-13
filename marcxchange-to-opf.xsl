@@ -363,6 +363,25 @@
             <xsl:value-of select="($value)[1]"/>
         </xsl:element>
     </xsl:template>
+    
+    <xsl:template name="bibliofil-id">
+        <xsl:param name="context" as="element()?" select="."/>
+        <xsl:param name="property" as="xs:string" select="nlb:prefixed-property('bibliofil-id')"/>
+        <xsl:param name="refines" as="xs:string?" select="()"/>
+        
+        <xsl:variable name="subfield" select="$context/*:subfield[@code='_']"/>
+        <xsl:variable name="subfield" select="if (count($subfield) = 0) then $context/*:subfield[@code='3'] else $subfield"/>
+        <xsl:variable name="subfield" select="$subfield[1]"/>
+        
+        <xsl:for-each select="$subfield">
+            <xsl:call-template name="meta">
+                <xsl:with-param name="context" select="$subfield"/>
+                <xsl:with-param name="property" select="$property"/>
+                <xsl:with-param name="value" select="$subfield/text()"/>
+                <xsl:with-param name="refines" select="$refines"/>
+            </xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
 
     <!-- 00X KONTROLLFELT -->
 
@@ -1179,13 +1198,14 @@
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$creator-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                 </xsl:for-each>
             </xsl:for-each>
-
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
-            </xsl:for-each>
+            
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$creator-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
-
+    
     <xsl:template match="*:datafield[@tag='110']">
         <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
         <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
@@ -1214,9 +1234,10 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('date')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
         </xsl:for-each>
 
-        <xsl:for-each select="*:subfield[@code=('_', '3')]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
-        </xsl:for-each>
+        <xsl:call-template name="bibliofil-id">
+            <xsl:with-param name="context" select="."/>
+            <xsl:with-param name="refines" select="$creator-id"/>
+        </xsl:call-template>
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='111']">
@@ -1239,9 +1260,10 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('date')"/><xsl:with-param name="value" select="."/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
         </xsl:for-each>
         
-        <xsl:for-each select="*:subfield[@code=('_', '3')]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
-        </xsl:for-each>
+        <xsl:call-template name="bibliofil-id">
+            <xsl:with-param name="context" select="."/>
+            <xsl:with-param name="refines" select="$creator-id"/>
+        </xsl:call-template>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='130']">
@@ -1385,9 +1407,10 @@
                 <xsl:with-param name="context" select="(*:subfield[@code='b'])[1]"/>
             </xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$publisher-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$publisher-id"/>
+            </xsl:call-template>
         </xsl:if>
 
         <xsl:for-each select="*:subfield[@code='a']">
@@ -1543,9 +1566,11 @@
                     <xsl:with-param name="id" select="$contributor-id"/>
                 </xsl:call-template>
                 
-                <xsl:variable name="pos" select="position()"/>
-                <xsl:for-each select="../*:subfield[@code=('_', '3')][position() = $pos]">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$contributor-id"/></xsl:call-template>
+                <xsl:for-each select="..">
+                    <xsl:call-template name="bibliofil-id">
+                        <xsl:with-param name="context" select="."/>
+                        <xsl:with-param name="refines" select="$contributor-id"/>
+                    </xsl:call-template>
                 </xsl:for-each>
                 
                 <xsl:if test="contains(lower-case($contributor-name), 'talesyntese')">
@@ -1806,9 +1831,10 @@
                 </xsl:for-each>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1828,9 +1854,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1840,9 +1867,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1887,9 +1915,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1912,9 +1941,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1937,9 +1967,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1978,9 +2009,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -1997,9 +2029,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2009,9 +2042,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2021,9 +2055,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2037,9 +2072,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2049,9 +2085,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2061,9 +2098,10 @@
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
 
             <xsl:if test="*:subfield[@code='a']/text() = 'Lydbok med tekst'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
@@ -2097,9 +2135,10 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('location')"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$subject-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2152,9 +2191,10 @@
                 </xsl:for-each>
             </xsl:for-each>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$contributor-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$contributor-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2168,9 +2208,10 @@
 
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
 
-            <xsl:for-each select="*:subfield[@code=('_', '3')]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
-            </xsl:for-each>
+            <xsl:call-template name="bibliofil-id">
+                <xsl:with-param name="context" select="."/>
+                <xsl:with-param name="refines" select="$creator-id"/>
+            </xsl:call-template>
         </xsl:if>
     </xsl:template>
 
@@ -2294,9 +2335,10 @@
             </xsl:for-each>
         </xsl:for-each>
 
-        <xsl:for-each select="*:subfield[@code=('_', '3')]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
-        </xsl:for-each>
+        <xsl:call-template name="bibliofil-id">
+            <xsl:with-param name="context" select="."/>
+            <xsl:with-param name="refines" select="$creator-id"/>
+        </xsl:call-template>
     </xsl:template>
 
     <!-- 85X LOKALISERINGSDATA -->

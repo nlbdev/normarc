@@ -2508,5 +2508,22 @@
         <meta property="sortingKey">Åndsverkets tittel</meta>
     </metadata></x:expect>
     </x:scenario>
+    
+    <x:scenario label="Både $_ og $3">
+        <x:context>
+            <marcxchange:datafield tag="655" ind1=" " ind2="1">
+                <marcxchange:subfield code="a">Hester</marcxchange:subfield>
+                <marcxchange:subfield code="3">1003</marcxchange:subfield>
+                <marcxchange:subfield code="_">1004</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <meta property="dc:type.genre" id="subject-655-1">Hester</meta>
+            <meta property="dc:type.genre.no" refines="#subject-655-1">Hester</meta>
+            <meta property="dc:type.mainGenre" refines="#subject-655-1">Hester</meta>
+            <meta property="bibliofil-id" refines="#subject-655-1">1004</meta>
+        </x:expect>
+    </x:scenario>
         
 </x:description>
