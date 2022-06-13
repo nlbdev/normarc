@@ -420,20 +420,20 @@
                     <marcxchange:subfield code="a">Trondheim</marcxchange:subfield>
                     <marcxchange:subfield code="b">Tapir</marcxchange:subfield>
                     <marcxchange:subfield code="c">2018</marcxchange:subfield>
-                    <marcxchange:subfield code="_">123456789</marcxchange:subfield>
+                    <marcxchange:subfield code="3">123456789</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="260" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">[Oslo]</marcxchange:subfield>
                     <marcxchange:subfield code="b">Cappelen Damm lyd</marcxchange:subfield>
                     <marcxchange:subfield code="c">2015</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19295500</marcxchange:subfield>
+                    <marcxchange:subfield code="3">19295500</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="260" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Bergen</marcxchange:subfield>
                     <marcxchange:subfield code="b">Tanum</marcxchange:subfield>
-                    <marcxchange:subfield code="_">987654321</marcxchange:subfield>
+                    <marcxchange:subfield code="3">987654321</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -502,13 +502,13 @@
                     <marcxchange:subfield code="b">XIV</marcxchange:subfield>
                     <marcxchange:subfield code="d">1935-</marcxchange:subfield>
                     <marcxchange:subfield code="j">tib.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">18927000</marcxchange:subfield>
+                    <marcxchange:subfield code="3">18927000</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="110" ind1="0" ind2="0">
                     <marcxchange:subfield code="a">NLB</marcxchange:subfield>
                     <marcxchange:subfield code="q">Norsk Lyd- og blindeskriftbibliotek</marcxchange:subfield>
-                    <marcxchange:subfield code="_">18158500</marcxchange:subfield>
+                    <marcxchange:subfield code="3">18158500</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
@@ -534,7 +534,7 @@
                 <marcxchange:datafield tag="700" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Windt-Val, Benedicta</marcxchange:subfield>
                     <marcxchange:subfield code="e">overs.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19594200</marcxchange:subfield>
+                    <marcxchange:subfield code="3">19594200</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -550,12 +550,12 @@
             <marcxchange:record>
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Fornavn Etternavn</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19209901</marcxchange:subfield>
+                    <marcxchange:subfield code="3">19209901</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Fry, Stephen</marcxchange:subfield>
-                    <marcxchange:subfield code="_">17738500</marcxchange:subfield>
+                    <marcxchange:subfield code="3">17738500</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1313,7 +1313,7 @@
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
-                    <marcxchange:subfield code="_">123</marcxchange:subfield>
+                    <marcxchange:subfield code="3">123</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
@@ -1321,23 +1321,23 @@
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">123</marcxchange:subfield>
+                    <marcxchange:subfield code="3">123</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">456</marcxchange:subfield>  <!-- different author with the same name -->
+                    <marcxchange:subfield code="3">456</marcxchange:subfield>  <!-- different author with the same name -->
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">789</marcxchange:subfield>
+                    <marcxchange:subfield code="3">789</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">red.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">789</marcxchange:subfield>
+                    <marcxchange:subfield code="3">789</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1413,13 +1413,13 @@
                     <marcxchange:subfield code="a">Sødal, Helje Kringlebotn</marcxchange:subfield>
                     <marcxchange:subfield code="d">1962-</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">17265000</marcxchange:subfield>
+                    <marcxchange:subfield code="3">17265000</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Sødal, Helje Kringlebotn</marcxchange:subfield>
                     <marcxchange:subfield code="d">1962-</marcxchange:subfield>
                     <marcxchange:subfield code="e">red.</marcxchange:subfield>
-                    <marcxchange:subfield code="_">17265000</marcxchange:subfield>
+                    <marcxchange:subfield code="3">17265000</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1578,7 +1578,7 @@
                     <marcxchange:subfield code="a">Ragde, Anne Birkefeldt</marcxchange:subfield>
                     <marcxchange:subfield code="j">n.</marcxchange:subfield>
                     <marcxchange:subfield code="%">  </marcxchange:subfield>
-                    <marcxchange:subfield code="_">10856500</marcxchange:subfield>
+                    <marcxchange:subfield code="3">10856500</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
@@ -1586,13 +1586,13 @@
                 <marcxchange:datafield tag="900" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Birkefeldt Ragde, Anne</marcxchange:subfield>
                     <marcxchange:subfield code="%"> 0</marcxchange:subfield>
-                    <marcxchange:subfield code="_">10856501</marcxchange:subfield>
+                    <marcxchange:subfield code="3">10856501</marcxchange:subfield>
                     <marcxchange:subfield code="~">15538600</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="950" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Ragde, Anne B.</marcxchange:subfield>
                     <marcxchange:subfield code="%"> 0</marcxchange:subfield>
-                    <marcxchange:subfield code="_">10856502</marcxchange:subfield>
+                    <marcxchange:subfield code="3">10856502</marcxchange:subfield>
                     <marcxchange:subfield code="~">17941800</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
@@ -1615,7 +1615,7 @@
                     <marcxchange:subfield code="a">Don Giovanni, klaver, sopran, Batti, Batti o bel Masetto740</marcxchange:subfield>
                     <marcxchange:subfield code="a">Don Giovanni, klaver, sopran, Batti, Batti o bel Ma</marcxchange:subfield>
                     <marcxchange:subfield code="%"><![CDATA[  ]]></marcxchange:subfield>
-                    <marcxchange:subfield code="_">17159800</marcxchange:subfield>
+                    <marcxchange:subfield code="3">17159800</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1783,7 +1783,7 @@
                 
                 <marcxchange:datafield tag="697" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Lydbok med tekst</marcxchange:subfield>
-                    <marcxchange:subfield code="_">21203600</marcxchange:subfield>
+                    <marcxchange:subfield code="3">21203600</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
