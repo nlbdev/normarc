@@ -7,6 +7,7 @@ import sys
 import subprocess
 import traceback
 import logging
+import re
 
 current_directory = os.path.dirname(__file__)
 
@@ -128,13 +129,17 @@ def compare(identifier, normarc_path, marc21_path):
             normarc_offset += 1
             continue
         
-        # Not sure how dewey is converted yet (if at all), ignore some dewey for now
-        if "dc:subject" in normarc_line and identifier in ["3"]:
+        # Not sure how dewey is converted yet (if at all), ignore dewey in 650 for now
+        if "dc:subject.dewey" in normarc_line:
             normarc_offset += 1
             continue
-        if "dc:subject" in marc21_line and identifier in ["3"]:
+        if 'id="subject-650' in normarc_line:
+            normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
+        if "dc:subject.dewey" in marc21_line:
             marc21_offset += 1
             continue
+        if 'id="subject-650' in marc21_line:
+            marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
         
         if normarc_line != marc21_line:
             print("Lines are different:")
