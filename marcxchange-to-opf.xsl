@@ -2275,10 +2275,10 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.sequel'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="id" select="$series-sequel-id"/></xsl:call-template>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='w']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.sequel.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',text())"/><xsl:with-param name="refines" select="$series-sequel-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.sequel.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',replace(text(), '\([^\)]*\)', ''))"/><xsl:with-param name="refines" select="$series-sequel-id"/></xsl:call-template>
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:identifier.series.sequel'"/>
-                <xsl:with-param name="value" select="text()"/>
+                <xsl:with-param name="value" select="replace(text(), '\([^\)]*\)', '')"/>
                 <xsl:with-param name="id" select="if (not(count(parent::*/*:subfield[@code='t']))) then $series-sequel-id else ()"/>
                 <xsl:with-param name="refines" select="if (count(parent::*/*:subfield[@code='t'])) then $series-sequel-id else ()"/>
             </xsl:call-template>
