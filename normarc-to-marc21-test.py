@@ -139,6 +139,10 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_line = normarc[normarc_linenum].strip()
         marc21_line = marc21[marc21_linenum].strip()
 
+        # ignore id attributes (at least for now)
+        normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
+        marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
+
         # Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
         if '<meta property="nationality" refines=' in normarc_line:
             normarc_offset += 1
@@ -148,13 +152,9 @@ def compare(identifier, normarc_path, marc21_path):
         if "dc:subject.dewey" in normarc_line:
             normarc_offset += 1
             continue
-        if 'id="subject-650' in normarc_line:
-            normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
         if "dc:subject.dewey" in marc21_line:
             marc21_offset += 1
             continue
-        if 'id="subject-650' in marc21_line:
-            marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
         
         # sorting key from *245$w seems to have been removed in MARC21
         if "sortingKey" in normarc_line and 'refines="#title-245' in normarc_line:
