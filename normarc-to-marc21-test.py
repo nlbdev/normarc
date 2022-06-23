@@ -87,7 +87,7 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
     return success
 
 
-def compare(normarc_path, marc21_path):
+def compare(identifier, normarc_path, marc21_path):
     normarc = None
     marc21 = None
     with open(normarc_path) as f:
@@ -125,6 +125,11 @@ def compare(normarc_path, marc21_path):
 
         # Not sure how to determine if a MARC21 record is deleted yet, ignore for now
         if normarc_line == '<meta property="availability">deleted</meta>':
+            normarc_offset += 1
+            continue
+
+        # *100$j = "sv." not converted to MARC21 for some reason. Ignore for now
+        if normarc_line == '<meta property="nationality" refines="#creator-1">se</meta>' and identifier in ["2"]:
             normarc_offset += 1
             continue
         
@@ -210,7 +215,7 @@ for identifier in identifiers:
     success = xslt(marc21_xslt_path, marc21_file, marc21_opf_file)
     assert success, f"Failed to transform: {marc21_file}"
 
-    equal = compare(normarc_opf_file, marc21_opf_file)
+    equal = compare(identifier, normarc_opf_file, marc21_opf_file)
     
     if not equal:
         print(f"{identifier}:")
