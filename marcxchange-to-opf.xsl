@@ -475,9 +475,38 @@
             <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
         </xsl:choose>
         
-        <!--<xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>-->
-        <xsl:variable name="ageRanges" as="xs:string*">
-            <xsl:sequence select="if ($POS22 = 'e') then '17-INF' else ()"/>
+        <xsl:variable name="tag385sub0" select="../*:datafield[@tag='385']/*:subfield[@code='0']/text()" as="xs:string*"/>
+        <xsl:variable name="ageRangesFrom385sub0" as="xs:string*">
+            <xsl:for-each select="$tag385sub0">
+                <xsl:choose>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1000'">
+                        <xsl:sequence select="'0-2'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1001'">
+                        <xsl:sequence select="'3-5'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1002'">
+                        <xsl:sequence select="'6-8'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1003'">
+                        <xsl:sequence select="'9-10'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1004'">
+                        <xsl:sequence select="'11-12'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1005'">
+                        <xsl:sequence select="'13-15'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1015'">
+                        <xsl:sequence select="'16-17'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1016'">
+                        <xsl:sequence select="'18-INF'"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="ageRangesFrom008POS22" as="xs:string*">
             <xsl:for-each select="$POS22">
                 <xsl:choose>
                     <xsl:when test=".='a'">
@@ -495,9 +524,13 @@
                     <xsl:when test=".='j'">
                         <xsl:sequence select="'0-15'"/>
                     </xsl:when>
+                    <xsl:when test=".='e'">
+                        <xsl:sequence select="'18-INF'"/>
+                    </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
         </xsl:variable>
+        <xsl:variable name="ageRanges" select="if (count($ageRangesFrom385sub0)) then $ageRangesFrom385sub0 else $ageRangesFrom008POS22"/>
         <xsl:variable name="ageRangeFrom" select="if (count($ageRanges) = 0) then '' else xs:integer(min(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[1])))"/>
         <xsl:variable name="ageMax" select="if (count($ageRanges) = 0) then '' else max(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[2]))"/>
         <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF')) then '' else $ageMax"/>
@@ -512,10 +545,10 @@
             - else, use "Child"
         -->
         <xsl:choose>
-            <xsl:when test="$POS22='e'">
+            <xsl:when test="$ageRangeFrom ge 18 or $POS22='e'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$POS22 = 'd'">
+            <xsl:when test="$ageRangeFrom ge 13 or $POS22='d'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>

@@ -142,6 +142,10 @@ def compare(identifier, normarc_path, marc21_path):
         # Båstad, Babbis Friis spelled as Baastad, Babbis Friis in MARC21
         normarc_line = normarc_line.replace("Båstad, Babbis Friis", "Baastad, Babbis Friis")
 
+        # The definition of "adult" has changed from 17+ in NORMARC to 18+ in MARC21
+        if normarc_line == '<meta property="typicalAgeRange">17-</meta>':
+            normarc_line = '<meta property="typicalAgeRange">18-</meta>'
+
         # ignore id attributes (at least for now)
         normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
         marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
