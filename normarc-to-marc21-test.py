@@ -206,6 +206,7 @@ marc21_target_dir = os.path.join(target, "opf", "marc21")
 os.makedirs(normarc_target_dir, exist_ok=True)
 os.makedirs(marc21_target_dir, exist_ok=True)
 
+successful = 0
 for identifier in identifiers:
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
@@ -221,9 +222,13 @@ for identifier in identifiers:
     equal = compare(identifier, normarc_opf_file, marc21_opf_file)
     
     if not equal:
+        print(f"{successful} of {len(identifiers)} successful so far")
+        print()
         print(f"{identifier}:")
         print(f"- NORMARC in: {normarc_file}")
         print(f"- MARC21 in: {marc21_file}")
         print(f"- NORMARC OPF out: {normarc_opf_file}")
         print(f"- MARC21 OPF out: {marc21_opf_file}")
         sys.exit(1)
+    else:
+        successful += 1
