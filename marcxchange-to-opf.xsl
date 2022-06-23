@@ -1584,7 +1584,7 @@
 
     <xsl:template match="*:datafield[@tag='520']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.abstract'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.abstract'"/><xsl:with-param name="value" select="normalize-space(text())"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
