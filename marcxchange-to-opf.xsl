@@ -542,7 +542,7 @@
         </xsl:choose>
 
         <xsl:choose>
-            <xsl:when test="$POS34='0'">
+            <xsl:when test="$POS34=('0', ' ')">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-biography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='1'">
