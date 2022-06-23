@@ -164,8 +164,8 @@ def compare(identifier, normarc_path, marc21_path):
         if normarc_line != marc21_line:
             print("Lines are different:")
             print()
-            print(f"NORMARC: {normarc_line.strip()}")
-            print(f"MARC21:  {marc21_line.strip()}")
+            print(f"NORMARC (line {normarc_linenum}): {normarc_line.strip()}")
+            print(f"MARC21 (line {marc21_linenum}):  {marc21_line.strip()}")
             print()
             return False
         
