@@ -4,12 +4,25 @@ import os
 import tempfile
 import shutil
 import sys
+import subprocess
+import traceback
+import logging
 
-# hardcode in for now, move to config in the future if necessary
-source_data = "/home/jostein/Dokumenter/2022/BS-MARC21/dumpreg"
+current_directory = os.path.dirname(__file__)
 
-target = os.path.join(os.path.dirname(__file__), "target")
+config = {}
+with open(os.path.join(current_directory, "normarc-to-marc21-test.config")) as f:
+    for line in f:
+        if line.startswith("#"):
+            continue
+        key, value = line.split("=", 1)
+        config[key.strip()] = value.strip()
+
+target = os.path.join(current_directory, "target")
 records = os.path.join(target, "records")
+
+normarc_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.normarc.xsl")
+marc21_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.xsl")
 
 
 def writefile(outdir, identifier, lines):
@@ -28,15 +41,62 @@ def writefile(outdir, identifier, lines):
         f.writelines(lines)
 
 
-def xslt(xslt, xml):
-    global target
-    # TODO
-    # return filename
+def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None, cwd=None):
+    global current_directory
+
+    assert stylesheet
+    assert source or template
+
+    if not cwd:
+        cwd = current_directory
+
+    success = False
+    timeout = 600
+
+    try:
+        command = ["java", "-jar", config["saxon_jar"]]
+        if source:
+            command.append("-s:" + source)
+        else:
+            command.append("-it:" + template)
+        command.append("-xsl:" + stylesheet)
+        if target:
+            command.append("-o:" + target)
+        for param in parameters:
+            command.append(param + "=" + parameters[param])
+
+        process = subprocess.run(command,
+                                            stdout=subprocess.PIPE,
+                                            stderr=subprocess.PIPE,
+                                            shell=False,
+                                            cwd=cwd,
+                                            timeout=timeout,
+                                            check=True)
+
+        logging.info(process.stdout.decode("utf-8"))
+        logging.info(process.stderr.decode("utf-8"))
+
+        success = process.returncode == 0
+
+    except subprocess.TimeoutExpired:
+        logging.exception(f"The XSLT timed out: {stylesheet}")
+
+    except Exception:
+        logging.exception(f"An error occured while running the XSLT: {stylesheet}")
+    
+    return success
 
 
 def compare(normarc, marc21):
-    # TODO: assertions here
-    sys.exit(1)
+    with open(normarc) as n:
+        with open(marc21) as m:
+            for nline, mline in zip(n, m):
+                if nline != mline:
+                    print("Lines are different:")
+                    print(f"{nline}")
+                    print(f"{mline}")
+                    return False
+    return True
 
 
 if not os.path.exists(records):
@@ -50,9 +110,9 @@ if not os.path.exists(records):
 
     for marcname in ["normarc", "marc21"]:
         for tablename in ["vmarc"]:
-            infile = os.path.join(source_data, marcname, f"data.{tablename}.txt")
+            infile = os.path.join(config["source_data"], marcname, f"data.{tablename}.txt")
             outdir = os.path.join(records, marcname, tablename)
-            os.makedirs(outdir)
+            os.makedirs(outdirexist_ok=True)
 
             identifier = None
             lines = []
@@ -91,33 +151,29 @@ record_files = record_files_normarc.intersection(record_files_marc21)
 identifiers = [filename[:-4] for filename in record_files if filename.endswith(".xml")]
 identifiers = [str(identifier) for identifier in sorted([int(ident) for ident in identifiers])]
 
+normarc_target_dir = os.path.join(target, "opf", "normarc")
+marc21_target_dir = os.path.join(target, "opf", "marc21")
+os.makedirs(normarc_target_dir, exist_ok=True)
+os.makedirs(marc21_target_dir, exist_ok=True)
+
 for identifier in identifiers:
-    print("Comparing:")
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
-    print(f"- NORMARC: {normarc_file}")
-    print(f"- MARC21: {marc21_file}")
 
-    normarc_opf_file = xslt("marcxchange-to-opf.normarc.xsl", normarc_file)
-    marc21_opf_file = xslt("marcxchange-to-opf.xsl", marc21_file)
-    compare(normarc_opf_file, marc21_opf_file)
+    normarc_opf_file = os.path.join(normarc_target_dir, f"{identifier}.opf")
+    marc21_opf_file = os.path.join(marc21_target_dir, f"{identifier}.opf")
+    
+    success = xslt(normarc_xslt_path, normarc_file, normarc_opf_file)
+    assert success, f"Failed to transform: {normarc_file}"
+    success = xslt(marc21_xslt_path, marc21_file, marc21_opf_file)
+    assert success, f"Failed to transform: {marc21_file}"
 
-    sys.exit(1)
-
-
-
-# 1. sett inn:
-# <?xml version="1.0" encoding="utf-8"?>
-# <marcxchange:record format="bibliofilmarc" type="Bibliographic" xmlns:marcxchange="info:lc/xmlns/marcxchange-v1">
-# 
-# 2. for *000-*009, pakk inn i:
-# <marcxchange:controlfield tag="00…">…</marcxchange:controlfield>
-# 
-# 3. for *010-*999:
-# <marcxchange:datafield tag="…" ind1="…" ind2="…">
-#     <marcxchange:subfield code="…">…</marcxchange:subfield>
-#     <marcxchange:subfield code="…">…</marcxchange:subfield>
-# </marcxchange:datafield>
-# 
-# 4. for ^ eller EOF:
-# </marcxchange:record>
+    equal = compare(normarc_opf_file, marc21_opf_file)
+    
+    if not equal:
+        print(f"{identifier}:")
+        print(f"- NORMARC in: {normarc_file}")
+        print(f"- MARC21 in: {marc21_file}")
+        print(f"- NORMARC OPF out: {normarc_opf_file}")
+        print(f"- MARC21 OPF out: {marc21_opf_file}")
+        sys.exit(1)
