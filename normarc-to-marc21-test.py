@@ -93,8 +93,10 @@ def compare(normarc, marc21):
             for nline, mline in zip(n, m):
                 if nline != mline:
                     print("Lines are different:")
-                    print(f"{nline}")
-                    print(f"{mline}")
+                    print()
+                    print(f"NORMARC: {nline.strip()}")
+                    print(f"MARC21:  {mline.strip()}")
+                    print()
                     return False
     return True
 
