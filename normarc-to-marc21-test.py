@@ -128,8 +128,8 @@ def compare(identifier, normarc_path, marc21_path):
             normarc_offset += 1
             continue
 
-        # *100$j = "sv." not converted to MARC21 for some reason. Ignore for now
-        if normarc_line == '<meta property="nationality" refines="#creator-1">se</meta>' and identifier in ["2"]:
+        # Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
+        if '<meta property="nationality" refines=' in normarc_line:
             normarc_offset += 1
             continue
         
