@@ -139,6 +139,9 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_line = normarc[normarc_linenum].strip()
         marc21_line = marc21[marc21_linenum].strip()
 
+        # Båstad, Babbis Friis spelled as Baastad, Babbis Friis in MARC21
+        normarc_line = normarc_line.replace("Båstad, Babbis Friis", "Baastad, Babbis Friis")
+
         # ignore id attributes (at least for now)
         normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
         marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
