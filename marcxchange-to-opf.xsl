@@ -482,25 +482,25 @@
             <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
         </xsl:choose>
         
-        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
+        <!--<xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>-->
         <xsl:variable name="ageRanges" as="xs:string*">
-            <xsl:sequence select="if ($POS22 = 'a') then '17-INF' else ()"/>
-            <xsl:for-each select="$tag019a">
+            <xsl:sequence select="if ($POS22 = 'e') then '17-INF' else ()"/>
+            <xsl:for-each select="$POS22">
                 <xsl:choose>
                     <xsl:when test=".='a'">
                         <xsl:sequence select="'0-5'"/>
                     </xsl:when>
                     <xsl:when test=".='b'">
-                        <xsl:sequence select="'6-7'"/>
+                        <xsl:sequence select="'6-8'"/>
                     </xsl:when>
-                    <xsl:when test=".='bu'">
-                        <xsl:sequence select="'8-10'"/>
+                    <xsl:when test=".='c'">
+                        <xsl:sequence select="'9-13'"/>
                     </xsl:when>
-                    <xsl:when test=".='u'">
-                        <xsl:sequence select="'11-12'"/>
+                    <xsl:when test=".='d'">
+                        <xsl:sequence select="'14-17'"/>
                     </xsl:when>
-                    <xsl:when test=".='mu'">
-                        <xsl:sequence select="'13-16'"/>
+                    <xsl:when test=".='j'">
+                        <xsl:sequence select="'0-15'"/>
                     </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
@@ -514,15 +514,15 @@
         </xsl:if>
 
         <!--
-            - if 008 POS 22 is 'a', then use "Adult"
-            - else if 019$a contains 'mu', then use "Adolescent"
+            - if 008 POS 22 is 'e', then use "Adult"
+            - else if OO8 POS 22 is 'd', then use "Adolescent"
             - else, use "Child"
         -->
         <xsl:choose>
-            <xsl:when test="$POS22='a'">
+            <xsl:when test="$POS22='e'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$tag019a = 'mu'">
+            <xsl:when test="$POS22 = 'd'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
