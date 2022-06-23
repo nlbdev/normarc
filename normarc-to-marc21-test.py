@@ -25,6 +25,21 @@ records = os.path.join(target, "records")
 normarc_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.normarc.xsl")
 marc21_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.xsl")
 
+already_handled_file = os.path.join(target, "already-handled.txt")
+already_handled = []
+if os.path.isfile(already_handled_file):
+    with open(already_handled_file) as f:
+        already_handled = f.readlines()
+        already_handled = [line.strip() for line in already_handled]
+
+
+def mark_as_handled(identifier):
+    global already_handled_file
+    global already_handled
+    with open(already_handled_file, "a") as f:
+        f.write(identifier + "\n")
+    already_handled.append(identifier)
+
 
 def writefile(outdir, identifier, lines):
     assert os.path.isdir(outdir), f"{outdir}"
@@ -211,8 +226,11 @@ marc21_target_dir = os.path.join(target, "opf", "marc21")
 os.makedirs(normarc_target_dir, exist_ok=True)
 os.makedirs(marc21_target_dir, exist_ok=True)
 
-successful = 0
+successful = len(already_handled)
 for identifier in identifiers:
+    if identifier in already_handled:
+        continue
+    
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
 
@@ -236,4 +254,5 @@ for identifier in identifiers:
         print(f"- MARC21 OPF out: {marc21_opf_file}")
         sys.exit(1)
     else:
+        mark_as_handled(identifier)
         successful += 1
