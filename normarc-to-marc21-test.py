@@ -87,17 +87,57 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
     return success
 
 
-def compare(normarc, marc21):
-    with open(normarc) as n:
-        with open(marc21) as m:
-            for nline, mline in zip(n, m):
-                if nline != mline:
-                    print("Lines are different:")
-                    print()
-                    print(f"NORMARC: {nline.strip()}")
-                    print(f"MARC21:  {mline.strip()}")
-                    print()
-                    return False
+def compare(normarc_path, marc21_path):
+    normarc = None
+    marc21 = None
+    with open(normarc_path) as f:
+        normarc = f.readlines()
+    with open(marc21_path) as f:
+        marc21 = f.readlines()
+    
+    linenum = 0
+    normarc_offset = 0
+    marc21_offset = 0
+    while linenum < len(normarc):
+        normarc_linenum = linenum + normarc_offset
+        marc21_linenum = linenum + marc21_offset
+
+        if normarc_linenum > len(normarc) - 1 and marc21_linenum > len(marc21) - 1:
+            # done
+            break
+
+        if normarc_linenum > len(normarc) - 1 and marc21_linenum <= len(marc21) - 1:
+            print("No more lines in NORMARC. Remaining lines in MARC21 are:")
+            print()
+            print("\n".join(normarc[normarc_linenum:]))
+            print()
+            return False
+        
+        if normarc_linenum <= len(normarc) - 1 and marc21_linenum > len(marc21) - 1:
+            print("No more lines in MARC21. Remaining lines in NORMARC are:")
+            print()
+            print("\n".join(marc21[marc21_linenum:]))
+            print()
+            return False
+        
+        normarc_line = normarc[normarc_linenum].strip()
+        marc21_line = marc21[marc21_linenum].strip()
+
+        # Not sure how to determine if a MARC21 record is deleted yet, ignore for now
+        if normarc_line == '<meta property="availability">deleted</meta>':
+            normarc_offset += 1
+            continue
+        
+        if normarc_line != marc21_line:
+            print("Lines are different:")
+            print()
+            print(f"NORMARC: {normarc_line.strip()}")
+            print(f"MARC21:  {marc21_line.strip()}")
+            print()
+            return False
+        
+        linenum += 1
+
     return True
 
 
