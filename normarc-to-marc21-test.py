@@ -156,6 +156,11 @@ def compare(identifier, normarc_path, marc21_path):
         if 'id="subject-650' in marc21_line:
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
         
+        # sorting key from *245$w seems to have been removed in MARC21
+        if "sortingKey" in normarc_line and 'refines="#title-245' in normarc_line:
+            normarc_offset += 1
+            continue
+        
         if normarc_line != marc21_line:
             print("Lines are different:")
             print()
