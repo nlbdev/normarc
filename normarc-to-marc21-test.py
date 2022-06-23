@@ -123,11 +123,6 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_line = normarc[normarc_linenum].strip()
         marc21_line = marc21[marc21_linenum].strip()
 
-        # Not sure how to determine if a MARC21 record is deleted yet, ignore for now
-        if normarc_line == '<meta property="availability">deleted</meta>':
-            normarc_offset += 1
-            continue
-
         # Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
         if '<meta property="nationality" refines=' in normarc_line:
             normarc_offset += 1
