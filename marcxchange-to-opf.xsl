@@ -2001,7 +2001,7 @@
     <xsl:template match="*:datafield[@tag='655']">
         <xsl:variable name="subject-id" select="concat('subject-655-',1+count(preceding-sibling::*:datafield[@tag='655']))"/>
 
-        <xsl:if test="*:subfield[@code='a']">
+        <xsl:if test="*:subfield[@code='a'] and not(*:subfield[@code='2']/text() = 'norvok')">
             <xsl:variable name="context" select="."/>
             <xsl:variable name="mainGenre" select="*:subfield[@code='a']/text()"/>
             <xsl:variable name="subGenre" as="xs:string*">
