@@ -162,6 +162,14 @@ def compare(identifier, normarc_path, marc21_path):
         if "dc:subject.dewey" in marc21_line:
             marc21_offset += 1
             continue
+
+        # Not sure how dc:title.part is converted yet (if at all), ignore part titles (from *740) for now
+        if "dc:title.part" in normarc_line:
+            normarc_offset += 1
+            continue
+        if "dc:title.part" in marc21_line:
+            marc21_offset += 1
+            continue
         
         # sorting keys that refine the title or contributors seems to have been removed in MARC21
         if "sortingKey" in normarc_line and 'refines="' in normarc_line:
