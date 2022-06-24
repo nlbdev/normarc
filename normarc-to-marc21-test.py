@@ -143,6 +143,7 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_line = normarc_line.replace("Båstad, Babbis Friis", "Baastad, Babbis Friis")
         normarc_line = normarc_line.replace("Saint Exupéry, Antoine de", "Saint-Exupéry, Antoine de")
         normarc_line = normarc_line.replace("Vesås, Tarjei", "Vesaas, Tarjei")
+        normarc_line = normarc_line.replace("Åsen, Arne Påsche", "Aasen, Arne Paasche")
 
         # The definition of "adult" has changed from 17+ in NORMARC to 18+ in MARC21
         if normarc_line == '<meta property="typicalAgeRange">17-</meta>':
