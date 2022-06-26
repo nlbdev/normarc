@@ -139,12 +139,15 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_line = normarc[normarc_linenum].strip()
         marc21_line = marc21[marc21_linenum].strip()
 
-        # Differences in the authority registry
-        normarc_line = normarc_line.replace("Båstad, Babbis Friis", "Baastad, Babbis Friis")
-        normarc_line = normarc_line.replace("Saint Exupéry, Antoine de", "Saint-Exupéry, Antoine de")
-        normarc_line = normarc_line.replace("Vesås, Tarjei", "Vesaas, Tarjei")
-        normarc_line = normarc_line.replace("Åsen, Arne Påsche", "Aasen, Arne Paasche")
-        normarc_line = normarc_line.replace("Lagerløf, Selma", "Lagerlöf, Selma")
+        # Handle differences in the authority registry
+        if "property=" in normarc_line and normarc_line.split('property="')[1].split('"')[0] in ["sortingKey"]:
+            normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
+            normarc_line = normarc_line.replace("ö", "ø").replace("Ö", "Ø")
+            normarc_line = normarc_line.replace("Saint Exupéry, Antoine de", "Saint-Exupéry, Antoine de")
+            normarc_line = normarc_line.replace("Lagerkvist, Pær", "Lagerkvist, Pär")
+        if "property=" in marc21_line and marc21_line.split('property="')[1].split('"')[0] in ["sortingKey"]:
+            marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
+            marc21_line = marc21_line.replace("ö", "ø").replace("Ö", "Ø")
 
         # The definition of "adult" has changed from 17+ in NORMARC to 18+ in MARC21
         if normarc_line == '<meta property="typicalAgeRange">17-</meta>':
