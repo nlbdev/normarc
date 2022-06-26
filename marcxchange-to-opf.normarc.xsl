@@ -1287,7 +1287,7 @@
         <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
         
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="title" select="replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', '')"/>
+            <xsl:variable name="title" select="replace(replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', ''), ' ; .*', '')"/>
             <xsl:variable name="title-id" select="concat('title-245-',1+count(preceding-sibling::*:datafield[@tag='245']))"/>
             <xsl:variable name="title-sortingKey" select="(../*:subfield[@code='w'])[1]"/>
             
@@ -1310,6 +1310,15 @@
         <xsl:for-each select="(*:subfield[@code='b'])[1]">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
         </xsl:for-each>
+        <xsl:if test="count(*:subfield[@code='b']) = 0">
+            <xsl:for-each select="*:subfield[@code='a']">
+                <xsl:variable name="title" select="replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', '')"/>
+                <xsl:variable name="subtitle" select="if (contains($title, ' ; ')) then replace($title, '.* ; +', '') else ()"/>
+                <xsl:if test="$subtitle">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="$subtitle"/></xsl:call-template>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:if>
         
         <xsl:variable name="part740" as="element()*">
             <xsl:apply-templates select="../*:datafield[@tag='740']"/>
