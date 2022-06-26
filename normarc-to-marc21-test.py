@@ -220,7 +220,7 @@ if not os.path.exists(records):
         for tablename in ["vmarc"]:
             infile = os.path.join(config["source_data"], marcname, f"data.{tablename}.txt")
             outdir = os.path.join(records, marcname, tablename)
-            os.makedirs(outdirexist_ok=True)
+            os.makedirs(outdir, exist_ok=True)
 
             identifier = None
             lines = []
