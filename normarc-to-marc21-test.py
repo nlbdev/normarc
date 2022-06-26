@@ -234,6 +234,7 @@ if not os.path.exists(records):
                     elif line.startswith("*00"):
                         tag = line[1:4]
                         data = line.strip()[4:]
+                        data = data.replace("<", "&lt;").replace(">", "&gt;").replace("&", "&amp;")
                         lines.append(f'    <marcxchange:controlfield tag="{tag}">{data}</marcxchange:controlfield>')
                     elif line.startswith("*"):
                         tag = line[1:4]
@@ -244,6 +245,7 @@ if not os.path.exists(records):
                         for subfield in subfields:
                             code = subfield[0]
                             data = subfield[1:]
+                            data = data.replace("<", "&lt;").replace(">", "&gt;").replace("&", "&amp;")
                             lines.append(f'        <marcxchange:subfield code="{code}">{data}</marcxchange:subfield>')
                         lines.append(f'    </marcxchange:datafield>')
                     else:
