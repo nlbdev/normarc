@@ -156,8 +156,8 @@ def compare(identifier, normarc_path, marc21_path):
         # Age ranges work differently in MARC21
         # NORMARC=MARC21: a=aa,a | b≈b | bu≈bu | u=u | mu≈mu,vu
         if "typicalAgeRange" in normarc_line:
-            # 16/17 is now 17/18 (adults are now 18+ instead of 17+)
-            normarc_line = normarc_line.replace("-16<", "-17<")
+            # 13-16 is now 13-15, and 17+ is now 18+ (adults are now 18+ instead of 17+)
+            normarc_line = normarc_line.replace("-16<", "-15<")
             normarc_line = normarc_line.replace(">17-", ">18-")
 
             # 7/8 is now 8/9
