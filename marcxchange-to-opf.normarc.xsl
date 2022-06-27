@@ -1497,7 +1497,7 @@
 
     <!-- 4XX SERIEANGIVELSER -->
 
-    <xsl:template match="*:datafield[@tag='440']">
+    <xsl:template match="*:datafield[@tag='440'] | *:datafield[@tag='490']">
         <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='440' or @tag='490']))"/>
 
         <xsl:variable name="series-title" as="element()?">
@@ -1539,10 +1539,6 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.cd'"/><xsl:with-param name="value" select="replace(text(),'^[^\d]*(\d+).*?$','$1')"/></xsl:call-template>
             </xsl:if>
         </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template match="*:datafield[@tag='490']">
-        <!--<xsl:message select="'NORMARC-felt ignorert: 490 SERIEANGIVELSE UTEN BIINNFØRSEL'"/>-->
     </xsl:template>
 
     <!-- 5XX NOTER -->
