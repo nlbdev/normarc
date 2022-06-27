@@ -110,6 +110,10 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
 
 def compare(identifier, normarc_path, marc21_path):
     global lock
+    global normarc_target_dir
+    global marc21_target_dir
+    global records
+
     with lock:
         normarc = None
         marc21 = None
@@ -145,6 +149,15 @@ def compare(identifier, normarc_path, marc21_path):
             
             normarc_line = re.sub(r"  +", " ", normarc[normarc_linenum].strip())
             marc21_line = re.sub(r"  +", " ", marc21[marc21_linenum].strip())
+
+            normarc_line_comment = ""
+            marc21_line_comment = ""
+            if " <!--" in normarc_line:
+                [normarc_line, normarc_line_comment] = normarc_line.split(" <!--", 1)
+                normarc_line_comment = "  <!-- " + normarc_line_comment
+            if " <!--" in marc21_line:
+                [marc21_line, marc21_line_comment] = marc21_line.split(" <!--", 1)
+                marc21_line_comment = "  <!-- " + marc21_line_comment
 
             # Handle differences in the authority registry
             if "property=" in normarc_line and normarc_line.split('property="')[1].split('"')[0] in ["sortingKey"]:
@@ -204,8 +217,8 @@ def compare(identifier, normarc_path, marc21_path):
             if normarc_line != marc21_line:
                 print("Lines are different:")
                 print()
-                print(f"NORMARC (line {normarc_linenum}): {normarc_line.strip()}")
-                print(f"MARC21 (line {marc21_linenum}):  {marc21_line.strip()}")
+                print(f"NORMARC (line {normarc_linenum}): {normarc_line.strip()}{normarc_line_comment}")
+                print(f"MARC21 (line {marc21_linenum}):  {marc21_line.strip()}{marc21_line_comment}")
                 print()
                 return False
             
@@ -291,9 +304,9 @@ def handle(identifier):
     normarc_opf_file = os.path.join(normarc_target_dir, f"{identifier}.opf")
     marc21_opf_file = os.path.join(marc21_target_dir, f"{identifier}.opf")
     
-    success = xslt(normarc_xslt_path, normarc_file, normarc_opf_file)
+    success = xslt(normarc_xslt_path, normarc_file, normarc_opf_file, parameters={"include-source-reference-as-comments": "true"})
     assert success, f"Failed to transform: {normarc_file}"
-    success = xslt(marc21_xslt_path, marc21_file, marc21_opf_file)
+    success = xslt(marc21_xslt_path, marc21_file, marc21_opf_file, parameters={"include-source-reference-as-comments": "true"})
     assert success, f"Failed to transform: {marc21_file}"
 
     with lock:
