@@ -320,6 +320,9 @@ def handle(identifier):
             print(f"- MARC21 in: {marc21_file}")
             print(f"- NORMARC OPF out: {normarc_opf_file}")
             print(f"- MARC21 OPF out: {marc21_opf_file}")
+            print()
+            print("Open all in editor:")
+            print(f"{config.get('editor', 'subl')} {normarc_opf_file} {marc21_opf_file} {normarc_file} {marc21_file}")
             error_has_occured = True
             return False
         else:
