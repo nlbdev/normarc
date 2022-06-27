@@ -1501,9 +1501,9 @@
         <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='440' or @tag='490']))"/>
 
         <xsl:variable name="series-title" as="element()?">
-            <xsl:if test="*:subfield[@code='a']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
-            </xsl:if>
+            <xsl:for-each select="(*:subfield[@code='a'])[1]">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
+            </xsl:for-each>
         </xsl:variable>
         <xsl:copy-of select="$series-title" exclude-result-prefixes="#all"/>
         <xsl:for-each select="*:subfield[@code='p']">
