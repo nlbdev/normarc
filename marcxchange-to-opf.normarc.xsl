@@ -1496,8 +1496,18 @@
     </xsl:template>
 
     <!-- 4XX SERIEANGIVELSER -->
+    
+    <xsl:template match="*:datafield[@tag=('440','490')][not(preceding-sibling::*:datafield[@tag=('440','490')])]">
+        <!-- handle *490 first, then *440. This makes it so that the order of the series metadata are the same in NORMARC and MARC21. In MARC21, the *440 tag is converted to *830 if there is already a *490 present. -->
+        <xsl:for-each select="../*:datafield[@tag='490']">
+            <xsl:call-template name="series"/>
+        </xsl:for-each>
+        <xsl:for-each select="../*:datafield[@tag='440']">
+            <xsl:call-template name="series"/>
+        </xsl:for-each>
+    </xsl:template>
 
-    <xsl:template match="*:datafield[@tag='440'] | *:datafield[@tag='490']">
+    <xsl:template name="series">
         <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='440' or @tag='490']))"/>
 
         <xsl:variable name="series-title" as="element()?">

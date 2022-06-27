@@ -221,6 +221,10 @@ def compare(identifier, normarc_path, marc21_path):
 
             # temporary fix in marcxchange-to-opf.normarc.xsl:
             # - *490$v is not converted from NORMARC to MARC21
+
+            # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
+            normarc_line = re.sub(r'(refines="#series-title)-\d+', r'$1-X', normarc_line)
+            marc21_line = re.sub(r'(refines="#series-title)-\d+', r'$1-X', marc21_line)
             
             if normarc_line != marc21_line:
                 print("Lines are different:")

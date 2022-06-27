@@ -1545,7 +1545,7 @@
         </xsl:for-each>
     </xsl:template>
 
-    <xsl:template match="*:datafield[@tag='490']">
+    <xsl:template match="*:datafield[@tag='490'] | *:datafield[@tag='830']">
         <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='490']))"/>
 
         <xsl:variable name="series-title" as="element()?">
