@@ -1537,8 +1537,8 @@
 
     <!-- 4XX SERIEANGIVELSER -->
 
-    <xsl:template match="*:datafield[@tag='440']">
-        <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='440' or @tag='490']))"/>
+    <xsl:template match="*:datafield[@tag='490']">
+        <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='490']))"/>
 
         <xsl:variable name="series-title" as="element()?">
             <xsl:for-each select="(*:subfield[@code='a'])[1]">
@@ -1579,10 +1579,6 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.cd'"/><xsl:with-param name="value" select="replace(text(),'^[^\d]*(\d+).*?$','$1')"/></xsl:call-template>
             </xsl:if>
         </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template match="*:datafield[@tag='490']">
-        <!--<xsl:message select="'NORMARC-felt ignorert: 490 SERIEANGIVELSE UTEN BIINNFØRSEL'"/>-->
     </xsl:template>
 
     <!-- 5XX NOTER -->
@@ -2335,7 +2331,7 @@
         <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator.series'"/><xsl:with-param name="value" select="$name"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
 
         <xsl:for-each select="*:subfield[@code='t']">
-            <xsl:variable name="alternate-title" select="string((../../*:datafield[@tag='440']/*:subfield[@code='a'])[1]/text()) != (text(),'')"/>
+            <xsl:variable name="alternate-title" select="string((../../*:datafield[@tag='490']/*:subfield[@code='a'])[1]/text()) != (text(),'')"/>
             <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.series',if ($alternate-title or preceding-sibling::*[@code='t']) then '.alternate' else '','')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
 
