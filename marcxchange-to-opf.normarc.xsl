@@ -1533,15 +1533,18 @@
                 </xsl:call-template>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="*:subfield[@code='v']">
-            <xsl:if test="not(starts-with(text(), '['))">
-                <xsl:call-template name="meta">
-                    <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
-                    <xsl:with-param name="value" select="text()"/>
-                    <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
-                </xsl:call-template>
-            </xsl:if>
-        </xsl:for-each>
+        <xsl:if test="@tag='440'">
+            <!-- *490$v is not converted from NORMARC to MARC21, so let's ignore it for now -->
+            <xsl:for-each select="*:subfield[@code='v']">
+                <xsl:if test="not(starts-with(text(), '['))">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
+                        <xsl:with-param name="value" select="text()"/>
+                        <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
+                    </xsl:call-template>
+                </xsl:if>
+            </xsl:for-each>
+        </xsl:if>
         <xsl:for-each select="(*:subfield[@code='a'])[1][contains(text(), ' ; ')]">
             <xsl:if test="count($series-id) = 0 and not(preceding-sibling::*:subfield[@code='v'])">
                 <xsl:call-template name="meta">

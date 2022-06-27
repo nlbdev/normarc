@@ -218,6 +218,9 @@ def compare(identifier, normarc_path, marc21_path):
             if "sortingKey" in normarc_line and 'refines="' in normarc_line:
                 normarc_offset += 1
                 continue
+
+            # temporary fix in marcxchange-to-opf.normarc.xsl:
+            # - *490$v is not converted from NORMARC to MARC21
             
             if normarc_line != marc21_line:
                 print("Lines are different:")
