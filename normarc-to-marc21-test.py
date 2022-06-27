@@ -74,18 +74,18 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
     success = False
     timeout = 600
 
-    try:
-        command = ["java", "-jar", config["saxon_jar"]]
-        if source:
-            command.append("-s:" + source)
-        else:
-            command.append("-it:" + template)
-        command.append("-xsl:" + stylesheet)
-        if target:
-            command.append("-o:" + target)
-        for param in parameters:
-            command.append(param + "=" + parameters[param])
+    command = ["java", "-jar", config["saxon_jar"]]
+    if source:
+        command.append("-s:" + source)
+    else:
+        command.append("-it:" + template)
+    command.append("-xsl:" + stylesheet)
+    if target:
+        command.append("-o:" + target)
+    for param in parameters:
+        command.append(param + "=" + parameters[param])
 
+    try:
         process = subprocess.run(command,
                                  stdout=subprocess.PIPE,
                                  stderr=subprocess.PIPE,
@@ -94,10 +94,11 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
                                  timeout=timeout,
                                  check=True)
 
-        logging.info(process.stdout.decode("utf-8"))
-        logging.info(process.stderr.decode("utf-8"))
-
         success = process.returncode == 0
+    
+    except subprocess.CalledProcessError as process:
+        logging.error(process.stdout.decode("utf-8"))
+        logging.error(process.stderr.decode("utf-8"))
 
     except subprocess.TimeoutExpired:
         logging.exception(f"The XSLT timed out: {stylesheet}")
