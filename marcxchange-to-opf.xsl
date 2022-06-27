@@ -323,6 +323,7 @@
 
     <xsl:template name="meta">
         <xsl:param name="context" as="element()?" select="."/>
+        <xsl:param name="controlfield_position" as="xs:string?"/>
         <xsl:param name="property" as="xs:string"/>
         <xsl:param name="value" as="xs:string+"/>
         <xsl:param name="id" as="xs:string?" select="()"/>
@@ -333,7 +334,7 @@
 
         <xsl:variable name="identifier001" as="xs:string?" select="($context/(../* | ../../*)[self::*:controlfield[@tag='001']])[1]/replace(text(), '^0+(.)', '$1')"/>
         <xsl:variable name="tag" select="($context/../@tag, $context/@tag, '???')[1]"/>
-        <xsl:variable name="metadata-source-text" select="concat('Bibliofil', if ($identifier001) then concat('@',$identifier001) else '', ' *', $tag, if ($context/@code) then concat('$',$context/@code) else '')"/>
+        <xsl:variable name="metadata-source-text" select="concat('Bibliofil', if ($identifier001) then concat('@',$identifier001) else '', ' *', $tag, if ($context/@code) then concat('$',$context/@code) else '', if ($controlfield_position) then concat('/', $controlfield_position) else '')"/>
         <xsl:variable name="metadata-source-text" select="concat($metadata-source-text, if ($identifier001 != $identifier and $property = ('dc:identifier', 'dc:title') and not($refines)) then ' + dc:identifier' else '')"/>
 
         <xsl:element name="{if ($dublin-core and not($refines)) then $property else 'meta'}">
@@ -443,13 +444,13 @@
             <xsl:variable name="day" select="substring($POS00-05,5,2)"/>
             <xsl:variable name="registered" select="concat($year,'-',$month,'-',$day)"/>
 
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.registered'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.registered'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
 
             <xsl:variable name="available" as="element()*">
                 <xsl:apply-templates select="(../*:datafield[@tag=('592','598')])"/>
             </xsl:variable>
             <xsl:if test="count($available[@property='dc:date.available']) = 0 and matches($year,'^19..$')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
             </xsl:if>
         </xsl:if>
         
@@ -457,24 +458,25 @@
             <xsl:when test="$POS21 = 'a'"><!-- "Årbok": Not in use; ignore for now --></xsl:when>
             <xsl:when test="$POS21 = 'm'"><!-- "Monografiserie": Not in use; ignore for now --></xsl:when>
             <xsl:when test="$POS21 = 'n'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Avis'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Newspaper'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('newspaper')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Avis'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Newspaper'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="nlb:prefixed-property('newspaper')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS21 = 'p'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Tidsskrift'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Magazine'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('magazine')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Periodika'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Serial'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Tidsskrift'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Magazine'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'21'"/><xsl:with-param name="property" select="nlb:prefixed-property('magazine')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
         </xsl:choose>
         
+        <xsl:variable name="tag385sub0_context" select="(../*:datafield[@tag='385']/*:subfield[@code='0'])[1]" as="element()?"/>
         <xsl:variable name="tag385sub0" select="../*:datafield[@tag='385']/*:subfield[@code='0']/text()" as="xs:string*"/>
         <xsl:variable name="ageRangesFrom385sub0" as="xs:string*">
             <xsl:for-each select="$tag385sub0">
@@ -536,7 +538,16 @@
         <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF')) then '' else $ageMax"/>
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
+            <xsl:choose>
+                <xsl:when test="count($ageRangesFrom385sub0)">
+                    <xsl:for-each select="$tag385sub0_context">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:if>
 
         <!--
@@ -546,48 +557,48 @@
         -->
         <xsl:choose>
             <xsl:when test="$ageRangeFrom ge 18 or $POS22='e'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$ageRangeFrom ge 13 or $POS22='d'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Child'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Child'"/></xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 
         <xsl:choose>
             <xsl:when test="$POS33='0'">
                 <meta property="dc:type.fiction">false</meta>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-fiction'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-fiction'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS33='1'">
                 <meta property="dc:type.fiction">true</meta>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Fiction'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Fiction'"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
 
         <xsl:choose>
             <xsl:when test="$POS34=('0', ' ')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-biography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='1'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='a'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Autobiography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Autobiography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='b'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Individual biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Individual biography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='c'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Collective biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Collective biography'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS34='d'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
         
@@ -599,15 +610,15 @@
             <xsl:variable name="mainGenre" select="'Biografisk'"/>
             <xsl:variable name="genre" select="$mainGenre"/>
             
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre.no'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.mainGenre'"/><xsl:with-param name="value" select="$mainGenre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="$bibliofil-id"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre.no'"/><xsl:with-param name="value" select="$genre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.mainGenre'"/><xsl:with-param name="value" select="$mainGenre"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="nlb:prefixed-property('bibliofil-id')"/><xsl:with-param name="value" select="$bibliofil-id"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
         </xsl:if>
 
         <xsl:choose>
             <xsl:when test="normalize-space($POS35-37) and normalize-space($POS35-37) != 'mul'">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:language'"/><xsl:with-param name="value" select="$POS35-37"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'35-37'"/><xsl:with-param name="property" select="'dc:language'"/><xsl:with-param name="value" select="$POS35-37"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -615,7 +626,7 @@
     <xsl:template match="*:controlfield[@tag='009']">
         <xsl:variable name="POS05" select="substring(text(),6,1)"/>
         <xsl:if test="$POS05 = 'd'">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('availability')"/><xsl:with-param name="value" select="'deleted'"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'05'"/><xsl:with-param name="property" select="nlb:prefixed-property('availability')"/><xsl:with-param name="value" select="'deleted'"/></xsl:call-template>
         </xsl:if>
     </xsl:template>
 
