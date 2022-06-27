@@ -476,8 +476,8 @@
             <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
         </xsl:choose>
         
-        <xsl:variable name="tag385sub0_context" select="(../*:datafield[@tag='385']/*:subfield[@code='0'])[1]" as="element()?"/>
-        <xsl:variable name="tag385sub0" select="../*:datafield[@tag='385']/*:subfield[@code='0']/text()" as="xs:string*"/>
+        <xsl:variable name="tag385sub0_contexts" select="../*:datafield[@tag='385']/*:subfield[@code='0']" as="element()*"/>
+        <xsl:variable name="tag385sub0" select="$tag385sub0_contexts/text()" as="xs:string*"/>
         <xsl:variable name="ageRangesFrom385sub0" as="xs:string*">
             <xsl:for-each select="$tag385sub0">
                 <xsl:choose>
@@ -540,7 +540,7 @@
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
             <xsl:choose>
                 <xsl:when test="count($ageRangesFrom385sub0)">
-                    <xsl:for-each select="$tag385sub0_context">
+                    <xsl:for-each select="$tag385sub0_contexts[1]">
                         <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
                     </xsl:for-each>
                 </xsl:when>
@@ -559,7 +559,7 @@
             <xsl:when test="$ageRangeFrom ge 18 or $POS22='e'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$ageRangeFrom ge 13 or $POS22='d'">
+            <xsl:when test="$tag385sub0_contexts/text() = 'https://schema.nb.no/Bibliographic/Values/TG1005'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
