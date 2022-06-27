@@ -1554,6 +1554,17 @@
             </xsl:for-each>
         </xsl:variable>
         <xsl:copy-of select="$series-title" exclude-result-prefixes="#all"/>
+        <xsl:variable name="series-id" as="element()?">
+            <xsl:if test="$series-title">
+                <xsl:for-each select="..">
+                    <xsl:call-template name="bibliofil-id">
+                        <xsl:with-param name="context" select="."/>
+                        <xsl:with-param name="refines" select="$title-id"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:copy-of select="$series-id" exclude-result-prefixes="#all"/>
         <xsl:for-each select="*:subfield[@code='p']">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:title.subSeries'"/>
