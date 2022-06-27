@@ -87,12 +87,12 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
             command.append(param + "=" + parameters[param])
 
         process = subprocess.run(command,
-                                            stdout=subprocess.PIPE,
-                                            stderr=subprocess.PIPE,
-                                            shell=False,
-                                            cwd=cwd,
-                                            timeout=timeout,
-                                            check=True)
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE,
+                                 shell=False,
+                                 cwd=cwd,
+                                 timeout=timeout,
+                                 check=True)
 
         logging.info(process.stdout.decode("utf-8"))
         logging.info(process.stderr.decode("utf-8"))
