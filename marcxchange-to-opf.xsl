@@ -1550,7 +1550,7 @@
 
         <xsl:variable name="series-title" as="element()?">
             <xsl:for-each select="(*:subfield[@code='a'])[1]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="replace(text(), ' *; *.*', '')"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
             </xsl:for-each>
         </xsl:variable>
         <xsl:copy-of select="$series-title" exclude-result-prefixes="#all"/>
@@ -1586,6 +1586,15 @@
                 <xsl:call-template name="meta">
                     <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
                     <xsl:with-param name="value" select="text()"/>
+                    <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:for-each>
+        <xsl:for-each select="(*:subfield[@code='a'])[1][contains(text(), ' ; ')]">
+            <xsl:if test="count($series-id) = 0 and not(preceding-sibling::*:subfield[@code='v'])">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
+                    <xsl:with-param name="value" select="replace(text(), '^.*? *; *', '')"/>
                     <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
                 </xsl:call-template>
             </xsl:if>
