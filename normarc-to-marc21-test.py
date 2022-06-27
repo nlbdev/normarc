@@ -284,6 +284,7 @@ def handle(identifier):
     global identifiers
     global successful
     global error_has_occured
+    global records
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
 
