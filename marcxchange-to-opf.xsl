@@ -1536,6 +1536,14 @@
     </xsl:template>
 
     <!-- 4XX SERIEANGIVELSER -->
+    
+    <xsl:template match="*:datafield[@tag='449']">
+        <xsl:for-each select="*:subfield[@code='n']">
+            <xsl:if test="matches(text(),'\d')">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.cd'"/><xsl:with-param name="value" select="replace(text(),'^[^\d]*(\d+).*?$','$1')"/></xsl:call-template>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:template>
 
     <xsl:template match="*:datafield[@tag='490']">
         <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='490']))"/>
@@ -1569,14 +1577,6 @@
                     <xsl:with-param name="value" select="text()"/>
                     <xsl:with-param name="refines" select="if ($series-title) then $title-id else ()"/>
                 </xsl:call-template>
-            </xsl:if>
-        </xsl:for-each>
-    </xsl:template>
-
-    <xsl:template match="*:datafield[@tag='449']">
-        <xsl:for-each select="*:subfield[@code='n']">
-            <xsl:if test="matches(text(),'\d')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.cd'"/><xsl:with-param name="value" select="replace(text(),'^[^\d]*(\d+).*?$','$1')"/></xsl:call-template>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
