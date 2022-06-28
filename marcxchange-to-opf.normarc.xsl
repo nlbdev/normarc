@@ -487,6 +487,7 @@
         <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRanges" as="xs:string*">
             <xsl:sequence select="if ($POS22 = 'a') then '17-INF' else ()"/>
+            <xsl:sequence select="if ($POS22 = 'j' and count($tag019a) = 0) then '0-16' else ()"/>
             <xsl:for-each select="$tag019a">
                 <xsl:choose>
                     <xsl:when test=".='a'">
@@ -512,7 +513,11 @@
         <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF')) then '' else $ageMax"/>
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
-            <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
+            <xsl:call-template name="meta">
+                <xsl:with-param name="controlfield_position" select="'22'"/>
+                <xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/>
+                <xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/>
+            </xsl:call-template>
         </xsl:if>
 
         <!--
@@ -525,7 +530,7 @@
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="string($ageRangeTo) = '' or $ageRangeTo ge 13">
-                <xsl:for-each select="$tag019a_context">
+                <xsl:for-each select="($tag019a_context, .)[1]">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
                 </xsl:for-each>
             </xsl:when>
