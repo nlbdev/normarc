@@ -1321,7 +1321,7 @@
 
     <xsl:template match="*:datafield[@tag='240']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -1422,12 +1422,14 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='246']">
+        <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else 'alternative'" as="xs:string"/>
+        
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
 
         <xsl:for-each select="*:subfield[@code='b']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle.alternative.other'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type, '.other')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
 
         <xsl:for-each select="*:subfield[@code='n']">
@@ -1438,7 +1440,7 @@
         </xsl:for-each>
 
         <xsl:for-each select="*:subfield[@code='p']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -1684,9 +1686,9 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='574']">
-        <xsl:variable name="property" select="if (../*:datafield[@tag='240']) then 'dc:title.original.alternative' else 'dc:title.original'"/>
+        <xsl:variable name="property" select="if (../*:datafield[@tag='246' and *:subfield[@code='i' and text()='Originaltittel']]) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="replace(text(),'^\s*Ori?ginaltit\w*\s*:?\s*','')"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="replace(text(),'^\s*Ori?ginal(ens )?tit\w*\s*:?\s*','')"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
     
