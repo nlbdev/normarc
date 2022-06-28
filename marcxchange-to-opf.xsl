@@ -1616,19 +1616,17 @@
     </xsl:template>
 
     <!-- 5XX NOTER -->
-
+    
     <xsl:template match="*:datafield[@tag='500']">
-        <!--<xsl:message select="'NORMARC-felt ignorert: 500 GENERELL NOTE'"/>-->
+        <!--<xsl:message select="'MARC21 field ignored: 500'"/>-->
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='501']">
-        <!--<xsl:message select="'NORMARC-felt ignorert: 490 &quot;SAMMEN MED&quot;-NOTE'"/>-->
+        <!--<xsl:message select="'MARC21 field ignored: 501'"/>-->
     </xsl:template>
-
+    
     <xsl:template match="*:datafield[@tag='503']">
-        <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bookEdition.history')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
+        <!--<xsl:message select="'MARC21 field ignored: 503'"/>-->
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='505']">
