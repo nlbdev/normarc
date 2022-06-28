@@ -524,7 +524,7 @@
             <xsl:when test="$POS22='a'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="$ageRangeTo ge 13">
+            <xsl:when test="string($ageRangeTo) = '' or $ageRangeTo ge 13">
                 <xsl:for-each select="$tag019a_context">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
                 </xsl:for-each>
