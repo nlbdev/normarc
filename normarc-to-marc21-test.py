@@ -126,6 +126,13 @@ def compare(identifier, normarc_path, marc21_path):
         linenum = 0
         normarc_offset = 0
         marc21_offset = 0
+
+        normarc_has_sortingKey_from_245w = False
+        for line in normarc:
+            if "sortingKey" in line and "*245$w" in line:
+                normarc_has_sortingKey_from_245w = True
+                break
+
         while linenum < len(normarc):
             normarc_linenum = linenum + normarc_offset
             marc21_linenum = linenum + marc21_offset
@@ -221,6 +228,17 @@ def compare(identifier, normarc_path, marc21_path):
 
             # temporary fix in marcxchange-to-opf.normarc.xsl:
             # - *490$v is not converted from NORMARC to MARC21
+            
+            # the sorting key in *245$w is not preserved in MARC21
+            # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
+            # if normarc has a sortingKey based on *245$w, then we need to ignore 
+            if normarc_has_sortingKey_from_245w:
+                if "sortingKey" in normarc_line and "refines=" not in normarc_line:
+                    normarc_offset += 1
+                    continue
+                if "sortingKey" in marc21_line and "refines=" not in marc21_line:
+                    marc21_offset += 1
+                    continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'$1-X', normarc_line)
