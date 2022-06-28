@@ -1895,15 +1895,13 @@
         <xsl:variable name="subject-id" select="concat('subject-610-',1+count(preceding-sibling::*:datafield[@tag='610']))"/>
 
         <xsl:if test="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            <xsl:variable name="value" select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='q']/text()/concat('(', ., ')')), ' ')"/>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="$value"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
             <xsl:for-each select="*:subfield[@code='1']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='b']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
-            <xsl:for-each select="*:subfield[@code='q']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
 

@@ -231,6 +231,7 @@ def compare(identifier, normarc_path, marc21_path):
 
             # handled in marcxchange-to-opf.normarc.xsl:
             # - *700 are sorted alphabetically in MARC21
+            # - *610$q is parenthesized and appended to *610$a in MARC21
             
             # the sorting key in *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
@@ -250,8 +251,8 @@ def compare(identifier, normarc_path, marc21_path):
             if normarc_line != marc21_line:
                 print("Lines are different:")
                 print()
-                print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line.strip()}{normarc_line_comment}")
-                print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line.strip()}{marc21_line_comment}")
+                print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}{normarc_line_comment}")
+                print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}{marc21_line_comment}")
                 print()
                 return False
             
