@@ -228,6 +228,9 @@ def compare(identifier, normarc_path, marc21_path):
 
             # temporary fix in marcxchange-to-opf.normarc.xsl:
             # - *490$v is not converted from NORMARC to MARC21
+
+            # handled in marcxchange-to-opf.normarc.xsl:
+            # - *700 are sorted alphabetically in MARC21
             
             # the sorting key in *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21

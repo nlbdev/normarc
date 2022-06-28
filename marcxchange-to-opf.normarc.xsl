@@ -2183,7 +2183,21 @@
     <!-- 700 - 75X BIINNFØRSLER -->
 
     <xsl:template match="*:datafield[@tag='700']">
-        <xsl:variable name="contributor-id" select="concat('contributor-700-',1+count(preceding-sibling::*:datafield[@tag='700']))"/>
+        <!-- when we find the first *700 -->
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='700'])">
+            <!-- then handle all *700 sorted by $a -->
+            <xsl:for-each select="../*:datafield[@tag='700']">
+                <xsl:sort select="*:subfield[@code='a']"/>
+                <xsl:call-template name="datafield700">
+                    <xsl:with-param name="position" select="position()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="datafield700">
+        <xsl:param name="position" as="xs:integer"/>
+        <xsl:variable name="contributor-id" select="concat('contributor-700-',string($position))"/>
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="$name">
