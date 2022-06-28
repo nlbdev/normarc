@@ -128,10 +128,12 @@ def compare(identifier, normarc_path, marc21_path):
         marc21_offset = 0
 
         normarc_has_sortingKey_from_245w = False
+        normarc_has_490_without_refines = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line:
                 normarc_has_sortingKey_from_245w = True
-                break
+            if '"dc:title.series"' in line and " id=" not in line:
+                normarc_has_490_without_refines = True
 
         while linenum < len(normarc):
             normarc_linenum = linenum + normarc_offset
@@ -157,6 +159,11 @@ def compare(identifier, normarc_path, marc21_path):
             
             normarc_line = re.sub(r"  +", " ", normarc[normarc_linenum].strip())
             marc21_line = re.sub(r"  +", " ", marc21[marc21_linenum].strip())
+
+            # *490$v is set to 1 for some reason, even though there's no *440$v in the corresponding NORMARC record
+            if marc21_line == '<meta property="series.position" refines="#series-title-1">1</meta> <!-- Bibliofil@3588 *490$v -->':
+                marc21_offset += 1
+                continue
 
             normarc_line_comment = ""
             marc21_line_comment = ""
@@ -243,10 +250,19 @@ def compare(identifier, normarc_path, marc21_path):
                 if "sortingKey" in marc21_line and "refines=" not in marc21_line:
                     marc21_offset += 1
                     continue
+            
+            # *490$v is copied from *440$v when there is no *490$v; ignore for now
+            if normarc_has_490_without_refines:
+                if "*490$v" in normarc_line_comment:
+                    normarc_offset += 1
+                    continue
+                if "*490$v" in marc21_line_comment:
+                    marc21_offset += 1
+                    continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
-            normarc_line = re.sub(r'(refines="#series-title)-\d+', r'$1-X', normarc_line)
-            marc21_line = re.sub(r'(refines="#series-title)-\d+', r'$1-X', marc21_line)
+            normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
+            marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
             
             if normarc_line != marc21_line:
                 print("Lines are different:")
