@@ -1929,7 +1929,8 @@
         <xsl:variable name="subject-id" select="concat('subject-650-',1+count(preceding-sibling::*:datafield[@tag='650']))"/>
 
         <xsl:if test="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            <xsl:variable name="value" select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='q']/text()/concat('(', ., ')')), ' ')"/>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="$value"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
             <xsl:if test="*:subfield[@code='a']/text()=('Tidsskrifter','Avis')">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('periodical')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
@@ -1952,9 +1953,6 @@
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='d']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.time'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
-            <xsl:for-each select="*:subfield[@code='q']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='w']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
