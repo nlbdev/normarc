@@ -1202,6 +1202,10 @@
         <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
         <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
+        
+        <!-- strip and normalize space -->
+        <xsl:variable name="name" select="replace(normalize-space($name), '(^ +| +$)', '')"/>
+        <xsl:variable name="sortingKey" select="replace(normalize-space($sortingKey), '(^ +| +$)', '')"/>
 
         <xsl:if test="$name">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="$name"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
@@ -1406,17 +1410,19 @@
         </xsl:if>
         
         <!-- The main sorting key for this record -->
-        <xsl:variable name="sortingKey" select="(
+        <xsl:variable name="sortingKey_context" select="(
             ../*:datafield[@tag='100' or @tag='110' or @tag='111' or @tag='130']/*:subfield[@code='w'],
             ../*:datafield[@tag='100' or @tag='110' or @tag='111' or @tag='130']/*:subfield[@code='a'],
             *:subfield[@code='w'],
             *:subfield[@code='a']
         )[1]"/>
+        <xsl:variable name="sortingKey" select="nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true())"/>
+        <xsl:variable name="sortingKey" select="replace($sortingKey, '(^ +| +$)', '')"/>
         <xsl:if test="$sortingKey">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
-                <xsl:with-param name="value" select="nlb:identifier-in-title(replace($sortingKey/text(),'[\[\]]',''), $language, true())"/>
-                <xsl:with-param name="context" select="$sortingKey"/>
+                <xsl:with-param name="value" select="$sortingKey"/>
+                <xsl:with-param name="context" select="$sortingKey_context"/>
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
