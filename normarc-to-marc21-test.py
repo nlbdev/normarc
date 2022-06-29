@@ -13,6 +13,7 @@ import time
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
+exit_on_error = True
 
 config = {}
 with open(os.path.join(current_directory, "normarc-to-marc21-test.config")) as f:
@@ -386,10 +387,16 @@ for identifier in identifiers:
     if identifier in already_handled:
         continue
 
-    success = handle(identifier)
+    success = False
+    try:
+        success = handle(identifier)
+    except Exception as e:
+        print(f"An error occured when handling {identifier}: {e}")
+        continue
+    
     if success:
         handled_in_this_run += 1
-    else:
+    elif exit_on_error:
         sys.exit(1)
     
     if handled_in_this_run >= 3:
@@ -399,12 +406,12 @@ if handled_in_this_run >= 3:
     print("3 successful in a row, switching to parallel processing")
     thread_pool = []
     for identifier in identifiers:
-        if error_has_occured:
+        if error_has_occured and exit_on_error:
             sys.exit(1)
         if identifier in already_handled:
             continue
         while len(thread_pool) >= 10:
-            if error_has_occured:
+            if error_has_occured and exit_on_error:
                 sys.exit(1)
             thread_pool = [t for t in thread_pool if t.is_alive()]
             time.sleep(0.1)
