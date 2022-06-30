@@ -1299,39 +1299,42 @@
         </xsl:variable>
         <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
         
+        <xsl:variable name="title" select="*:subfield[@code='a'][1]/text()" as="xs:string"/>
+        <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
+        <xsl:variable name="title-without-subtitle" select="replace($title, '^([^;:]*[^;: ]).*', '$1')"/>
+        <xsl:variable name="title-without-subtitle" select="nlb:identifier-in-title($title-without-subtitle, $language, false())"/>
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="title" select="replace(replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', ''), ' *; .*', '')"/>
-            <xsl:variable name="title-id" select="concat('title-245-',1+count(preceding-sibling::*:datafield[@tag='245']))"/>
-            <xsl:variable name="title-sortingKey" select="(../*:subfield[@code='w'])[1]"/>
-            
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="'dc:title'"/>
                 <xsl:with-param name="context" select="."/>
-                <xsl:with-param name="value" select="nlb:identifier-in-title($title, $language, false())"/>
-                <xsl:with-param name="id" select="if ($title-sortingKey) then $title-id else ()"/>
+                <xsl:with-param name="value" select="$title-without-subtitle"/>
             </xsl:call-template>
-            
-            <xsl:for-each select="$title-sortingKey">
-                <xsl:call-template name="meta">
-                    <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
-                    <xsl:with-param name="value" select="nlb:identifier-in-title(replace(text(),'[\[\]]',''), $language, true())"/>
-                    <xsl:with-param name="refines" select="$title-id"/>
-                </xsl:call-template>
-            </xsl:for-each>
         </xsl:for-each>
         
-        <xsl:for-each select="(*:subfield[@code='b'])[1]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
-        </xsl:for-each>
-        <xsl:if test="count(*:subfield[@code='b']) = 0">
+        <xsl:variable name="subtitle" as="element()*">
             <xsl:for-each select="*:subfield[@code='a']">
-                <xsl:variable name="title" select="replace(replace(normalize-space(text()), '^\[\s*(.*?)\s*\]$', '$1'), '\s*:$', '')"/>
-                <xsl:variable name="subtitle" select="if (contains($title, '; ')) then replace($title, '^[^;]*; +', '') else ()"/>
+                <xsl:variable name="subtitle" select="if (matches($title, '.*[;:].*')) then replace($title, '^[^;:]*[;:] *', '') else ()"/>
                 <xsl:if test="$subtitle">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="$subtitle"/></xsl:call-template>
                 </xsl:if>
             </xsl:for-each>
-        </xsl:if>
+            <xsl:for-each select="*:subfield[@code='b']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="count($subtitle) = 1">
+                <xsl:copy-of select="$subtitle"/>
+            </xsl:when>
+            <xsl:when test="count($subtitle) gt 1">
+                <xsl:variable name="subtitle_context" select="(*:subfield[@code='b'], *:subfield[@code='b'])[1]"/>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'dc:title.subTitle'"/>
+                    <xsl:with-param name="value" select="string-join($subtitle, ' : ')"/>
+                    <xsl:with-param name="context" select="$subtitle_context"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
         
         <xsl:variable name="part740" as="element()*">
             <xsl:apply-templates select="../*:datafield[@tag='740']"/>
@@ -1380,8 +1383,7 @@
             *:subfield[@code='w'],
             *:subfield[@code='a']
         )[1]"/>
-        <xsl:variable name="sortingKey" select="nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true())"/>
-        <xsl:variable name="sortingKey" select="replace($sortingKey, '(^ +| +$)', '')"/>
+        <xsl:variable name="sortingKey" select="if ($sortingKey_context/@code = 'a') then $title-without-subtitle else replace(nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true()), '(^ +| +$)', '')"/>
         <xsl:if test="$sortingKey_context">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
