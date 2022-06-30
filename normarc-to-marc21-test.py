@@ -239,6 +239,7 @@ def compare(identifier, normarc_path, marc21_path):
 
             # handled in marcxchange-to-opf.normarc.xsl:
             # - *600 are sorted alphabetically in MARC21
+            # - *650 are sorted alphabetically in MARC21
             # - *700 are sorted alphabetically in MARC21
             # - *610$q is parenthesized and appended to *610$a in MARC21
             
