@@ -238,6 +238,7 @@ def compare(identifier, normarc_path, marc21_path):
             # - *490$v is not converted from NORMARC to MARC21
 
             # handled in marcxchange-to-opf.normarc.xsl:
+            # - *600 are sorted alphabetically in MARC21
             # - *700 are sorted alphabetically in MARC21
             # - *610$q is parenthesized and appended to *610$a in MARC21
             
