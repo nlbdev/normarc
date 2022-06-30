@@ -254,10 +254,10 @@ def compare(identifier, normarc_path, marc21_path):
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_refines:
-                if "*490$v" in normarc_line_comment:
+                if "series.position" in normarc_line and "*490" in normarc_line_comment:
                     normarc_offset += 1
                     continue
-                if "*490$v" in marc21_line_comment:
+                if "series.position" in marc21_line and "*490" in marc21_line_comment:
                     marc21_offset += 1
                     continue
 
