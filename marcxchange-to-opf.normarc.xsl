@@ -1383,7 +1383,7 @@
             *:subfield[@code='w'],
             *:subfield[@code='a']
         )[1]"/>
-        <xsl:variable name="sortingKey" select="if ($sortingKey_context/@code = 'a') then $title-without-subtitle else replace(nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true()), '(^ +| +$)', '')"/>
+        <xsl:variable name="sortingKey" select="if ($sortingKey_context[../@tag = '245' and @code = 'a']) then $title-without-subtitle else replace(nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true()), '(^ +| +$)', '')"/>
         <xsl:if test="$sortingKey_context">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
