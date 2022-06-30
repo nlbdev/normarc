@@ -1965,7 +1965,21 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='650']">
-        <xsl:variable name="subject-id" select="concat('subject-650-',1+count(preceding-sibling::*:datafield[@tag='650']))"/>
+        <!-- when we find the first *650 -->
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='650'])">
+            <!-- then handle all *650 sorted by $a and $0 -->
+            <xsl:for-each select="../*:datafield[@tag='650']">
+                <xsl:sort select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='0']/text()), ' ')"/>
+                <xsl:call-template name="datafield650">
+                    <xsl:with-param name="position" select="position()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="datafield650">
+        <xsl:param name="position"/>
+        <xsl:variable name="subject-id" select="concat('subject-650-', string($position))"/>
 
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
