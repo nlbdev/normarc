@@ -132,11 +132,14 @@ def compare(identifier, normarc_path, marc21_path):
 
         normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
+        marc21_has_385 = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
+            if "*385" in line:
+                marc21_has_385 = True
 
         while linenum < len(normarc):
             normarc_linenum = linenum + normarc_offset
@@ -199,7 +202,7 @@ def compare(identifier, normarc_path, marc21_path):
             
             # Age ranges work differently in MARC21
             # NORMARC=MARC21: a=aa,a | b≈b | bu≈bu | u=u | mu≈mu,vu
-            if "typicalAgeRange" in normarc_line:
+            if "typicalAgeRange" in normarc_line and marc21_has_385:
                 # 13-16 is now 13-15, and 17+ is now 18+ (adults are now 18+ instead of 17+)
                 normarc_line = normarc_line.replace("-16<", "-15<")
                 normarc_line = normarc_line.replace(">17-", ">18-")
