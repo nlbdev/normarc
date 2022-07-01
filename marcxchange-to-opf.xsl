@@ -561,7 +561,7 @@
         <xsl:variable name="ageRanges" select="if (count($ageRangesFrom385sub0)) then $ageRangesFrom385sub0 else if (count($ageRangesFrom019a)) then $ageRangesFrom019a else $ageRangesFrom008POS22"/>
         <xsl:variable name="ageRangeFrom" select="if (count($ageRanges) = 0) then '' else xs:integer(min(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[1])))"/>
         <xsl:variable name="ageMax" select="if (count($ageRanges) = 0) then '' else max(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[2]))"/>
-        <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF')) then '' else $ageMax"/>
+        <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF') or $POS22 = 'e') then '' else $ageMax"/>
         <xsl:variable name="juvenileAgeLimit" select="if (count($ageRangesFrom385sub0)) then 13 else 14"/> <!-- because the 008/22 age range 14-17 fits better than 9-13 -->
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
