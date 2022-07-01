@@ -508,6 +508,8 @@
                 </xsl:choose>
             </xsl:for-each>
         </xsl:variable>
+        <xsl:variable name="tag019a_context" select="(../*:datafield[@tag='019']/*:subfield[@code='a'])[1]" as="element()?"/>
+        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRangesFrom008POS22" as="xs:string*">
             <xsl:for-each select="$POS22">
                 <xsl:choose>
@@ -532,7 +534,31 @@
                 </xsl:choose>
             </xsl:for-each>
         </xsl:variable>
-        <xsl:variable name="ageRanges" select="if (count($ageRangesFrom385sub0)) then $ageRangesFrom385sub0 else $ageRangesFrom008POS22"/>
+        <xsl:variable name="ageRangesFrom019a" as="xs:string*">
+            <!-- *019$a is a remnant from NORMARC. If there's no *385$0, let's fall back to this instead -->
+            <xsl:if test="count($tag385sub0) = 0">
+                <xsl:for-each select="$tag019a">
+                    <xsl:choose>
+                        <xsl:when test=".='a'">
+                            <xsl:sequence select="'0-5'"/>
+                        </xsl:when>
+                        <xsl:when test=".='b'">
+                            <xsl:sequence select="'6-7'"/>
+                        </xsl:when>
+                        <xsl:when test=".='bu'">
+                            <xsl:sequence select="'8-10'"/>
+                        </xsl:when>
+                        <xsl:when test=".='u'">
+                            <xsl:sequence select="'11-12'"/>
+                        </xsl:when>
+                        <xsl:when test=".='mu'">
+                            <xsl:sequence select="'13-16'"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:variable>
+        <xsl:variable name="ageRanges" select="if (count($ageRangesFrom385sub0)) then $ageRangesFrom385sub0 else if (count($ageRangesFrom019a)) then $ageRangesFrom019a else $ageRangesFrom008POS22"/>
         <xsl:variable name="ageRangeFrom" select="if (count($ageRanges) = 0) then '' else xs:integer(min(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[1])))"/>
         <xsl:variable name="ageMax" select="if (count($ageRanges) = 0) then '' else max(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[2]))"/>
         <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF')) then '' else $ageMax"/>
