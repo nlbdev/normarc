@@ -2238,7 +2238,7 @@
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="$name">
-            <xsl:variable name="role" select="nlb:parseRole(concat('',(*:subfield[@code='e'], *:subfield[@code='r'], *:subfield[@code='x'])[1]/text()))"/>
+            <xsl:variable name="role" select="nlb:parseRole(*:subfield[@code='4'][1]/text())"/>
 
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="$role"/>
@@ -2749,59 +2749,280 @@
         <xsl:variable name="role" select="lower-case($role)"/>
 
         <xsl:choose>
-            <xsl:when test="matches($role,'^fr.\s.*') or matches($role,'^til\s.*') or matches($role,'^p.\s.*') or matches($role,'.*(overs|.versett|overatt|omsett).*')">
-                <xsl:value-of select="'dc:contributor.translator'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(foto|billed).*')">
-                <xsl:value-of select="'dc:contributor.photographer'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(illu|tegning|teikni|tegnet).*')">
-                <xsl:value-of select="'dc:contributor.illustrator'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(konsulent|faglig|r.dgiver|research).*')">
-                <xsl:value-of select="'dc:contributor.consultant'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(red[ia\.]|bearb|tilrett|edit|eds|instrukt|instruert|revid).*') or $role='ed' or $role='red' or $role='hovedred'">
-                <xsl:value-of select="'dc:contributor.editor'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(forord|innl|intro).*')">
-                <xsl:value-of select="'dc:creator.foreword'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*etterord.*')">
-                <!-- Author of afterword, colophon, etc. -->
-                <xsl:value-of select="'dc:creator.afterword'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*noter.*')">
-                <!-- Other -->
-                <xsl:value-of select="'dc:contributor.other'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*kommentar.*')">
-                <!-- Commentator for written text -->
-                <xsl:value-of select="'dc:contributor.commentator'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(bidrag|medarb|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
-                <xsl:value-of select="'dc:creator'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(lest|fort|presentert).*')">
-                <!-- Narrator -->
-                <xsl:value-of select="'dc:contributor.narrator'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*regi.*')">
-                <!-- Director -->
-                <xsl:value-of select="'dc:contributor.director'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*musikk.*')">
-                <!-- Musician -->
-                <xsl:value-of select="'dc:contributor.musician'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*komponist.*')">
-                <!-- Composer -->
-                <xsl:value-of select="'dc:contributor.composer'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(samlet|utvalg).*')">
-                <!-- Compiler -->
-                <xsl:value-of select="'dc:contributor.compiler'"/>
-            </xsl:when>
+            <!-- handle all MARC relators from https://www.loc.gov/marc/relators/relaterm.html -->
+            <xsl:when test="$role = 'exp'"><xsl:value-of select="'dc:contributor.expert'"/></xsl:when>
+            <xsl:when test="$role = 'abr'"><xsl:value-of select="'dc:contributor.abridger'"/></xsl:when>
+            <xsl:when test="$role = 'act'"><xsl:value-of select="'dc:contributor.actor'"/></xsl:when>
+            <xsl:when test="$role = 'adp'"><xsl:value-of select="'dc:contributor.adapter'"/></xsl:when>
+            <xsl:when test="$role = 'rcp'"><xsl:value-of select="'dc:contributor.addressee'"/></xsl:when>
+            <xsl:when test="$role = 'anl'"><xsl:value-of select="'dc:contributor.analyst'"/></xsl:when>
+            <xsl:when test="$role = 'anm'"><xsl:value-of select="'dc:contributor.animator'"/></xsl:when>
+            <xsl:when test="$role = 'ann'"><xsl:value-of select="'dc:contributor.annotator'"/></xsl:when>
+            <xsl:when test="$role = 'apl'"><xsl:value-of select="'dc:contributor.appellant'"/></xsl:when>
+            <xsl:when test="$role = 'ape'"><xsl:value-of select="'dc:contributor.appellee'"/></xsl:when>
+            <xsl:when test="$role = 'app'"><xsl:value-of select="'dc:contributor.applicant'"/></xsl:when>
+            <xsl:when test="$role = 'arc'"><xsl:value-of select="'dc:contributor.architect'"/></xsl:when>
+            <xsl:when test="$role = 'arr'"><xsl:value-of select="'dc:contributor.arranger'"/></xsl:when>
+            <xsl:when test="$role = 'acp'"><xsl:value-of select="'dc:contributor.art-copyist'"/></xsl:when>
+            <xsl:when test="$role = 'adi'"><xsl:value-of select="'dc:contributor.art-director'"/></xsl:when>
+            <xsl:when test="$role = 'art'"><xsl:value-of select="'dc:contributor.artist'"/></xsl:when>
+            <xsl:when test="$role = 'ard'"><xsl:value-of select="'dc:contributor.artistic-director'"/></xsl:when>
+            <xsl:when test="$role = 'asg'"><xsl:value-of select="'dc:contributor.assignee'"/></xsl:when>
+            <xsl:when test="$role = 'asn'"><xsl:value-of select="'dc:contributor.associated-name'"/></xsl:when>
+            <xsl:when test="$role = 'att'"><xsl:value-of select="'dc:contributor.attributed-name'"/></xsl:when>
+            <xsl:when test="$role = 'auc'"><xsl:value-of select="'dc:contributor.auctioneer'"/></xsl:when>
+            <xsl:when test="$role = 'aut'"><xsl:value-of select="'dc:contributor.author'"/></xsl:when>
+            <xsl:when test="$role = 'aqt'"><xsl:value-of select="'dc:contributor.quotations-or-text-abstracts'"/></xsl:when>
+            <xsl:when test="$role = 'aft'"><xsl:value-of select="'dc:contributor.afterword'"/></xsl:when>
+            <xsl:when test="$role = 'aud'"><xsl:value-of select="'dc:contributor.dialog'"/></xsl:when>
+            <xsl:when test="$role = 'aui'"><xsl:value-of select="'dc:contributor.foreword'"/></xsl:when>
+            <xsl:when test="$role = 'ato'"><xsl:value-of select="'dc:contributor.autographer'"/></xsl:when>
+            <xsl:when test="$role = 'ant'"><xsl:value-of select="'dc:contributor.bibliographic-antecedent'"/></xsl:when>
+            <xsl:when test="$role = 'bnd'"><xsl:value-of select="'dc:contributor.binder'"/></xsl:when>
+            <xsl:when test="$role = 'bdd'"><xsl:value-of select="'dc:contributor.binding-designer'"/></xsl:when>
+            <xsl:when test="$role = 'blw'"><xsl:value-of select="'dc:contributor.blurb-writer'"/></xsl:when>
+            <xsl:when test="$role = 'bkd'"><xsl:value-of select="'dc:contributor.book-designer'"/></xsl:when>
+            <xsl:when test="$role = 'bkp'"><xsl:value-of select="'dc:contributor.book-producer'"/></xsl:when>
+            <xsl:when test="$role = 'bjd'"><xsl:value-of select="'dc:contributor.bookjacket-designer'"/></xsl:when>
+            <xsl:when test="$role = 'bpd'"><xsl:value-of select="'dc:contributor.bookplate-designer'"/></xsl:when>
+            <xsl:when test="$role = 'bsl'"><xsl:value-of select="'dc:contributor.bookseller'"/></xsl:when>
+            <xsl:when test="$role = 'brl'"><xsl:value-of select="'dc:contributor.braille-embosser'"/></xsl:when>
+            <xsl:when test="$role = 'brd'"><xsl:value-of select="'dc:contributor.broadcaster'"/></xsl:when>
+            <xsl:when test="$role = 'cll'"><xsl:value-of select="'dc:contributor.calligrapher'"/></xsl:when>
+            <xsl:when test="$role = 'ctg'"><xsl:value-of select="'dc:contributor.cartographer'"/></xsl:when>
+            <xsl:when test="$role = 'cas'"><xsl:value-of select="'dc:contributor.caster'"/></xsl:when>
+            <xsl:when test="$role = 'cns'"><xsl:value-of select="'dc:contributor.censor'"/></xsl:when>
+            <xsl:when test="$role = 'chr'"><xsl:value-of select="'dc:contributor.choreographer'"/></xsl:when>
+            <xsl:when test="$role = 'cng'"><xsl:value-of select="'dc:contributor.cinematographer'"/></xsl:when>
+            <xsl:when test="$role = 'cli'"><xsl:value-of select="'dc:contributor.client'"/></xsl:when>
+            <xsl:when test="$role = 'cor'"><xsl:value-of select="'dc:contributor.collection-registrar'"/></xsl:when>
+            <xsl:when test="$role = 'col'"><xsl:value-of select="'dc:contributor.collector'"/></xsl:when>
+            <xsl:when test="$role = 'clt'"><xsl:value-of select="'dc:contributor.collotyper'"/></xsl:when>
+            <xsl:when test="$role = 'clr'"><xsl:value-of select="'dc:contributor.colorist'"/></xsl:when>
+            <xsl:when test="$role = 'cmm'"><xsl:value-of select="'dc:contributor.commentator'"/></xsl:when>
+            <xsl:when test="$role = 'cwt'"><xsl:value-of select="'dc:contributor.commentator-for-written-text'"/></xsl:when>
+            <xsl:when test="$role = 'com'"><xsl:value-of select="'dc:contributor.compiler'"/></xsl:when>
+            <xsl:when test="$role = 'cpl'"><xsl:value-of select="'dc:contributor.complainant'"/></xsl:when>
+            <xsl:when test="$role = 'cpt'"><xsl:value-of select="'dc:contributor.complainant-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'cpe'"><xsl:value-of select="'dc:contributor.complainant-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'cmp'"><xsl:value-of select="'dc:contributor.composer'"/></xsl:when>
+            <xsl:when test="$role = 'cmt'"><xsl:value-of select="'dc:contributor.compositor'"/></xsl:when>
+            <xsl:when test="$role = 'ccp'"><xsl:value-of select="'dc:contributor.conceptor'"/></xsl:when>
+            <xsl:when test="$role = 'cnd'"><xsl:value-of select="'dc:contributor.conductor'"/></xsl:when>
+            <xsl:when test="$role = 'con'"><xsl:value-of select="'dc:contributor.conservator'"/></xsl:when>
+            <xsl:when test="$role = 'csl'"><xsl:value-of select="'dc:contributor.consultant'"/></xsl:when>
+            <xsl:when test="$role = 'csp'"><xsl:value-of select="'dc:contributor.consultant-to-a-project'"/></xsl:when>
+            <xsl:when test="$role = 'cos'"><xsl:value-of select="'dc:contributor.contestant'"/></xsl:when>
+            <xsl:when test="$role = 'cot'"><xsl:value-of select="'dc:contributor.contestant-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'coe'"><xsl:value-of select="'dc:contributor.contestant-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'cts'"><xsl:value-of select="'dc:contributor.contestee'"/></xsl:when>
+            <xsl:when test="$role = 'ctt'"><xsl:value-of select="'dc:contributor.contestee-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'cte'"><xsl:value-of select="'dc:contributor.contestee-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'ctr'"><xsl:value-of select="'dc:contributor.contractor'"/></xsl:when>
+            <xsl:when test="$role = 'ctb'"><xsl:value-of select="'dc:contributor.contributor'"/></xsl:when>
+            <xsl:when test="$role = 'cpc'"><xsl:value-of select="'dc:contributor.copyright-claimant'"/></xsl:when>
+            <xsl:when test="$role = 'cph'"><xsl:value-of select="'dc:contributor.copyright-holder'"/></xsl:when>
+            <xsl:when test="$role = 'crr'"><xsl:value-of select="'dc:contributor.corrector'"/></xsl:when>
+            <xsl:when test="$role = 'crp'"><xsl:value-of select="'dc:contributor.correspondent'"/></xsl:when>
+            <xsl:when test="$role = 'cst'"><xsl:value-of select="'dc:contributor.costume-designer'"/></xsl:when>
+            <xsl:when test="$role = 'cou'"><xsl:value-of select="'dc:contributor.court-governed'"/></xsl:when>
+            <xsl:when test="$role = 'crt'"><xsl:value-of select="'dc:contributor.court-reporter'"/></xsl:when>
+            <xsl:when test="$role = 'cov'"><xsl:value-of select="'dc:contributor.cover-designer'"/></xsl:when>
+            <xsl:when test="$role = 'cre'"><xsl:value-of select="'dc:contributor.creator'"/></xsl:when>
+            <xsl:when test="$role = 'cur'"><xsl:value-of select="'dc:contributor.curator'"/></xsl:when>
+            <xsl:when test="$role = 'dnc'"><xsl:value-of select="'dc:contributor.dancer'"/></xsl:when>
+            <xsl:when test="$role = 'dtc'"><xsl:value-of select="'dc:contributor.data-contributor'"/></xsl:when>
+            <xsl:when test="$role = 'dtm'"><xsl:value-of select="'dc:contributor.data-manager'"/></xsl:when>
+            <xsl:when test="$role = 'dte'"><xsl:value-of select="'dc:contributor.dedicatee'"/></xsl:when>
+            <xsl:when test="$role = 'dto'"><xsl:value-of select="'dc:contributor.dedicator'"/></xsl:when>
+            <xsl:when test="$role = 'dfd'"><xsl:value-of select="'dc:contributor.defendant'"/></xsl:when>
+            <xsl:when test="$role = 'dft'"><xsl:value-of select="'dc:contributor.defendant-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'dfe'"><xsl:value-of select="'dc:contributor.defendant-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'dgc'"><xsl:value-of select="'dc:contributor.degree-committee-member'"/></xsl:when>
+            <xsl:when test="$role = 'dgg'"><xsl:value-of select="'dc:contributor.degree-granting-institution'"/></xsl:when>
+            <xsl:when test="$role = 'dgs'"><xsl:value-of select="'dc:contributor.degree-supervisor'"/></xsl:when>
+            <xsl:when test="$role = 'dln'"><xsl:value-of select="'dc:contributor.delineator'"/></xsl:when>
+            <xsl:when test="$role = 'dpc'"><xsl:value-of select="'dc:contributor.depicted'"/></xsl:when>
+            <xsl:when test="$role = 'dpt'"><xsl:value-of select="'dc:contributor.depositor'"/></xsl:when>
+            <xsl:when test="$role = 'dsr'"><xsl:value-of select="'dc:contributor.designer'"/></xsl:when>
+            <xsl:when test="$role = 'drt'"><xsl:value-of select="'dc:contributor.director'"/></xsl:when>
+            <xsl:when test="$role = 'dis'"><xsl:value-of select="'dc:contributor.dissertant'"/></xsl:when>
+            <xsl:when test="$role = 'dbp'"><xsl:value-of select="'dc:contributor.distribution-place'"/></xsl:when>
+            <xsl:when test="$role = 'dst'"><xsl:value-of select="'dc:contributor.distributor'"/></xsl:when>
+            <xsl:when test="$role = 'dnr'"><xsl:value-of select="'dc:contributor.donor'"/></xsl:when>
+            <xsl:when test="$role = 'drm'"><xsl:value-of select="'dc:contributor.draftsman'"/></xsl:when>
+            <xsl:when test="$role = 'dub'"><xsl:value-of select="'dc:contributor.dubious-author'"/></xsl:when>
+            <xsl:when test="$role = 'edt'"><xsl:value-of select="'dc:contributor.editor'"/></xsl:when>
+            <xsl:when test="$role = 'edc'"><xsl:value-of select="'dc:contributor.editor-of-compilation'"/></xsl:when>
+            <xsl:when test="$role = 'edm'"><xsl:value-of select="'dc:contributor.editor-of-moving-image-work'"/></xsl:when>
+            <xsl:when test="$role = 'elg'"><xsl:value-of select="'dc:contributor.electrician'"/></xsl:when>
+            <xsl:when test="$role = 'elt'"><xsl:value-of select="'dc:contributor.electrotyper'"/></xsl:when>
+            <xsl:when test="$role = 'enj'"><xsl:value-of select="'dc:contributor.enacting-jurisdiction'"/></xsl:when>
+            <xsl:when test="$role = 'eng'"><xsl:value-of select="'dc:contributor.engineer'"/></xsl:when>
+            <xsl:when test="$role = 'egr'"><xsl:value-of select="'dc:contributor.engraver'"/></xsl:when>
+            <xsl:when test="$role = 'etr'"><xsl:value-of select="'dc:contributor.etcher'"/></xsl:when>
+            <xsl:when test="$role = 'evp'"><xsl:value-of select="'dc:contributor.event-place'"/></xsl:when>
+            <xsl:when test="$role = 'exp'"><xsl:value-of select="'dc:contributor.expert'"/></xsl:when>
+            <xsl:when test="$role = 'fac'"><xsl:value-of select="'dc:contributor.facsimilist'"/></xsl:when>
+            <xsl:when test="$role = 'fld'"><xsl:value-of select="'dc:contributor.field-director'"/></xsl:when>
+            <xsl:when test="$role = 'fmd'"><xsl:value-of select="'dc:contributor.film-director'"/></xsl:when>
+            <xsl:when test="$role = 'fds'"><xsl:value-of select="'dc:contributor.film-distributor'"/></xsl:when>
+            <xsl:when test="$role = 'flm'"><xsl:value-of select="'dc:contributor.film-editor'"/></xsl:when>
+            <xsl:when test="$role = 'fmp'"><xsl:value-of select="'dc:contributor.film-producer'"/></xsl:when>
+            <xsl:when test="$role = 'fmk'"><xsl:value-of select="'dc:contributor.filmmaker'"/></xsl:when>
+            <xsl:when test="$role = 'fpy'"><xsl:value-of select="'dc:contributor.first-party'"/></xsl:when>
+            <xsl:when test="$role = 'frg'"><xsl:value-of select="'dc:contributor.forger'"/></xsl:when>
+            <xsl:when test="$role = 'fmo'"><xsl:value-of select="'dc:contributor.former-owner'"/></xsl:when>
+            <xsl:when test="$role = 'fnd'"><xsl:value-of select="'dc:contributor.funder'"/></xsl:when>
+            <xsl:when test="$role = 'gis'"><xsl:value-of select="'dc:contributor.geographic-information-specialist'"/></xsl:when>
+            <xsl:when test="$role = 'hnr'"><xsl:value-of select="'dc:contributor.honoree'"/></xsl:when>
+            <xsl:when test="$role = 'hst'"><xsl:value-of select="'dc:contributor.host'"/></xsl:when>
+            <xsl:when test="$role = 'his'"><xsl:value-of select="'dc:contributor.host-institution'"/></xsl:when>
+            <xsl:when test="$role = 'ilu'"><xsl:value-of select="'dc:contributor.illuminator'"/></xsl:when>
+            <xsl:when test="$role = 'ill'"><xsl:value-of select="'dc:contributor.illustrator'"/></xsl:when>
+            <xsl:when test="$role = 'ins'"><xsl:value-of select="'dc:contributor.inscriber'"/></xsl:when>
+            <xsl:when test="$role = 'itr'"><xsl:value-of select="'dc:contributor.instrumentalist'"/></xsl:when>
+            <xsl:when test="$role = 'ive'"><xsl:value-of select="'dc:contributor.interviewee'"/></xsl:when>
+            <xsl:when test="$role = 'ivr'"><xsl:value-of select="'dc:contributor.interviewer'"/></xsl:when>
+            <xsl:when test="$role = 'inv'"><xsl:value-of select="'dc:contributor.inventor'"/></xsl:when>
+            <xsl:when test="$role = 'isb'"><xsl:value-of select="'dc:contributor.issuing-body'"/></xsl:when>
+            <xsl:when test="$role = 'jud'"><xsl:value-of select="'dc:contributor.judge'"/></xsl:when>
+            <xsl:when test="$role = 'jug'"><xsl:value-of select="'dc:contributor.jurisdiction-governed'"/></xsl:when>
+            <xsl:when test="$role = 'lbr'"><xsl:value-of select="'dc:contributor.laboratory'"/></xsl:when>
+            <xsl:when test="$role = 'ldr'"><xsl:value-of select="'dc:contributor.laboratory-director'"/></xsl:when>
+            <xsl:when test="$role = 'lsa'"><xsl:value-of select="'dc:contributor.landscape-architect'"/></xsl:when>
+            <xsl:when test="$role = 'led'"><xsl:value-of select="'dc:contributor.lead'"/></xsl:when>
+            <xsl:when test="$role = 'len'"><xsl:value-of select="'dc:contributor.lender'"/></xsl:when>
+            <xsl:when test="$role = 'lil'"><xsl:value-of select="'dc:contributor.libelant'"/></xsl:when>
+            <xsl:when test="$role = 'lit'"><xsl:value-of select="'dc:contributor.libelant-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'lie'"><xsl:value-of select="'dc:contributor.libelant-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'lel'"><xsl:value-of select="'dc:contributor.libelee'"/></xsl:when>
+            <xsl:when test="$role = 'let'"><xsl:value-of select="'dc:contributor.libelee-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'lee'"><xsl:value-of select="'dc:contributor.libelee-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'lbt'"><xsl:value-of select="'dc:contributor.librettist'"/></xsl:when>
+            <xsl:when test="$role = 'lse'"><xsl:value-of select="'dc:contributor.licensee'"/></xsl:when>
+            <xsl:when test="$role = 'lso'"><xsl:value-of select="'dc:contributor.licensor'"/></xsl:when>
+            <xsl:when test="$role = 'lgd'"><xsl:value-of select="'dc:contributor.lighting-designer'"/></xsl:when>
+            <xsl:when test="$role = 'ltg'"><xsl:value-of select="'dc:contributor.lithographer'"/></xsl:when>
+            <xsl:when test="$role = 'lyr'"><xsl:value-of select="'dc:contributor.lyricist'"/></xsl:when>
+            <xsl:when test="$role = 'mfp'"><xsl:value-of select="'dc:contributor.manufacture-place'"/></xsl:when>
+            <xsl:when test="$role = 'mfr'"><xsl:value-of select="'dc:contributor.manufacturer'"/></xsl:when>
+            <xsl:when test="$role = 'mrb'"><xsl:value-of select="'dc:contributor.marbler'"/></xsl:when>
+            <xsl:when test="$role = 'mrk'"><xsl:value-of select="'dc:contributor.markup-editor'"/></xsl:when>
+            <xsl:when test="$role = 'med'"><xsl:value-of select="'dc:contributor.medium'"/></xsl:when>
+            <xsl:when test="$role = 'mdc'"><xsl:value-of select="'dc:contributor.metadata-contact'"/></xsl:when>
+            <xsl:when test="$role = 'mte'"><xsl:value-of select="'dc:contributor.metal-engraver'"/></xsl:when>
+            <xsl:when test="$role = 'mtk'"><xsl:value-of select="'dc:contributor.minute-taker'"/></xsl:when>
+            <xsl:when test="$role = 'mod'"><xsl:value-of select="'dc:contributor.moderator'"/></xsl:when>
+            <xsl:when test="$role = 'mon'"><xsl:value-of select="'dc:contributor.monitor'"/></xsl:when>
+            <xsl:when test="$role = 'mcp'"><xsl:value-of select="'dc:contributor.music-copyist'"/></xsl:when>
+            <xsl:when test="$role = 'msd'"><xsl:value-of select="'dc:contributor.musical-director'"/></xsl:when>
+            <xsl:when test="$role = 'mus'"><xsl:value-of select="'dc:contributor.musician'"/></xsl:when>
+            <xsl:when test="$role = 'nrt'"><xsl:value-of select="'dc:contributor.narrator'"/></xsl:when>
+            <xsl:when test="$role = 'osp'"><xsl:value-of select="'dc:contributor.onscreen-presenter'"/></xsl:when>
+            <xsl:when test="$role = 'opn'"><xsl:value-of select="'dc:contributor.opponent'"/></xsl:when>
+            <xsl:when test="$role = 'orm'"><xsl:value-of select="'dc:contributor.organizer'"/></xsl:when>
+            <xsl:when test="$role = 'org'"><xsl:value-of select="'dc:contributor.originator'"/></xsl:when>
+            <xsl:when test="$role = 'oth'"><xsl:value-of select="'dc:contributor.other'"/></xsl:when>
+            <xsl:when test="$role = 'own'"><xsl:value-of select="'dc:contributor.owner'"/></xsl:when>
+            <xsl:when test="$role = 'pan'"><xsl:value-of select="'dc:contributor.panelist'"/></xsl:when>
+            <xsl:when test="$role = 'ppm'"><xsl:value-of select="'dc:contributor.papermaker'"/></xsl:when>
+            <xsl:when test="$role = 'pta'"><xsl:value-of select="'dc:contributor.patent-applicant'"/></xsl:when>
+            <xsl:when test="$role = 'pth'"><xsl:value-of select="'dc:contributor.patent-holder'"/></xsl:when>
+            <xsl:when test="$role = 'pat'"><xsl:value-of select="'dc:contributor.patron'"/></xsl:when>
+            <xsl:when test="$role = 'prf'"><xsl:value-of select="'dc:contributor.performer'"/></xsl:when>
+            <xsl:when test="$role = 'pma'"><xsl:value-of select="'dc:contributor.permitting-agency'"/></xsl:when>
+            <xsl:when test="$role = 'pht'"><xsl:value-of select="'dc:contributor.photographer'"/></xsl:when>
+            <xsl:when test="$role = 'pad'"><xsl:value-of select="'dc:contributor.place-of-address'"/></xsl:when>
+            <xsl:when test="$role = 'ptf'"><xsl:value-of select="'dc:contributor.plaintiff'"/></xsl:when>
+            <xsl:when test="$role = 'ptt'"><xsl:value-of select="'dc:contributor.plaintiff-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'pte'"><xsl:value-of select="'dc:contributor.plaintiff-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'plt'"><xsl:value-of select="'dc:contributor.platemaker'"/></xsl:when>
+            <xsl:when test="$role = 'pra'"><xsl:value-of select="'dc:contributor.praeses'"/></xsl:when>
+            <xsl:when test="$role = 'pre'"><xsl:value-of select="'dc:contributor.presenter'"/></xsl:when>
+            <xsl:when test="$role = 'prt'"><xsl:value-of select="'dc:contributor.printer'"/></xsl:when>
+            <xsl:when test="$role = 'pop'"><xsl:value-of select="'dc:contributor.printer-of-plates'"/></xsl:when>
+            <xsl:when test="$role = 'prm'"><xsl:value-of select="'dc:contributor.printmaker'"/></xsl:when>
+            <xsl:when test="$role = 'prc'"><xsl:value-of select="'dc:contributor.process-contact'"/></xsl:when>
+            <xsl:when test="$role = 'pro'"><xsl:value-of select="'dc:contributor.producer'"/></xsl:when>
+            <xsl:when test="$role = 'prn'"><xsl:value-of select="'dc:contributor.production-company'"/></xsl:when>
+            <xsl:when test="$role = 'prs'"><xsl:value-of select="'dc:contributor.production-designer'"/></xsl:when>
+            <xsl:when test="$role = 'pmn'"><xsl:value-of select="'dc:contributor.production-manager'"/></xsl:when>
+            <xsl:when test="$role = 'prd'"><xsl:value-of select="'dc:contributor.production-personnel'"/></xsl:when>
+            <xsl:when test="$role = 'prp'"><xsl:value-of select="'dc:contributor.production-place'"/></xsl:when>
+            <xsl:when test="$role = 'prg'"><xsl:value-of select="'dc:contributor.programmer'"/></xsl:when>
+            <xsl:when test="$role = 'pdr'"><xsl:value-of select="'dc:contributor.project-director'"/></xsl:when>
+            <xsl:when test="$role = 'pfr'"><xsl:value-of select="'dc:contributor.proofreader'"/></xsl:when>
+            <xsl:when test="$role = 'prv'"><xsl:value-of select="'dc:contributor.provider'"/></xsl:when>
+            <xsl:when test="$role = 'pup'"><xsl:value-of select="'dc:contributor.publication-place'"/></xsl:when>
+            <xsl:when test="$role = 'pbl'"><xsl:value-of select="'dc:contributor.publisher'"/></xsl:when>
+            <xsl:when test="$role = 'pbd'"><xsl:value-of select="'dc:contributor.publishing-director'"/></xsl:when>
+            <xsl:when test="$role = 'ppt'"><xsl:value-of select="'dc:contributor.puppeteer'"/></xsl:when>
+            <xsl:when test="$role = 'rdd'"><xsl:value-of select="'dc:contributor.radio-director'"/></xsl:when>
+            <xsl:when test="$role = 'rpc'"><xsl:value-of select="'dc:contributor.radio-producer'"/></xsl:when>
+            <xsl:when test="$role = 'rce'"><xsl:value-of select="'dc:contributor.recording-engineer'"/></xsl:when>
+            <xsl:when test="$role = 'rcd'"><xsl:value-of select="'dc:contributor.recordist'"/></xsl:when>
+            <xsl:when test="$role = 'red'"><xsl:value-of select="'dc:contributor.redaktor'"/></xsl:when>
+            <xsl:when test="$role = 'ren'"><xsl:value-of select="'dc:contributor.renderer'"/></xsl:when>
+            <xsl:when test="$role = 'rpt'"><xsl:value-of select="'dc:contributor.reporter'"/></xsl:when>
+            <xsl:when test="$role = 'rps'"><xsl:value-of select="'dc:contributor.repository'"/></xsl:when>
+            <xsl:when test="$role = 'rth'"><xsl:value-of select="'dc:contributor.research-team-head'"/></xsl:when>
+            <xsl:when test="$role = 'rtm'"><xsl:value-of select="'dc:contributor.research-team-member'"/></xsl:when>
+            <xsl:when test="$role = 'res'"><xsl:value-of select="'dc:contributor.researcher'"/></xsl:when>
+            <xsl:when test="$role = 'rsp'"><xsl:value-of select="'dc:contributor.respondent'"/></xsl:when>
+            <xsl:when test="$role = 'rst'"><xsl:value-of select="'dc:contributor.respondent-appellant'"/></xsl:when>
+            <xsl:when test="$role = 'rse'"><xsl:value-of select="'dc:contributor.respondent-appellee'"/></xsl:when>
+            <xsl:when test="$role = 'rpy'"><xsl:value-of select="'dc:contributor.responsible-party'"/></xsl:when>
+            <xsl:when test="$role = 'rsg'"><xsl:value-of select="'dc:contributor.restager'"/></xsl:when>
+            <xsl:when test="$role = 'rsr'"><xsl:value-of select="'dc:contributor.restorationist'"/></xsl:when>
+            <xsl:when test="$role = 'rev'"><xsl:value-of select="'dc:contributor.reviewer'"/></xsl:when>
+            <xsl:when test="$role = 'rbr'"><xsl:value-of select="'dc:contributor.rubricator'"/></xsl:when>
+            <xsl:when test="$role = 'sce'"><xsl:value-of select="'dc:contributor.scenarist'"/></xsl:when>
+            <xsl:when test="$role = 'sad'"><xsl:value-of select="'dc:contributor.scientific-advisor'"/></xsl:when>
+            <xsl:when test="$role = 'aus'"><xsl:value-of select="'dc:contributor.screenwriter'"/></xsl:when>
+            <xsl:when test="$role = 'scr'"><xsl:value-of select="'dc:contributor.scribe'"/></xsl:when>
+            <xsl:when test="$role = 'scl'"><xsl:value-of select="'dc:contributor.sculptor'"/></xsl:when>
+            <xsl:when test="$role = 'spy'"><xsl:value-of select="'dc:contributor.second-party'"/></xsl:when>
+            <xsl:when test="$role = 'sec'"><xsl:value-of select="'dc:contributor.secretary'"/></xsl:when>
+            <xsl:when test="$role = 'sll'"><xsl:value-of select="'dc:contributor.seller'"/></xsl:when>
+            <xsl:when test="$role = 'std'"><xsl:value-of select="'dc:contributor.set-designer'"/></xsl:when>
+            <xsl:when test="$role = 'stg'"><xsl:value-of select="'dc:contributor.setting'"/></xsl:when>
+            <xsl:when test="$role = 'sgn'"><xsl:value-of select="'dc:contributor.signer'"/></xsl:when>
+            <xsl:when test="$role = 'sng'"><xsl:value-of select="'dc:contributor.singer'"/></xsl:when>
+            <xsl:when test="$role = 'sds'"><xsl:value-of select="'dc:contributor.sound-designer'"/></xsl:when>
+            <xsl:when test="$role = 'spk'"><xsl:value-of select="'dc:contributor.speaker'"/></xsl:when>
+            <xsl:when test="$role = 'spn'"><xsl:value-of select="'dc:contributor.sponsor'"/></xsl:when>
+            <xsl:when test="$role = 'sgd'"><xsl:value-of select="'dc:contributor.stage-director'"/></xsl:when>
+            <xsl:when test="$role = 'stm'"><xsl:value-of select="'dc:contributor.stage-manager'"/></xsl:when>
+            <xsl:when test="$role = 'stn'"><xsl:value-of select="'dc:contributor.standards-body'"/></xsl:when>
+            <xsl:when test="$role = 'str'"><xsl:value-of select="'dc:contributor.stereotyper'"/></xsl:when>
+            <xsl:when test="$role = 'stl'"><xsl:value-of select="'dc:contributor.storyteller'"/></xsl:when>
+            <xsl:when test="$role = 'sht'"><xsl:value-of select="'dc:contributor.supporting-host'"/></xsl:when>
+            <xsl:when test="$role = 'srv'"><xsl:value-of select="'dc:contributor.surveyor'"/></xsl:when>
+            <xsl:when test="$role = 'tch'"><xsl:value-of select="'dc:contributor.teacher'"/></xsl:when>
+            <xsl:when test="$role = 'tcd'"><xsl:value-of select="'dc:contributor.technical-director'"/></xsl:when>
+            <xsl:when test="$role = 'tld'"><xsl:value-of select="'dc:contributor.television-director'"/></xsl:when>
+            <xsl:when test="$role = 'tlp'"><xsl:value-of select="'dc:contributor.television-producer'"/></xsl:when>
+            <xsl:when test="$role = 'ths'"><xsl:value-of select="'dc:contributor.thesis-advisor'"/></xsl:when>
+            <xsl:when test="$role = 'trc'"><xsl:value-of select="'dc:contributor.transcriber'"/></xsl:when>
+            <xsl:when test="$role = 'trl'"><xsl:value-of select="'dc:contributor.translator'"/></xsl:when>
+            <xsl:when test="$role = 'tyd'"><xsl:value-of select="'dc:contributor.type-designer'"/></xsl:when>
+            <xsl:when test="$role = 'tyg'"><xsl:value-of select="'dc:contributor.typographer'"/></xsl:when>
+            <xsl:when test="$role = 'uvp'"><xsl:value-of select="'dc:contributor.university-place'"/></xsl:when>
+            <xsl:when test="$role = 'vdg'"><xsl:value-of select="'dc:contributor.videographer'"/></xsl:when>
+            <xsl:when test="$role = 'vac'"><xsl:value-of select="'dc:contributor.voice-actor'"/></xsl:when>
+            <xsl:when test="$role = 'wit'"><xsl:value-of select="'dc:contributor.witness'"/></xsl:when>
+            <xsl:when test="$role = 'wde'"><xsl:value-of select="'dc:contributor.wood-engraver'"/></xsl:when>
+            <xsl:when test="$role = 'wdc'"><xsl:value-of select="'dc:contributor.woodcutter'"/></xsl:when>
+            <xsl:when test="$role = 'wam'"><xsl:value-of select="'dc:contributor.accompanying-material'"/></xsl:when>
+            <xsl:when test="$role = 'wac'"><xsl:value-of select="'dc:contributor.added-commentary'"/></xsl:when>
+            <xsl:when test="$role = 'wal'"><xsl:value-of select="'dc:contributor.added-lyrics'"/></xsl:when>
+            <xsl:when test="$role = 'wat'"><xsl:value-of select="'dc:contributor.added-text'"/></xsl:when>
+            <xsl:when test="$role = 'win'"><xsl:value-of select="'dc:contributor.introduction'"/></xsl:when>
+            <xsl:when test="$role = 'wpr'"><xsl:value-of select="'dc:contributor.preface'"/></xsl:when>
+            <xsl:when test="$role = 'wst'"><xsl:value-of select="'dc:contributor.supplementary-textual-content'"/></xsl:when>
+            
+            <!-- default to dc:contributor.other when unable to determine the role -->
             <xsl:otherwise>
                 <xsl:value-of select="'dc:contributor.other'"/>
             </xsl:otherwise>
