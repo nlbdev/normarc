@@ -130,11 +130,11 @@ def compare(identifier, normarc_path, marc21_path):
         normarc_offset = 0
         marc21_offset = 0
 
-        normarc_has_sortingKey_from_245w = False
+        normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
         for line in normarc:
-            if "sortingKey" in line and "*245$w" in line:
-                normarc_has_sortingKey_from_245w = True
+            if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
+                normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
 
@@ -250,10 +250,9 @@ def compare(identifier, normarc_path, marc21_path):
             # handled in marcxchange-to-opf.xsl:
             # - *650 are sorted alphabetically for easier comparison with NORMARC
             
-            # the sorting key in *245$w is not preserved in MARC21
+            # the sorting keys in *100$w and *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
-            # if normarc has a sortingKey based on *245$w, then we need to ignore 
-            if normarc_has_sortingKey_from_245w:
+            if normarc_has_sortingKey_from_100w_or_245w:
                 if "sortingKey" in normarc_line and "refines=" not in normarc_line:
                     normarc_offset += 1
                     continue
