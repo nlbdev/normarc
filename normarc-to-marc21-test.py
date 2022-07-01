@@ -13,7 +13,8 @@ import time
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
-exit_on_error = True
+exit_on_error = False
+print_first_error_only = True
 
 config = {}
 with open(os.path.join(current_directory, "normarc-to-marc21-test.config")) as f:
@@ -115,6 +116,7 @@ def compare(identifier, normarc_path, marc21_path):
     global normarc_target_dir
     global marc21_target_dir
     global records
+    global print_first_error_only
 
     with lock:
         normarc = None
@@ -145,17 +147,19 @@ def compare(identifier, normarc_path, marc21_path):
                 break
 
             if normarc_linenum > len(normarc) - 1 and marc21_linenum <= len(marc21) - 1:
-                print("No more lines in NORMARC. Remaining lines in MARC21 are:")
-                print()
-                print("\n".join(normarc[normarc_linenum:]))
-                print()
+                if not print_first_error_only or not error_has_occured:
+                    print("No more lines in NORMARC. Remaining lines in MARC21 are:")
+                    print()
+                    print("\n".join(normarc[normarc_linenum:]))
+                    print()
                 return False
             
             if normarc_linenum <= len(normarc) - 1 and marc21_linenum > len(marc21) - 1:
-                print("No more lines in MARC21. Remaining lines in NORMARC are:")
-                print()
-                print("\n".join(marc21[marc21_linenum:]))
-                print()
+                if not print_first_error_only or not error_has_occured:
+                    print("No more lines in MARC21. Remaining lines in NORMARC are:")
+                    print()
+                    print("\n".join(marc21[marc21_linenum:]))
+                    print()
                 return False
             
             normarc_line = re.sub(r"  +", " ", normarc[normarc_linenum].strip())
@@ -277,11 +281,12 @@ def compare(identifier, normarc_path, marc21_path):
                 marc21_line = re.sub(r'>\d+<', '>X<', marc21_line)
             
             if normarc_line != marc21_line:
-                print("Lines are different:")
-                print()
-                print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}{normarc_line_comment}")
-                print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}{marc21_line_comment}")
-                print()
+                if print_first_error_only and not error_has_occured:
+                    print("Lines are different:")
+                    print()
+                    print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}{normarc_line_comment}")
+                    print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}{marc21_line_comment}")
+                    print()
                 return False
             
             linenum += 1
@@ -349,6 +354,7 @@ os.makedirs(normarc_target_dir, exist_ok=True)
 os.makedirs(marc21_target_dir, exist_ok=True)
 
 successful = len(already_handled)
+failed = 0
 handled_in_this_run = 0
 error_has_occured = False
 
@@ -358,7 +364,9 @@ def handle(identifier):
     global marc21_target_dir
     global identifiers
     global successful
+    global failed
     global error_has_occured
+    global print_first_error_only
     global records
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
@@ -375,23 +383,27 @@ def handle(identifier):
         equal = compare(identifier, normarc_opf_file, marc21_opf_file)
         
         if not equal:
-            print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%)")
-            print()
-            print(f"{identifier}:")
-            print(f"- NORMARC in: {normarc_file}")
-            print(f"- MARC21 in: {marc21_file}")
-            print(f"- NORMARC OPF out: {normarc_opf_file}")
-            print(f"- MARC21 OPF out: {marc21_opf_file}")
-            print()
-            print("Open all in editor:")
-            print(f"{config.get('editor', 'subl')} {normarc_opf_file} {marc21_opf_file} {normarc_file} {marc21_file}")
+            if not print_first_error_only or not error_has_occured:
+                print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%)")
+                print()
+                print(f"{identifier}:")
+                print(f"- NORMARC in: {normarc_file}")
+                print(f"- MARC21 in: {marc21_file}")
+                print(f"- NORMARC OPF out: {normarc_opf_file}")
+                print(f"- MARC21 OPF out: {marc21_opf_file}")
+                print()
+                print("Open all in editor:")
+                print(f"{config.get('editor', 'subl')} {normarc_opf_file} {marc21_opf_file} {normarc_file} {marc21_file}")
             error_has_occured = True
+            failed += 1
+            if (successful + failed) % 10 == 0 or (successful + failed) == len(identifiers):
+                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. Last: {identifier})")
             return False
         else:
             mark_as_handled(identifier)
             successful += 1
-            if successful % 10 == 0 or successful == len(identifiers):
-                print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%, last: {identifier})")
+            if (successful + failed) % 10 == 0 or (successful + failed) == len(identifiers):
+                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. Last: {identifier})")
             return True
 
 for identifier in identifiers:
@@ -414,7 +426,7 @@ for identifier in identifiers:
         break
     
 if handled_in_this_run >= 3:
-    print("3 successful in a row, switching to parallel processing")
+    print("Processed three records synchronously, now switching to parallel processing")
     thread_pool = []
     for identifier in identifiers:
         if error_has_occured and exit_on_error:
