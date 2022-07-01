@@ -285,7 +285,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_offset += 1
                     continue
             
-            if identifier in ["9115", "9275"]:
+            if identifier in ["9115", "9275", "9518"]:
                 # strange conversion of series metadata, skip for now
                 if "*440" in normarc_line_comment or "*490" in normarc_line_comment or "*830" in normarc_line_comment:
                     normarc_offset += 1
