@@ -514,9 +514,10 @@
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
             <xsl:call-template name="meta">
-                <xsl:with-param name="controlfield_position" select="'22'"/>
                 <xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/>
                 <xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/>
+                <xsl:with-param name="context" select="($tag019a_context, .)[1]"/>
+                <xsl:with-param name="controlfield_position" select="if (($tag019a_context, .)[1] = .) then '22' else ()"/>
             </xsl:call-template>
         </xsl:if>
 

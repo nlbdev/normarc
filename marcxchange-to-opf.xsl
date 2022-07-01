@@ -565,16 +565,12 @@
         <xsl:variable name="juvenileAgeLimit" select="if (count($ageRangesFrom385sub0)) then 13 else 14"/> <!-- because the 008/22 age range 14-17 fits better than 9-13 -->
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
-            <xsl:choose>
-                <xsl:when test="count($ageRangesFrom385sub0)">
-                    <xsl:for-each select="$tag385sub0_contexts[1]">
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
-                    </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/><xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/></xsl:call-template>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="meta">
+                <xsl:with-param name="property" select="nlb:prefixed-property('typicalAgeRange')"/>
+                <xsl:with-param name="value" select="concat($ageRangeFrom,'-',$ageRangeTo)"/>
+                <xsl:with-param name="context" select="($tag385sub0_contexts, $tag019a_context, .)[1]"/>
+                <xsl:with-param name="controlfield_position" select="if (($tag385sub0_contexts, $tag019a_context, .)[1] = .) then '22' else ()"/>
+            </xsl:call-template>
         </xsl:if>
 
         <!--
