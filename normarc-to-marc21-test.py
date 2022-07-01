@@ -141,13 +141,18 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
         marc21_has_385 = False
+        marc21_has_spaces_in_019a = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
+        for line in marc21:
             if "*385" in line:
                 marc21_has_385 = True
+        for line in marc21_source:
+            if line.startswith("*019") and "$a" in line and " " in line.split("$a")[1].split("$")[0]:
+                marc21_has_spaces_in_019a = True
 
         while linenum < len(normarc):
             normarc_linenum = linenum + normarc_offset
@@ -289,7 +294,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_offset += 1
                     continue
             
-            if identifier in ["9379"]:
+            if marc21_has_spaces_in_019a:
                 # bad conversion of *019$a, skip for now
                 if "typicalAgeRange" in normarc_line:
                     normarc_offset += 1
