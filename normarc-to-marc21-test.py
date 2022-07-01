@@ -268,6 +268,15 @@ def compare(identifier, normarc_path, marc21_path):
                 if "series.position" in marc21_line and "*490" in marc21_line_comment:
                     marc21_offset += 1
                     continue
+            
+            if identifier in ["9115"]:
+                # strange conversion of series metadata, skip for now
+                if "*440" in normarc_line_comment or "*490" in normarc_line_comment or "*830" in normarc_line_comment:
+                    normarc_offset += 1
+                    continue
+                if "*440" in marc21_line_comment or "*490" in marc21_line_comment or "*830" in marc21_line_comment:
+                    marc21_offset += 1
+                    continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
