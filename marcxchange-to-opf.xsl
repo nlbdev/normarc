@@ -2232,9 +2232,23 @@
     </xsl:template>
 
     <!-- 700 - 75X BIINNFØRSLER -->
-
+    
     <xsl:template match="*:datafield[@tag='700']">
-        <xsl:variable name="contributor-id" select="concat('contributor-700-',1+count(preceding-sibling::*:datafield[@tag='700']))"/>
+        <!-- when we find the first *700 -->
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='700'])">
+            <!-- then handle all *700 sorted by $a and $0 -->
+            <xsl:for-each select="../*:datafield[@tag='700']">
+                <xsl:sort select="*:subfield[@code='a'][1]/text()"/>
+                <xsl:call-template name="datafield700">
+                    <xsl:with-param name="position" select="position()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="datafield700">
+        <xsl:param name="position"/>
+        <xsl:variable name="contributor-id" select="concat('contributor-700-', $position)"/>
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="$name">
@@ -2771,7 +2785,7 @@
             <xsl:when test="$role = 'asn'"><xsl:value-of select="'dc:contributor.associated-name'"/></xsl:when>
             <xsl:when test="$role = 'att'"><xsl:value-of select="'dc:contributor.attributed-name'"/></xsl:when>
             <xsl:when test="$role = 'auc'"><xsl:value-of select="'dc:contributor.auctioneer'"/></xsl:when>
-            <xsl:when test="$role = 'aut'"><xsl:value-of select="'dc:contributor.author'"/></xsl:when>
+            <xsl:when test="$role = 'aut'"><xsl:value-of select="'dc:creator'"/></xsl:when>
             <xsl:when test="$role = 'aqt'"><xsl:value-of select="'dc:contributor.quotations-or-text-abstracts'"/></xsl:when>
             <xsl:when test="$role = 'aft'"><xsl:value-of select="'dc:contributor.afterword'"/></xsl:when>
             <xsl:when test="$role = 'aud'"><xsl:value-of select="'dc:contributor.dialog'"/></xsl:when>
