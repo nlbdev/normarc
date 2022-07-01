@@ -1613,9 +1613,23 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:description.content'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
-
+    
     <xsl:template match="*:datafield[@tag='511']">
-        <xsl:variable name="contributor-id" select="concat('contributor-511-',1+count(preceding-sibling::*:datafield[@tag='511']))"/>
+        <!-- when we find the first *511 -->
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='511'])">
+            <!-- then handle all *511 sorted by $a -->
+            <xsl:for-each select="../*:datafield[@tag='511']">
+                <xsl:sort select="*:subfield[@code='a']/text()"/>
+                <xsl:call-template name="datafield511">
+                    <xsl:with-param name="position" select="position()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template name="datafield511">
+        <xsl:param name="position"/>
+        <xsl:variable name="contributor-id" select="concat('contributor-511-', $position)"/>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:variable name="contributor-name" select="text()"/>
             
