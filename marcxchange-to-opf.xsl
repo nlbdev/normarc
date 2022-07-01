@@ -2252,7 +2252,7 @@
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="$name">
-            <xsl:variable name="role" select="nlb:parseRole(*:subfield[@code='4'][1]/text())"/>
+            <xsl:variable name="role" select="nlb:parseRole((*:subfield[@code='4'], *:subfield[@code='e'], *:subfield[@code='r'], *:subfield[@code='x'])[1]/text())"/>
 
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="$role"/>
@@ -3035,6 +3035,61 @@
             <xsl:when test="$role = 'win'"><xsl:value-of select="'dc:contributor.introduction'"/></xsl:when>
             <xsl:when test="$role = 'wpr'"><xsl:value-of select="'dc:contributor.preface'"/></xsl:when>
             <xsl:when test="$role = 'wst'"><xsl:value-of select="'dc:contributor.supplementary-textual-content'"/></xsl:when>
+            
+            <!-- parse the role from the free text subfield (as we did in NORMARC) -->
+            <xsl:when test="matches($role,'^fr.\s.*') or matches($role,'^til\s.*') or matches($role,'^p.\s.*') or matches($role,'.*(overs|.versett|overatt|omsett).*')">
+                <xsl:value-of select="'dc:contributor.translator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(foto|billed).*')">
+                <xsl:value-of select="'dc:contributor.photographer'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(illu|tegning|teikni|tegnet).*')">
+                <xsl:value-of select="'dc:contributor.illustrator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(konsulent|faglig|r.dgiver|research).*')">
+                <xsl:value-of select="'dc:contributor.consultant'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(red[ia\.]|bearb|tilrett|edit|eds|instrukt|instruert|revid).*') or $role='ed' or $role='red' or $role='hovedred'">
+                <xsl:value-of select="'dc:contributor.editor'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(forord|innl|intro).*')">
+                <xsl:value-of select="'dc:creator.foreword'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*etterord.*')">
+                <!-- Author of afterword, colophon, etc. -->
+                <xsl:value-of select="'dc:creator.afterword'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*noter.*')">
+                <!-- Other -->
+                <xsl:value-of select="'dc:contributor.other'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*kommentar.*')">
+                <!-- Commentator for written text -->
+                <xsl:value-of select="'dc:contributor.commentator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(forf|bidrag|medarb|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
+                <xsl:value-of select="'dc:creator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(lest|fort|presentert).*')">
+                <!-- Narrator -->
+                <xsl:value-of select="'dc:contributor.narrator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*regi.*')">
+                <!-- Director -->
+                <xsl:value-of select="'dc:contributor.director'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*musikk.*')">
+                <!-- Musician -->
+                <xsl:value-of select="'dc:contributor.musician'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*komponist.*')">
+                <!-- Composer -->
+                <xsl:value-of select="'dc:contributor.composer'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(samlet|utvalg).*')">
+                <!-- Compiler -->
+                <xsl:value-of select="'dc:contributor.compiler'"/>
+            </xsl:when>
             
             <!-- default to dc:contributor.other when unable to determine the role -->
             <xsl:otherwise>
