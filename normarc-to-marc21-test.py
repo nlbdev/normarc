@@ -48,7 +48,7 @@ def mark_as_handled(identifier):
         already_handled.append(identifier)
 
 
-def writefile(outdir, identifier, lines):
+def writefile(outdir, identifier, lines, source_lines):
     assert os.path.isdir(outdir), f"{outdir}"
     assert identifier is not None, f"lines: {lines}"
     header = [
@@ -62,6 +62,8 @@ def writefile(outdir, identifier, lines):
     lines = [line + "\n" for line in lines]  # add newlines
     with open(os.path.join(outdir, f"{identifier}.xml"), "w") as f:
         f.writelines(lines)
+    with open(os.path.join(outdir, f"{identifier}.txt"), "w") as f:
+        f.writelines(source_lines)
 
 
 def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None, cwd=None):
@@ -111,7 +113,7 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
     return success
 
 
-def compare(identifier, normarc_path, marc21_path):
+def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_source_path):
     global lock
     global normarc_target_dir
     global marc21_target_dir
@@ -121,10 +123,16 @@ def compare(identifier, normarc_path, marc21_path):
     with lock:
         normarc = None
         marc21 = None
+        normarc_source = None
+        marc21_source = None
         with open(normarc_path) as f:
             normarc = f.readlines()
         with open(marc21_path) as f:
             marc21 = f.readlines()
+        with open(normarc_source_path) as f:
+            normarc_source = f.readlines()
+        with open(marc21_source_path) as f:
+            marc21_source = f.readlines()
         
         linenum = 0
         normarc_offset = 0
@@ -331,13 +339,15 @@ if not os.path.exists(records):
 
             identifier = None
             lines = []
+            source_lines = []
             print(f"Processing: {infile}")
             with open(infile) as f:
                 for line in f.readlines():
                     if line.startswith("^"):
-                        writefile(outdir, identifier, lines)
+                        writefile(outdir, identifier, lines, source_lines)
                         identifier = None
                         lines = []
+                        source_lines = []
                     elif line.startswith("*00"):
                         tag = line[1:4]
                         data = line.strip()[4:]
@@ -357,6 +367,7 @@ if not os.path.exists(records):
                         lines.append(f'    </marcxchange:datafield>')
                     else:
                         assert False, f"Unexpected line: '{line}'"
+                    source_lines.append(line)
 
                     if marcname in ["normarc", "marc21"] and tablename == "vmarc" and line[1:4] == "001":
                         identifier = line.strip()[4:].lstrip("0")
@@ -390,6 +401,8 @@ def handle(identifier):
     global records
     normarc_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.xml")
     marc21_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.xml")
+    normarc_source_file = os.path.join(records, "normarc", "vmarc", f"{identifier}.txt")
+    marc21_source_file = os.path.join(records, "marc21", "vmarc", f"{identifier}.txt")
 
     normarc_opf_file = os.path.join(normarc_target_dir, f"{identifier}.opf")
     marc21_opf_file = os.path.join(marc21_target_dir, f"{identifier}.opf")
@@ -400,7 +413,7 @@ def handle(identifier):
     assert success, f"Failed to transform: {marc21_file}"
 
     with lock:
-        equal = compare(identifier, normarc_opf_file, marc21_opf_file)
+        equal = compare(identifier, normarc_opf_file, marc21_opf_file, normarc_source_file, marc21_source_file)
         
         if not equal:
             if not print_first_error_only or not error_has_occured:
