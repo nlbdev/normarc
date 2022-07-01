@@ -533,7 +533,7 @@
             </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="tag019a_context" select="(../*:datafield[@tag='019']/*:subfield[@code='a'])[1]" as="element()?"/>
-        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'\s',''),'[,\.\-_]')" as="xs:string*"/>
+        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'[\[\]\s]',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRangesFrom019a" as="xs:string*">
             <!-- *019$a is a remnant from NORMARC. If there's no *385$0, let's fall back to this instead -->
             <xsl:if test="count($tag385sub0) = 0">
