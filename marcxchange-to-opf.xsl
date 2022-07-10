@@ -1580,10 +1580,10 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='490'] | *:datafield[@tag='830']">
-        <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='490']))"/>
+        <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag=('440','490','830')]))"/>
         
-        <xsl:variable name="series-serialized" select="string-join(.//text(), '')" as="xs:string"/>
-        <xsl:variable name="preceding-series-serialized" select="preceding-sibling::*:datafield[@tag=('440','490')]/string-join(.//text(), '')" as="xs:string*"/>
+        <xsl:variable name="series-serialized" select="string-join(*:subfield[not(@code=('n','v'))]/text(), '')" as="xs:string"/>
+        <xsl:variable name="preceding-series-serialized" select="preceding-sibling::*:datafield[@tag=('440','490','830')]/string-join(*:subfield[not(@code=('n','v'))]/text(), '')" as="xs:string*"/>
         
         <xsl:if test="not($series-serialized = $preceding-series-serialized)">
             <xsl:variable name="series-title" as="element()?">
