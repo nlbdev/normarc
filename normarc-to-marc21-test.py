@@ -292,10 +292,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_refines:
-                if "series.position" in normarc_line and "*490" in normarc_line_comment:
+                if "series.position" in normarc_line and not "refines=" in normarc_line and "*490" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
                     continue
-                if "series.position" in marc21_line and "*490" in marc21_line_comment:
+                if "series.position" in marc21_line and not "refines=" in marc21_line and "*490" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
                     continue
             
