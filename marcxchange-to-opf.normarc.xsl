@@ -2805,8 +2805,11 @@
             <xsl:when test="matches($role,'.*(konsulent|faglig|r.dgiver|research).*')">
                 <xsl:value-of select="'dc:contributor.consultant'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*(red[ia\.]|bearb|tilrett|edit|eds|instrukt|instruert|revid).*') or $role='ed' or $role='red' or $role='hovedred'">
+            <xsl:when test="matches($role,'.*(red[ia\.]|tilrett|edit|eds|instrukt|instruert|revid).*') or $role='ed' or $role='red' or $role='hovedred'">
                 <xsl:value-of select="'dc:contributor.editor'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*bearb.*')">
+                <xsl:value-of select="'dc:contributor.adapter'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(forord|innl|intro).*')">
                 <xsl:value-of select="'dc:creator.foreword'"/>
