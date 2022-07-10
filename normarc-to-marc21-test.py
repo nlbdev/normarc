@@ -223,20 +223,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = marc21_line.replace("ü", "y").replace("Ü", "Y")
                 marc21_line = marc21_line.replace("-", " ")
 
-            # The definition of "adult" has changed from 17+ in NORMARC to 18+ in MARC21
-            if normarc_line == '<meta property="typicalAgeRange">17-</meta>':
+            # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
+            if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
-            
-            # Age ranges work differently in MARC21
-            # NORMARC=MARC21: a=aa,a | b≈b | bu≈bu | u=u | mu≈mu,vu
-            if "typicalAgeRange" in normarc_line and marc21_has_385:
-                # 13-16 is now 13-15, and 17+ is now 18+ (adults are now 18+ instead of 17+)
-                normarc_line = normarc_line.replace("-16<", "-15<")
-                normarc_line = normarc_line.replace(">17-", ">18-")
-
-                # 7/8 is now 8/9
-                normarc_line = normarc_line.replace("-7<", "-8<")
-                normarc_line = normarc_line.replace(">8-", ">9-")
 
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
