@@ -592,11 +592,11 @@
 
         <xsl:choose>
             <xsl:when test="$POS33='0'">
-                <meta property="dc:type.fiction">false</meta>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.fiction'"/><xsl:with-param name="value" select="'false'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-fiction'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="$POS33='1'">
-                <meta property="dc:type.fiction">true</meta>
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.fiction'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'33'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Fiction'"/></xsl:call-template>
             </xsl:when>
         </xsl:choose>
