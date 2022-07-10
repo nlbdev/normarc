@@ -486,24 +486,27 @@
         <xsl:variable name="tag019a_context" select="(../*:datafield[@tag='019']/*:subfield[@code='a'])[1]" as="element()?"/>
         <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'[\[\]\s]',''),'[,\.\-_]')" as="xs:string*"/>
         <xsl:variable name="ageRanges" as="xs:string*">
-            <xsl:sequence select="if ($POS22 = 'a') then '17-INF' else ()"/>
-            <xsl:sequence select="if ($POS22 = 'j' and count($tag019a) = 0) then '0-16' else ()"/>
+            <xsl:sequence select="if ($POS22 = 'a') then '16-INF' else ()"/>
+            <xsl:sequence select="if ($POS22 = 'j' and count($tag019a) = 0) then '0-15' else ()"/>
             <xsl:for-each select="$tag019a">
                 <xsl:choose>
+                    <xsl:when test=".='aa'">
+                        <xsl:sequence select="'0-2'"/>
+                    </xsl:when>
                     <xsl:when test=".='a'">
-                        <xsl:sequence select="'0-5'"/>
+                        <xsl:sequence select="'3-5'"/>
                     </xsl:when>
                     <xsl:when test=".='b'">
-                        <xsl:sequence select="'6-7'"/>
+                        <xsl:sequence select="'6-8'"/>
                     </xsl:when>
                     <xsl:when test=".='bu'">
-                        <xsl:sequence select="'8-10'"/>
+                        <xsl:sequence select="'9-10'"/>
                     </xsl:when>
                     <xsl:when test=".='u'">
                         <xsl:sequence select="'11-12'"/>
                     </xsl:when>
                     <xsl:when test=".='mu'">
-                        <xsl:sequence select="'13-16'"/>
+                        <xsl:sequence select="'13-15'"/>
                     </xsl:when>
                 </xsl:choose>
             </xsl:for-each>
