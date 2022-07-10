@@ -142,11 +142,17 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_490_without_refines = False
         marc21_has_385 = False
         marc21_has_spaces_in_019a = False
+        normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
+        for line in normarc_source:
+            if "*019" in line and "$a" in line:
+                value = line.split("$a")[1].split("$")[0]
+                if "[" in value or "]" in value:
+                    normarc_has_brackets_in_019a = True
         for line in marc21:
             if "*385" in line:
                 marc21_has_385 = True
@@ -294,7 +300,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_offset += 1
                     continue
             
-            if marc21_has_spaces_in_019a:
+            if marc21_has_spaces_in_019a or normarc_has_brackets_in_019a:
                 # bad conversion of *019$a, skip for now
                 if "typicalAgeRange" in normarc_line:
                     normarc_offset += 1
