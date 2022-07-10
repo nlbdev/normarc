@@ -1689,7 +1689,7 @@
     <xsl:template match="*:datafield[@tag='574']">
         <xsl:variable name="property" select="if (../*:datafield[@tag='240']) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="value" select="replace(text(),'^\s*Ori?ginal(ens )?tit\w*\s*:?\s*','')"/>
+            <xsl:variable name="value" select="replace(text(),'^\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*','')"/>
             <xsl:if test="not($value = 'mangler')">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
             </xsl:if>
