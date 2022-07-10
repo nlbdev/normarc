@@ -2838,7 +2838,7 @@
                 <!-- Musician -->
                 <xsl:value-of select="'dc:contributor.musician'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*komponist.*')">
+            <xsl:when test="matches($role,'.*komp.*')">
                 <!-- Composer -->
                 <xsl:value-of select="'dc:contributor.composer'"/>
             </xsl:when>
