@@ -143,17 +143,22 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_574a_without_Originaltittel = []
         marc21_has_spaces_in_019a = False
         normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
+        normarc_is_deleted = False
+        normarc_has_008 = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
         for line in normarc_source:
+            if "*008" in line:
+                normarc_has_008 = True
+            if "*000" in line and line[9] == "d":
+                normarc_is_deleted = True
             if "*019" in line and "$a" in line:
                 value = line.split("$a")[1].split("$")[0]
                 if "[" in value or "]" in value:
                     normarc_has_brackets_in_019a = True
-        for line in normarc_source:
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
@@ -161,6 +166,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         for line in marc21_source:
             if line.startswith("*019") and "$a" in line and " " in line.split("$a")[1].split("$")[0]:
                 marc21_has_spaces_in_019a = True
+        
+        if normarc_is_deleted and not normarc_has_008:
+            print(f"Skipping deleted record with no *008: {identifier}")
+            return True
 
         while linenum < len(normarc):
             normarc_offset = len(normarc_skip_lines)
