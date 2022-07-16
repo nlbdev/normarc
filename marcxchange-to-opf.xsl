@@ -1182,7 +1182,7 @@
 
     <xsl:template match="*:datafield[@tag='041']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="text" select="text()"/>
+            <xsl:variable name="text" select="replace(text(), '[, ]', '')"/>
             <xsl:variable name="context" select="."/>
             <xsl:for-each select="(1 to xs:integer(floor(string-length($text) div 3)))">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:language'"/><xsl:with-param name="value" select="substring($text,1+(.-1)*3,3)"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
@@ -1190,7 +1190,7 @@
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='h']">
             <xsl:variable name="has-following-041h" select="exists(following-sibling::*:subfield[@code='h'])"/>
-            <xsl:variable name="text" select="text()"/>
+            <xsl:variable name="text" select="replace(text(), '[, ]', '')"/>
             <xsl:variable name="context" select="."/>
             <xsl:for-each select="(1 to xs:integer(floor(string-length($text) div 3)))">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:language.original',if (position() lt last() or $has-following-041h) then '.intermediary' else '','')"/><xsl:with-param name="value" select="substring($text,1+(.-1)*3,3)"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
