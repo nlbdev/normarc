@@ -1578,6 +1578,11 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
+    
+    <xsl:function name="nlb:serialized-series" as="xs:string">
+        <xsl:param name="datafield-490-or-830" as="element()"/>
+        <xsl:value-of select="$datafield-490-or-830/string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')"/>
+    </xsl:function>
 
     <xsl:template match="*:datafield[@tag='490'] | *:datafield[@tag='830']">
         <xsl:choose>
@@ -1588,15 +1593,12 @@
                 <xsl:variable name="series" select="../*:datafield[@tag=('490','830')]" as="element()*"/>
                 <xsl:variable name="series-with-ids" select="$series[exists(*:subfield[@code='_'])]" as="element()*"/>
                 <xsl:variable name="series-without-ids" select="$series except $series-with-ids" as="element()*"/>
-                <xsl:variable name="series-with-ids-serialized" select="$series-with-ids/string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')" as="xs:string*"/>
-                <xsl:variable name="series-without-ids-serialized" select="$series-without-ids/string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')" as="xs:string*"/>
                 
                 <!-- for duplicate series, prefer the one that has an ID -->
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="$series">
-                        <xsl:variable name="serialized" select="string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')" as="xs:string"/>
                         <!-- if the series exists both with and without an ID, and this instance is one without an ID, then discard it -->
-                        <xsl:if test="not($serialized = $series-without-ids-serialized and $serialized = $series-with-ids-serialized and exists(*:subfield[@code='_']))">
+                        <xsl:if test="not(nlb:serialized-series(.) = $series-without-ids/nlb:serialized-series(.) and nlb:serialized-series(.) = $series-with-ids/nlb:serialized-series(.) and exists(*:subfield[@code='_']))">
                             <xsl:sequence select="."/>
                         </xsl:if>
                     </xsl:for-each>
@@ -1606,9 +1608,8 @@
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="$series-unique">
                         <xsl:variable name="position" select="position()"/>
-                        <xsl:variable name="serialized" select="string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')" as="xs:string"/>
                         <!-- if the series is not a duplicate of one of the preceding series -->
-                        <xsl:if test="not($serialized = $series-unique[position() lt $position])">
+                        <xsl:if test="not(nlb:serialized-series(.) = $series-unique[position() lt $position]/nlb:serialized-series(.))">
                             <xsl:sequence select="."/>
                         </xsl:if>
                     </xsl:for-each>
