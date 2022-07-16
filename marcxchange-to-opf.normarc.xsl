@@ -1292,8 +1292,14 @@
     <!-- 2XX TITTEL-, ANSVARS- OG UTGIVELSESOPPLYSNINGER -->
 
     <xsl:template match="*:datafield[@tag='240']">
+        <xsl:variable name="tag574" as="element()*">
+            <xsl:apply-templates select="../*:datafield[@tag='574']"/>
+        </xsl:variable>
+        <xsl:variable name="property" select="if (count($tag574)) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:if test="not(text() = $tag574/text())">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
     </xsl:template>
 
@@ -1687,11 +1693,10 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='574']">
-        <xsl:variable name="property" select="if (../*:datafield[@tag='240']) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:variable name="value" select="replace(text(),'^\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*','')"/>
             <xsl:if test="not($value = 'mangler')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
