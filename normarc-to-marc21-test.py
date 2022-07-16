@@ -140,7 +140,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
 
         normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
-        marc21_has_385 = False
         marc21_has_spaces_in_019a = False
         normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         for line in normarc:
@@ -153,9 +152,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 value = line.split("$a")[1].split("$")[0]
                 if "[" in value or "]" in value:
                     normarc_has_brackets_in_019a = True
-        for line in marc21:
-            if "*385" in line:
-                marc21_has_385 = True
         for line in marc21_source:
             if line.startswith("*019") and "$a" in line and " " in line.split("$a")[1].split("$")[0]:
                 marc21_has_spaces_in_019a = True
