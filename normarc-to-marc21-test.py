@@ -140,6 +140,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
 
         normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
+        normarc_574a_without_Originaltittel = []
         marc21_has_spaces_in_019a = False
         normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         for line in normarc:
@@ -152,6 +153,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 value = line.split("$a")[1].split("$")[0]
                 if "[" in value or "]" in value:
                     normarc_has_brackets_in_019a = True
+        for line in normarc:
+            if "*574" in line and "$a" in line:
+                a = line.split("$a")[1].split("$")[0]
+                if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
+                    normarc_574a_without_Originaltittel.append(f">{a}<")  # adding >< for easier comparison with meta elements
         for line in marc21_source:
             if line.startswith("*019") and "$a" in line and " " in line.split("$a")[1].split("$")[0]:
                 marc21_has_spaces_in_019a = True
@@ -302,11 +308,17 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
                     continue
             
-            if identifier in ["9989"]:
-                # original title is converted to 500 instead of 246 for some reason, ignore for now
+            # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
+            if normarc_574a_without_Originaltittel:
+                # bad conversion of *574$a, skip for now
                 if "*574" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
                     continue
+                if "*500" in marc21_line_comment:
+                    for original_title in normarc_574a_without_Originaltittel:
+                        if original_title in marc21_line:
+                            marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                            break
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
