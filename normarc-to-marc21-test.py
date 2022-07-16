@@ -153,7 +153,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 value = line.split("$a")[1].split("$")[0]
                 if "[" in value or "]" in value:
                     normarc_has_brackets_in_019a = True
-        for line in normarc:
+        for line in normarc_source:
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
