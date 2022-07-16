@@ -1691,6 +1691,13 @@
     <xsl:template match="*:datafield[@tag='539']">
         <!--<xsl:message select="'NORMARC-felt ignorert: 539 SERIER'"/>-->
     </xsl:template>
+    
+    <xsl:template match="*:datafield[@tag='572']">
+        <xsl:for-each select="*:subfield[@code='a' and starts-with(text(), 'Undertittel på omslaget: ')]">
+            <xsl:variable name="value" select="replace(text(),'^Undertittel på omslaget: ','')"/>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+        </xsl:for-each>
+    </xsl:template>
 
     <xsl:template match="*:datafield[@tag='574']">
         <xsl:for-each select="*:subfield[@code='a']">
