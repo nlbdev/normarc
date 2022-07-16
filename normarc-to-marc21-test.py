@@ -221,17 +221,23 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line_comment = "  <!-- " + marc21_line_comment
 
             # Handle differences in the authority registry
-            if "property=" in normarc_line and normarc_line.split('property="')[1].split('"')[0] in ["sortingKey"]:
+            normarc_line_property = normarc_line.split('property="')[1].split('"')[0] if "property=" in normarc_line else normarc_line.split("<")[1].split(">")[0].split(" ")[0]
+            marc21_line_property = marc21_line.split('property="')[1].split('"')[0] if "property=" in marc21_line else marc21_line.split("<")[1].split(">")[0].split(" ")[0]
+            if normarc_line_property in ["sortingKey", "dc:creator"]:
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
                 normarc_line = normarc_line.replace("ö", "ø").replace("Ö", "Ø")
                 normarc_line = normarc_line.replace("ä", "æ").replace("Ä", "Æ")
                 normarc_line = normarc_line.replace("ü", "y").replace("Ü", "Y")
+                normarc_line = normarc_line.replace("ó", "o").replace("Ó", "O")
+                normarc_line = normarc_line.replace("ð", "d").replace("Ð", "D")
                 normarc_line = normarc_line.replace("-", " ")
-            if "property=" in marc21_line and marc21_line.split('property="')[1].split('"')[0] in ["sortingKey"]:
+            if marc21_line_property in ["sortingKey", "dc:creator"]:
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
                 marc21_line = marc21_line.replace("ö", "ø").replace("Ö", "Ø")
                 marc21_line = marc21_line.replace("ä", "æ").replace("Ä", "Æ")
                 marc21_line = marc21_line.replace("ü", "y").replace("Ü", "Y")
+                marc21_line = marc21_line.replace("ó", "o").replace("Ó", "O")
+                marc21_line = marc21_line.replace("ð", "d").replace("Ð", "D")
                 marc21_line = marc21_line.replace("-", " ")
 
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
