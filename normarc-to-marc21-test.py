@@ -235,8 +235,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 [marc21_line, marc21_line_comment] = marc21_line.split(" <!--", 1)
                 marc21_line_comment = "<!--" + marc21_line_comment
             
-            # *490$v is set to 1 for some reason, even though there's no *440$v in the corresponding NORMARC record
-            if marc21_line == '<meta property="series.position" refines="#series-title-1">1</meta>' and "*490$v" in marc21_line_comment:
+            # *490$v is set to 1 when there's no *440$v, or copied from *440$v, even when that isn't necessarily correct
+            if re.match(r'<meta property="series.position" refines="#series-title-1">\d+</meta>', marc21_line) and "*490$v" in marc21_line_comment:
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
                 continue
 
