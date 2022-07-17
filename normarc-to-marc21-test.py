@@ -145,6 +145,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         normarc_is_deleted = False
         normarc_has_008 = False
+        normarc_marc21_008_pos_33 = []
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
@@ -153,6 +154,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         for line in normarc_source:
             if "*008" in line:
                 normarc_has_008 = True
+                if len(line) > 4+33:
+                    normarc_marc21_008_pos_33.append(line[4+33])  # *008/33
             if "*000" in line and line[9] == "d":
                 normarc_is_deleted = True
             if "*019" in line and "$a" in line:
@@ -164,12 +167,18 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
                     normarc_574a_without_Originaltittel.append(f">{a}<")  # adding >< for easier comparison with meta elements
         for line in marc21_source:
+            if "*008" in line and len(line) > 4+33:
+                normarc_marc21_008_pos_33.append(line[4+33])  # *008/33
             if line.startswith("*019") and "$a" in line and " " in line.split("$a")[1].split("$")[0]:
                 marc21_has_spaces_in_019a = True
         
-        if normarc_is_deleted and not normarc_has_008:
-            print(f"Skipping deleted record with no *008: {identifier}")
-            return True
+        if normarc_is_deleted:
+            if not normarc_has_008:
+                print(f"Skipping deleted record with no *008l: {identifier}")
+                return True
+            if len(normarc_marc21_008_pos_33) != 2 or normarc_marc21_008_pos_33[0] != normarc_marc21_008_pos_33[1]:
+                print(f"Skipping deleted record with different *008/33: {identifier}")
+                return True
 
         while linenum < len(normarc):
             normarc_offset = len(normarc_skip_lines)
