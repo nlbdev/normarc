@@ -1537,7 +1537,9 @@
 
         <xsl:variable name="series-title" as="element()?">
             <xsl:for-each select="(*:subfield[@code='a'])[1]">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="replace(text(), ' *; *.*', '')"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
+                <xsl:variable name="value" select="replace(text(), ' *; *.*', '')"/>
+                <xsl:variable name="value" select="if (../*:subfield[@code='c']) then concat($value, '/', ../*:subfield[@code='c'][1]/text()) else $value"/>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series'"/><xsl:with-param name="value" select="$value"/><xsl:with-param name="id" select="$title-id"/></xsl:call-template>
             </xsl:for-each>
         </xsl:variable>
         <xsl:copy-of select="$series-title" exclude-result-prefixes="#all"/>
