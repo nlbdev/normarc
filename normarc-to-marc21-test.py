@@ -215,19 +215,19 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             normarc_line = re.sub(r"  +", " ", normarc[normarc_linenum].strip())
             marc21_line = re.sub(r"  +", " ", marc21[marc21_linenum].strip())
 
-            # *490$v is set to 1 for some reason, even though there's no *440$v in the corresponding NORMARC record
-            if marc21_line == '<meta property="series.position" refines="#series-title-1">1</meta> <!-- Bibliofil@3588 *490$v -->':
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
-                continue
-
             normarc_line_comment = ""
             marc21_line_comment = ""
             if " <!--" in normarc_line:
                 [normarc_line, normarc_line_comment] = normarc_line.split(" <!--", 1)
-                normarc_line_comment = "  <!-- " + normarc_line_comment
+                normarc_line_comment = "<!--" + normarc_line_comment
             if " <!--" in marc21_line:
                 [marc21_line, marc21_line_comment] = marc21_line.split(" <!--", 1)
-                marc21_line_comment = "  <!-- " + marc21_line_comment
+                marc21_line_comment = "<!--" + marc21_line_comment
+            
+            # *490$v is set to 1 for some reason, even though there's no *440$v in the corresponding NORMARC record
+            if marc21_line == '<meta property="series.position" refines="#series-title-1">1</meta>' and "*490$v" in marc21_line_comment:
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                continue
 
             # Handle differences in the authority registry
             normarc_line_property = normarc_line.split('property="')[1].split('"')[0] if "property=" in normarc_line else normarc_line.split("<")[1].split(">")[0].split(" ")[0]
@@ -361,8 +361,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     print()
                     print("Lines are different:")
                     print()
-                    print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}{normarc_line_comment}")
-                    print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}{marc21_line_comment}")
+                    print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}  {normarc_line_comment}")
+                    print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}  {marc21_line_comment}")
                     print()
                 return False
             
