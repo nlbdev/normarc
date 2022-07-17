@@ -602,9 +602,6 @@
         </xsl:choose>
 
         <xsl:choose>
-            <xsl:when test="$POS34='1'">
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
-            </xsl:when>
             <xsl:when test="$POS34='a'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Autobiography'"/></xsl:call-template>
@@ -626,7 +623,7 @@
             </xsl:otherwise>
         </xsl:choose>
         
-        <xsl:if test="$POS34 = ('1', 'a', 'b', 'c', 'd')">
+        <xsl:if test="$POS34 = ('a', 'b', 'c', 'd')">
             <xsl:variable name="subject-id" select="'subject-008'"/>
             <xsl:variable name="bibliofil-id" select="'19880600'"/>  <!-- unfortunately hardcoded here - if we had a good way to do it  we could look for *655$aBiografisk in data.aut.txt and use $_ from there. -->
             
