@@ -602,9 +602,6 @@
         </xsl:choose>
 
         <xsl:choose>
-            <xsl:when test="$POS34=('0', ' ')">
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-biography'"/></xsl:call-template>
-            </xsl:when>
             <xsl:when test="$POS34='1'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
             </xsl:when>
@@ -623,6 +620,10 @@
             <xsl:when test="$POS34='d'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Biography'"/></xsl:call-template>
             </xsl:when>
+            <xsl:otherwise>
+                <!-- ('0', ' ') -->
+                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'34'"/><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Non-biography'"/></xsl:call-template>
+            </xsl:otherwise>
         </xsl:choose>
         
         <xsl:if test="$POS34 = ('1', 'a', 'b', 'c', 'd')">
