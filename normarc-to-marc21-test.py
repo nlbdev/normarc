@@ -12,6 +12,10 @@ import threading
 import time
 import unicodedata
 
+skip_records = [
+    "102680",  # bad *019$a
+]
+
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
 exit_on_error = False
@@ -489,6 +493,9 @@ def handle(identifier):
 
 for identifier in identifiers:
     if identifier in already_handled:
+        continue
+
+    if identifier in skip_records:
         continue
 
     success = False
