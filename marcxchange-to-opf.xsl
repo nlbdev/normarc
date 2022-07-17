@@ -1580,7 +1580,9 @@
     
     <xsl:function name="nlb:serialized-series" as="xs:string">
         <xsl:param name="datafield-490-or-830" as="element()"/>
-        <xsl:value-of select="$datafield-490-or-830/string-join(*:subfield[not(@code=('n','v','_'))]/text(), '')"/>
+        <xsl:variable name="values" select="$datafield-490-or-830/*:subfield[not(@code=('n','v','_'))]" as="element()*"/>
+        <xsl:variable name="values" select="for $subfield in ($values) return if ($subfield/@code = 'a') then replace($subfield/text(), '\(([^)]*)\)', '/$1') else $subfield/text()" as="xs:string*"/>
+        <xsl:value-of select="string-join($values, '')"/>
     </xsl:function>
 
     <xsl:template match="*:datafield[@tag='490'] | *:datafield[@tag='830']">
