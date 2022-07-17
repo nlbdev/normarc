@@ -1296,7 +1296,7 @@
         <xsl:variable name="tag574" as="element()*">
             <xsl:apply-templates select="../*:datafield[@tag='574']"/>
         </xsl:variable>
-        <xsl:variable name="property" select="if (count($tag574)) then 'dc:title.original.alternative' else 'dc:title.original'"/>
+        <xsl:variable name="property" select="if (@ind1 != '1') then 'dc:title.alternative' else if (count($tag574)) then 'dc:title.original.alternative' else 'dc:title.original'"/>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:if test="not(text() = $tag574/text())">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="$property"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
