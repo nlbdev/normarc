@@ -484,7 +484,8 @@
         </xsl:choose>
         
         <xsl:variable name="tag019a_context" select="(../*:datafield[@tag='019']/*:subfield[@code='a'])[1]" as="element()?"/>
-        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(text(),'[\[\]\s]',''),'[,\.\-_]')" as="xs:string*"/>
+        <xsl:variable name="tag019a" select="../*:datafield[@tag='019']/*:subfield[@code='a']/tokenize(replace(replace(text(), '[\[\]\s]', ''), '[/\.-]', ','), '[,\.\-_]')" as="xs:string*"/>
+        <xsl:variable name="tag019a" select="for $a in ($tag019a) return if (string-length($a) gt 0) then $a else ()" as="xs:string*"/>
         <xsl:variable name="ageRanges" as="xs:string*">
             <xsl:sequence select="if ($POS22 = 'a') then '16-INF' else ()"/>
             <xsl:sequence select="if ($POS22 = 'j' and count($tag019a) = 0) then '0-15' else ()"/>
