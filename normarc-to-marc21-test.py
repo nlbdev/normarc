@@ -10,6 +10,7 @@ import logging
 import re
 import threading
 import time
+import unicodedata
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
@@ -111,6 +112,12 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
         logging.exception(f"An error occured while running the XSLT: {stylesheet}")
     
     return success
+
+
+# https://stackoverflow.com/a/517974/281065
+def remove_accents(input_str):
+    nfkd_form = unicodedata.normalize('NFKD', input_str)
+    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
 def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_source_path):
@@ -234,20 +241,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             marc21_line_property = marc21_line.split('property="')[1].split('"')[0] if "property=" in marc21_line else marc21_line.split("<")[1].split(">")[0].split(" ")[0]
             if normarc_line_property in ["sortingKey", "dc:creator"]:
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
-                normarc_line = normarc_line.replace("ö", "ø").replace("Ö", "Ø")
-                normarc_line = normarc_line.replace("ä", "æ").replace("Ä", "Æ")
-                normarc_line = normarc_line.replace("ü", "y").replace("Ü", "Y")
-                normarc_line = normarc_line.replace("ó", "o").replace("Ó", "O")
-                normarc_line = normarc_line.replace("ð", "d").replace("Ð", "D")
                 normarc_line = normarc_line.replace("-", " ")
+                normarc_line = remove_accents(normarc_line)
             if marc21_line_property in ["sortingKey", "dc:creator"]:
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
-                marc21_line = marc21_line.replace("ö", "ø").replace("Ö", "Ø")
-                marc21_line = marc21_line.replace("ä", "æ").replace("Ä", "Æ")
-                marc21_line = marc21_line.replace("ü", "y").replace("Ü", "Y")
-                marc21_line = marc21_line.replace("ó", "o").replace("Ó", "O")
-                marc21_line = marc21_line.replace("ð", "d").replace("Ð", "D")
                 marc21_line = marc21_line.replace("-", " ")
+                marc21_line = remove_accents(normarc_line)
 
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
