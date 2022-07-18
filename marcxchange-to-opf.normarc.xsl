@@ -2861,8 +2861,12 @@
                 <!-- Commentator for written text -->
                 <xsl:value-of select="'dc:contributor.commentator'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*(forf|bidrag|medarb|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
+            <xsl:when test="matches($role,'.*(forf|bidrag|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
                 <xsl:value-of select="'dc:creator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(medarb).*')">
+                <!-- Contributor -->
+                <xsl:value-of select="'dc:contributor.contributor'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(lest|fort|presentert).*')">
                 <!-- Narrator -->
