@@ -153,7 +153,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_490_without_refines = False
         normarc_574a_without_Originaltittel = []
         marc21_has_spaces_in_019a = False
-        normarc_has_brackets_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
+        normarc_has_unknown_values_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         normarc_is_deleted = False
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
@@ -171,8 +171,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_is_deleted = True
             if "*019" in line and "$a" in line:
                 value = line.split("$a")[1].split("$")[0]
-                if "[" in value or "]" in value:
-                    normarc_has_brackets_in_019a = True
+                values = value.split(",")
+                for value in values:
+                    if value not in ["aa", "a", "b", "bu", "u", "mu"]:
+                        normarc_has_unknown_values_in_019a = True
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
@@ -342,7 +344,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #02): {marc21_line}")
                     continue
             
-            if marc21_has_spaces_in_019a or normarc_has_brackets_in_019a:
+            if marc21_has_spaces_in_019a or normarc_has_unknown_values_in_019a:
                 # bad conversion of *019$a, skip for now
                 if "typicalAgeRange" in normarc_line:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #03): {normarc_line}")
