@@ -124,7 +124,7 @@ def remove_accents(input_str):
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
 
-def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_source_path):
+def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_source_path, detailed_comparison=False):
     global lock
     global normarc_target_dir
     global marc21_target_dir
@@ -190,12 +190,28 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if len(normarc_marc21_008_pos_33) != 2 or normarc_marc21_008_pos_33[0] != normarc_marc21_008_pos_33[1]:
                 print(f"Skipping deleted record with different *008/33: {identifier}")
                 return True
-
+        
+        normarc_linenum = -1
+        marc21_linenum = -1
+        prev_normarc_linenum = -1
+        prev_marc21_linenum = -1
         while linenum < len(normarc):
+            prev_normarc_linenum = normarc_linenum
+            prev_marc21_linenum = marc21_linenum
             normarc_offset = len(normarc_skip_lines)
             marc21_offset = len(marc21_skip_lines)
             normarc_linenum = linenum + normarc_offset
             marc21_linenum = linenum + marc21_offset
+
+            if detailed_comparison and prev_normarc_linenum >= 0 and prev_marc21_linenum >= 0:
+                if normarc_linenum == prev_normarc_linenum and marc21_linenum > prev_marc21_linenum:
+                    print(f"skipped  MARC21 line {prev_normarc_linenum+1:02}: {marc21[prev_marc21_linenum].strip()}")
+                elif normarc_linenum > prev_normarc_linenum and marc21_linenum == prev_marc21_linenum:
+                    print(f"skipped NORMARC line {prev_marc21_linenum+1:02}: {normarc[prev_normarc_linenum].strip()}")
+                else:
+                    print(f"        NORMARC line {prev_normarc_linenum+1:02}: {normarc[prev_normarc_linenum].strip()}")
+                    print(f"         MARC21 line {prev_marc21_linenum+1:02}: {marc21[prev_marc21_linenum].strip()}")
+                print("---")
 
             if normarc_linenum > len(normarc) - 1 and marc21_linenum > len(marc21) - 1:
                 # done
@@ -237,7 +253,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             # *490$v is set to 1 when there's no *440$v, or copied from *440$v, even when that isn't necessarily correct
             if re.match(r'<meta property="series.position" refines="#series-title-1">\d+</meta>', marc21_line) and "*490$v" in marc21_line_comment:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #1): {marc21_line}")
                 continue
 
             # Handle differences in the authority registry
@@ -262,28 +278,28 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
 
             # Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
             if '<meta property="nationality" refines=' in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #2): {normarc_line}")
                 continue
             
             # Not sure how dewey is converted yet (if at all), ignore dewey in 650 for now
             if "dc:subject.dewey" in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #3): {normarc_line}")
                 continue
             if "dc:subject.dewey" in marc21_line:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #4): {marc21_line}")
                 continue
 
             # Not sure how dc:title.part is converted yet (if at all), ignore part titles (from *740) for now
             if "dc:title.part" in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #5): {normarc_line}")
                 continue
             if "dc:title.part" in marc21_line:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #6): {marc21_line}")
                 continue
             
             # sorting keys that refine the title or contributors seems to have been removed in MARC21
             if "sortingKey" in normarc_line and 'refines="' in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
                 continue
 
             # temporary fix in marcxchange-to-opf.normarc.xsl:
@@ -302,49 +318,49 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
             if normarc_has_sortingKey_from_100w_or_245w:
                 if "sortingKey" in normarc_line and "refines=" not in normarc_line:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #8): {normarc_line}")
                     continue
                 if "sortingKey" in marc21_line and "refines=" not in marc21_line:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #9): {marc21_line}")
                     continue
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_refines:
                 if "series.position" in normarc_line and "refines=" not in normarc_line and "*490" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #10): {normarc_line}")
                     continue
                 if "series.position" in marc21_line and "refines=" not in marc21_line and "*490" in marc21_line_comment:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #00): {marc21_line}")
                     continue
             
             if identifier in ["9115", "9275", "9518"]:
                 # strange conversion of series metadata, skip for now
                 if "*440" in normarc_line_comment or "*490" in normarc_line_comment or "*830" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #01): {normarc_line}")
                     continue
                 if "*440" in marc21_line_comment or "*490" in marc21_line_comment or "*830" in marc21_line_comment:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #02): {marc21_line}")
                     continue
             
             if marc21_has_spaces_in_019a or normarc_has_brackets_in_019a:
                 # bad conversion of *019$a, skip for now
                 if "typicalAgeRange" in normarc_line:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #03): {normarc_line}")
                     continue
                 if "typicalAgeRange" in marc21_line:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #04): {marc21_line}")
                     continue
             
             # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
             if normarc_574a_without_Originaltittel:
                 # bad conversion of *574$a, skip for now
                 if "*574" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum}: {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #05): {normarc_line}")
                     continue
                 if "*500" in marc21_line_comment:
                     for original_title in normarc_574a_without_Originaltittel:
                         if original_title in marc21_line:
-                            marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum}: {marc21_line}")
+                            marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #06): {marc21_line}")
                             break
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
@@ -441,7 +457,7 @@ failed = 0
 handled_in_this_run = 0
 error_has_occured = False
 
-def handle(identifier):
+def handle(identifier, detailed_comparison=False):
     global lock
     global normarc_target_dir
     global marc21_target_dir
@@ -465,7 +481,7 @@ def handle(identifier):
     assert success, f"Failed to transform: {marc21_file}"
 
     with lock:
-        equal = compare(identifier, normarc_opf_file, marc21_opf_file, normarc_source_file, marc21_source_file)
+        equal = compare(identifier, normarc_opf_file, marc21_opf_file, normarc_source_file, marc21_source_file, detailed_comparison=detailed_comparison)
         
         if not equal:
             if not print_first_error_only or not error_has_occured:
@@ -491,6 +507,7 @@ def handle(identifier):
                 print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. Last: {identifier})")
             return True
 
+detailed_comparison = "--detailed-comparison" in sys.argv
 for identifier in identifiers:
     if identifier in already_handled:
         continue
@@ -500,7 +517,7 @@ for identifier in identifiers:
 
     success = False
     try:
-        success = handle(identifier)
+        success = handle(identifier, detailed_comparison=detailed_comparison)
     except Exception as e:
         print(f"An error occured when handling {identifier}: {e}")
         continue
