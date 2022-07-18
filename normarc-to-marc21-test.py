@@ -377,9 +377,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             if normarc_line != marc21_line:
                 if print_first_error_only and not error_has_occured:
-                    print("\n".join(normarc_skip_lines))
-                    print("\n".join(marc21_skip_lines))
-                    print()
+                    if len(normarc_skip_lines) or len(marc21_skip_lines):
+                        print("\n".join(normarc_skip_lines))
+                        print("\n".join(marc21_skip_lines))
+                        print()
                     print("Lines are different:")
                     print()
                     print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}  {normarc_line_comment}")
