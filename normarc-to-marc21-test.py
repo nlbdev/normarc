@@ -250,7 +250,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property in ["sortingKey", "dc:creator"]:
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
                 marc21_line = marc21_line.replace("-", " ")
-                marc21_line = remove_accents(normarc_line)
+                marc21_line = remove_accents(marc21_line)
 
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
