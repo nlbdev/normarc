@@ -1580,8 +1580,23 @@
     
     <xsl:function name="nlb:serialized-series" as="xs:string">
         <xsl:param name="datafield-490-or-830" as="element()"/>
-        <xsl:variable name="values" select="$datafield-490-or-830/*:subfield[not(@code=('n','v','_'))]" as="element()*"/>
-        <xsl:variable name="values" select="for $subfield in ($values) return if ($subfield/@code = 'a') then replace($subfield/text(), '\(([^)]*)\)', '/$1') else $subfield/text()" as="xs:string*"/>
+        <xsl:variable name="a" select="string-join($datafield-490-or-830/*:subfield[@code='a']/replace(text(), '\(([^)]*)\)', '/$1'), '.')" as="xs:string"/>
+        <xsl:variable name="p" select="string-join($datafield-490-or-830/*:subfield[@code='p']/text(),'.')" as="xs:string"/>
+        <xsl:variable name="ap">
+            <xsl:choose>
+                <xsl:when test="$p = ''">
+                    <xsl:value-of select="$a"/>
+                </xsl:when>
+                <xsl:when test="contains($a, '/')">
+                    <xsl:value-of select="concat(tokenize($a, '/')[1], '.', $p, '/', string-join(tokenize($a, '/')[position() gt 1], '/'))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat($a, '.', $p)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="values" select="$datafield-490-or-830/*:subfield[not(@code=('a','n','p','v','_'))]" as="element()*"/>
+        <xsl:variable name="values" select="($ap, $values/text())" as="xs:string*"/>
         <xsl:value-of select="string-join($values, '.')"/>
     </xsl:function>
 
@@ -1641,7 +1656,7 @@
                         <xsl:for-each select="(*:subfield[@code='a'])[1]">
                             <xsl:call-template name="meta">
                                 <xsl:with-param name="property" select="'dc:title.series'"/>
-                                <xsl:with-param name="value" select="replace(text(), ' *; *.*', '')"/>
+                                <xsl:with-param name="value" select="replace(replace(text(), ' *; *.*', ''), '\((.*)\)', '/$1')"/>
                                 <xsl:with-param name="id" select="$title-id"/>
                             </xsl:call-template>
                         </xsl:for-each>
