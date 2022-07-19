@@ -1597,11 +1597,20 @@
                 <xsl:variable name="series-with-ids" select="$series[exists(*:subfield[@code='_'])]" as="element()*"/>
                 <xsl:variable name="series-without-ids" select="$series except $series-with-ids" as="element()*"/>
                 
+                <!-- sort by number of subfields -->
+                <xsl:variable name="series" as="element()*">
+                    <xsl:for-each select="$series">
+                        <xsl:sort select="count(*)"/>
+                        <xsl:sequence select="."/>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:variable name="series" select="reverse($series)" as="element()*"/>
+                
                 <!-- for duplicate series, prefer the one that has an ID -->
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="$series">
                         <!-- if the series exists both with and without an ID, and this instance is one without an ID, then discard it -->
-                        <xsl:if test="not(nlb:serialized-series(.) = $series-without-ids/nlb:serialized-series(.) and nlb:serialized-series(.) = $series-with-ids/nlb:serialized-series(.) and exists(*:subfield[@code='_']))">
+                        <xsl:if test="not(nlb:serialized-series(.) = $series-without-ids/nlb:serialized-series(.) and nlb:serialized-series(.) = $series-with-ids/nlb:serialized-series(.) and not(exists(*:subfield[@code='_'])))">
                             <xsl:sequence select="."/>
                         </xsl:if>
                     </xsl:for-each>
@@ -1613,6 +1622,15 @@
                         <xsl:variable name="position" select="position()"/>
                         <!-- if the series is not a duplicate of one of the preceding series -->
                         <xsl:if test="not(nlb:serialized-series(.) = $series-unique[position() lt $position]/nlb:serialized-series(.))">
+                            <xsl:sequence select="."/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                
+                <!-- sort back into document order -->
+                <xsl:variable name="series-unique" as="element()*">
+                    <xsl:for-each select="../(*:datafield[@tag='490'] | *:datafield[@tag='830'])">
+                        <xsl:if test=". = $series-unique">
                             <xsl:sequence select="."/>
                         </xsl:if>
                     </xsl:for-each>
