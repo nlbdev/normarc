@@ -1571,22 +1571,15 @@
                     </xsl:for-each>
                 </xsl:variable>
                 
-                <!-- sort by $a -->
+                <!-- sort by serialized value -->
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="$series-unique">
-                        <xsl:sort select="*:subfield[@code='a']"/>
+                        <xsl:sort select="nlb:serialized-series(.)"/>
                         <xsl:sequence select="."/>
                     </xsl:for-each>
                 </xsl:variable>
                 
-                <!-- handle *490 first, then *440. This makes it so that the order of the series metadata are the same in NORMARC and MARC21. In MARC21, the *440 tag is converted to *830 if there is already a *490 present. -->
-                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='490']">
-                    <xsl:call-template name="series"/>
-                </xsl:for-each>
-                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='440']">
-                    <xsl:call-template name="series"/>
-                </xsl:for-each>
-                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='830']">
+                <xsl:for-each select="$series-unique">
                     <xsl:call-template name="series"/>
                 </xsl:for-each>
             </xsl:otherwise>
