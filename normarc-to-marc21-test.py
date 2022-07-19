@@ -320,6 +320,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #8): {normarc_line}")
                 continue
 
+            # *650$w are not copied to MARC21
+            if "*650$w" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
+                continue
+
             # temporary fix in marcxchange-to-opf.normarc.xsl:
             # - *490$v is not converted from NORMARC to MARC21
 
@@ -336,52 +341,52 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
             if normarc_has_sortingKey_from_100w_or_245w:
                 if "sortingKey" in normarc_line and "refines=" not in normarc_line:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #10): {normarc_line}")
                     continue
                 if "sortingKey" in marc21_line and "refines=" not in marc21_line:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #10): {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #11): {marc21_line}")
                     continue
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_refines:
                 if "series.position" in normarc_line and "refines=" not in normarc_line and "*490" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #11): {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #12): {normarc_line}")
                     continue
                 if "series.position" in marc21_line and "refines=" not in marc21_line and "*490" in marc21_line_comment:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #12): {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #13): {marc21_line}")
                     continue
             
             if identifier in ["9115", "9275", "9518"]:
                 # strange conversion of series metadata, skip for now
                 if "*440" in normarc_line_comment or "*490" in normarc_line_comment or "*830" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #13): {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #14): {normarc_line}")
                     continue
                 if "*440" in marc21_line_comment or "*490" in marc21_line_comment or "*830" in marc21_line_comment:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #14): {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #15): {marc21_line}")
                     continue
             
             if marc21_has_spaces_in_019a or normarc_has_unknown_values_in_019a:
                 # bad conversion of *019$a, skip for now
                 if '"typicalAgeRange"' in normarc_line or '"audience"' in normarc_line:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #15): {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #16): {normarc_line}")
                     continue
                 if '"typicalAgeRange"' in marc21_line or '"audience"' in marc21_line:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #16): {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #17): {marc21_line}")
                     continue
             
             # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
             if normarc_574a_without_Originaltittel or normarc_has_Originaltittel_in_572a:
                 # bad conversion of *574$a or *572$a; skip for now
                 if "*574" in normarc_line_comment or "*572" in normarc_line_comment:
-                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #17): {normarc_line}")
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #18): {normarc_line}")
                     continue
                 if "*500" in marc21_line_comment:
                     for original_title in normarc_574a_without_Originaltittel:
                         if original_title in marc21_line:
-                            marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #18): {marc21_line}")
+                            marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #19): {marc21_line}")
                             break
                 if "*246" in marc21_line_comment:
-                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #19): {marc21_line}")
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #20): {marc21_line}")
                     break
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
