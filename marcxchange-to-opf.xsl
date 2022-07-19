@@ -1630,7 +1630,7 @@
                 <!-- sort back into document order -->
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="../(*:datafield[@tag='490'] | *:datafield[@tag='830'])">
-                        <xsl:if test=". = $series-unique">
+                        <xsl:if test=". intersect $series-unique">
                             <xsl:sequence select="."/>
                         </xsl:if>
                     </xsl:for-each>
