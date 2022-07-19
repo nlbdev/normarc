@@ -1951,7 +1951,7 @@
     <!-- 6XX EMNEINNFØRSLER -->
 
     <xsl:template match="*:datafield[@tag='600']">
-        <xsl:for-each select="*:subfield[@code='0']">
+        <xsl:for-each select="*:subfield[@code='g']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='x']">
