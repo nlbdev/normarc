@@ -160,6 +160,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_sortingKey_from_100w_or_245w = False
         normarc_has_490_without_refines = False
         normarc_574a_without_Originaltittel = []
+        normarc_has_Originaltittel_in_572a = False
         marc21_has_spaces_in_019a = False
         normarc_has_unknown_values_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
         normarc_is_deleted = False
@@ -187,6 +188,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
                     normarc_574a_without_Originaltittel.append(f">{a}<")  # adding >< for easier comparison with meta elements
+            if "*572" in line and re.match(r".*\$a\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*.*", line):
+                normarc_has_Originaltittel_in_572a = True
         for line in marc21_source:
             if "*008" in line and len(line) > 4+33:
                 normarc_marc21_008_pos_33.append(line[4+33])  # *008/33
@@ -367,9 +370,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     continue
             
             # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
-            if normarc_574a_without_Originaltittel:
-                # bad conversion of *574$a, skip for now
-                if "*574" in normarc_line_comment:
+            if normarc_574a_without_Originaltittel or normarc_has_Originaltittel_in_572a:
+                # bad conversion of *574$a or *572$a; skip for now
+                if "*574" in normarc_line_comment or "*572" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #17): {normarc_line}")
                     continue
                 if "*500" in marc21_line_comment:
@@ -377,6 +380,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                         if original_title in marc21_line:
                             marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #18): {marc21_line}")
                             break
+                if "*246" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #19): {marc21_line}")
+                    break
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
