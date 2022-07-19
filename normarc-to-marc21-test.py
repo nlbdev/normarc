@@ -535,6 +535,7 @@ for identifier in identifiers:
         continue
 
     if identifier in skip_records:
+        mark_as_handled(identifier)
         continue
 
     success = False
