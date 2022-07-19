@@ -1524,20 +1524,73 @@
 
     <!-- 4XX SERIEANGIVELSER -->
     
-    <xsl:template match="*:datafield[@tag=('440', '490', '830')][not(preceding-sibling::*:datafield[@tag=('440', '490', '830')])]">
-        <!-- handle *490 first, then *440. This makes it so that the order of the series metadata are the same in NORMARC and MARC21. In MARC21, the *440 tag is converted to *830 if there is already a *490 present. -->
-        <xsl:for-each select="../*:datafield[@tag='490']">
-            <xsl:sort select="*:subfield[@code='a']"/>
-            <xsl:call-template name="series"/>
-        </xsl:for-each>
-        <xsl:for-each select="../*:datafield[@tag='440']">
-            <xsl:sort select="*:subfield[@code='a']"/>
-            <xsl:call-template name="series"/>
-        </xsl:for-each>
-        <xsl:for-each select="../*:datafield[@tag='830']">
-            <xsl:sort select="*:subfield[@code='a']"/>
-            <xsl:call-template name="series"/>
-        </xsl:for-each>
+    <xsl:function name="nlb:serialized-series" as="xs:string">
+        <xsl:param name="datafield-440-490-or-830" as="element()"/>
+        <xsl:variable name="values" select="$datafield-440-490-or-830/*:subfield[not(@code=('n','v','_'))]" as="element()*"/>
+        <xsl:variable name="values" select="for $subfield in ($values) return if ($subfield/@code = 'a') then replace($subfield/text(), '\(([^)]*)\)', '/$1') else $subfield/text()" as="xs:string*"/>
+        <xsl:value-of select="string-join($values, '.')"/>
+    </xsl:function>
+    
+    <xsl:template match="*:datafield[@tag=('440', '490', '830')]">
+        <xsl:choose>
+            <xsl:when test="exists(preceding-sibling::*:datafield[@tag=('440','490','830')])">
+                <!-- skip this one, we process all series on the first match -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="series" select="../*:datafield[@tag=('440','490','830')]" as="element()*"/>
+                <xsl:variable name="series-with-ids" select="$series[exists(*:subfield[@code='_'])]" as="element()*"/>
+                <xsl:variable name="series-without-ids" select="$series except $series-with-ids" as="element()*"/>
+                
+                <!-- sort by number of subfields -->
+                <xsl:variable name="series" as="element()*">
+                    <xsl:for-each select="$series">
+                        <xsl:sort select="count(*)"/>
+                        <xsl:sequence select="."/>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:variable name="series" select="reverse($series)" as="element()*"/>
+                
+                <!-- for duplicate series, prefer the one that has an ID -->
+                <xsl:variable name="series-unique" as="element()*">
+                    <xsl:for-each select="$series">
+                        <!-- if the series exists both with and without an ID, and this instance is one without an ID, then discard it -->
+                        <xsl:if test="not(nlb:serialized-series(.) = $series-without-ids/nlb:serialized-series(.) and nlb:serialized-series(.) = $series-with-ids/nlb:serialized-series(.) and not(exists(*:subfield[@code='_'])))">
+                            <xsl:sequence select="."/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                
+                <!-- ignore duplicate series -->
+                <xsl:variable name="series-unique" as="element()*">
+                    <xsl:for-each select="$series-unique">
+                        <xsl:variable name="position" select="position()"/>
+                        <!-- if the series is not a duplicate of one of the preceding series -->
+                        <xsl:if test="not(nlb:serialized-series(.) = $series-unique[position() lt $position]/nlb:serialized-series(.))">
+                            <xsl:sequence select="."/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                
+                <!-- sort by $a -->
+                <xsl:variable name="series-unique" as="element()*">
+                    <xsl:for-each select="$series-unique">
+                        <xsl:sort select="*:subfield[@code='a']"/>
+                        <xsl:sequence select="."/>
+                    </xsl:for-each>
+                </xsl:variable>
+                
+                <!-- handle *490 first, then *440. This makes it so that the order of the series metadata are the same in NORMARC and MARC21. In MARC21, the *440 tag is converted to *830 if there is already a *490 present. -->
+                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='490']">
+                    <xsl:call-template name="series"/>
+                </xsl:for-each>
+                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='440']">
+                    <xsl:call-template name="series"/>
+                </xsl:for-each>
+                <xsl:for-each select="$series-unique intersect ../*:datafield[@tag='830']">
+                    <xsl:call-template name="series"/>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="series">
