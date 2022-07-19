@@ -1702,9 +1702,22 @@
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='572']">
-        <xsl:for-each select="*:subfield[@code='a' and starts-with(text(), 'Undertittel på omslaget: ')]">
-            <xsl:variable name="value" select="replace(text(),'^Undertittel på omslaget: ','')"/>
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:choose>
+                <xsl:when test="starts-with(text(), 'Undertittel på omslaget: ')">
+                    <xsl:variable name="value" select="replace(text(),'^Undertittel på omslaget: ','')"/>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+                </xsl:when>
+                <xsl:when test="matches(text(),'^\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*','')">
+                    <xsl:variable name="value" select="replace(text(),'^\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*','')"/>
+                    <xsl:if test="not($value = 'mangler')">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.original'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+                    </xsl:if>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:template>
 
