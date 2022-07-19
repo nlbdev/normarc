@@ -359,10 +359,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             if marc21_has_spaces_in_019a or normarc_has_unknown_values_in_019a:
                 # bad conversion of *019$a, skip for now
-                if "typicalAgeRange" in normarc_line:
+                if '"typicalAgeRange"' in normarc_line or '"audience"' in normarc_line:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #15): {normarc_line}")
                     continue
-                if "typicalAgeRange" in marc21_line:
+                if '"typicalAgeRange"' in marc21_line or '"audience"' in marc21_line:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #16): {marc21_line}")
                     continue
             
