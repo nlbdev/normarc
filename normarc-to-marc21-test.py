@@ -26,7 +26,7 @@ skip_records = [
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
-exit_on_error = False
+exit_on_error = True
 print_first_error_only = True
 
 config = {}
