@@ -1221,7 +1221,9 @@
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$creator-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    <xsl:if test="$nationality">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$creator-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
             
@@ -2013,7 +2015,9 @@
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$subject-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    <xsl:if test="$nationality">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$subject-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
 
@@ -2424,7 +2428,9 @@
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$contributor-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    <xsl:if test="$nationality">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$contributor-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
 
@@ -2568,7 +2574,9 @@
             <xsl:variable name="context" select="."/>
             <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                 <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$creator-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                <xsl:if test="$nationality">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$creator-id"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
         </xsl:for-each>
 
