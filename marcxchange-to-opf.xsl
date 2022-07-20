@@ -328,6 +328,13 @@
         <xsl:param name="value" as="xs:string+"/>
         <xsl:param name="id" as="xs:string?" select="()"/>
         <xsl:param name="refines" as="xs:string?" select="()"/>
+        
+        <xsl:if test="not($property)">
+            <xsl:message terminate="yes" select="'No property name was given'"/>
+        </xsl:if>
+        <xsl:if test="not($value)">
+            <xsl:message terminate="yes" select="'No value was given'"/>
+        </xsl:if>
 
         <xsl:variable name="dublin-core" select="$property = ('dc:contributor', 'dc:coverage', 'dc:creator', 'dc:date', 'dc:description', 'dc:format', 'dc:identifier',
                                                               'dc:language', 'dc:publisher', 'dc:relation', 'dc:rights', 'dc:source', 'dc:subject', 'dc:title', 'dc:type')" as="xs:boolean"/>
