@@ -585,7 +585,7 @@
             - else, use "Child"
         -->
         <xsl:choose>
-            <xsl:when test="$ageRangeFrom ge 18 or $POS22='e'">
+            <xsl:when test="(string($ageRangeFrom) != '' and $ageRangeFrom ge 18) or $POS22='e'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
             <xsl:when test="string($ageRangeTo) = '' or $ageRangeTo ge $juvenileAgeLimit">
