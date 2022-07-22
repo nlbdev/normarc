@@ -284,6 +284,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
+            
+            if "*650" in normarc_line_comment:
+                normarc_line = normarc_line.lower()
+            if "*650" in marc21_line_comment:
+                marc21_line = marc21_line.lower()
 
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
