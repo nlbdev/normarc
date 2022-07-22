@@ -198,7 +198,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         
         if normarc_is_deleted:
             if not normarc_has_008:
-                print(f"Skipping deleted record with no *008l: {identifier}")
+                print(f"Skipping deleted record with no *008: {identifier}")
                 return True
             if len(normarc_marc21_008_pos_33) != 2 or normarc_marc21_008_pos_33[0] != normarc_marc21_008_pos_33[1]:
                 print(f"Skipping deleted record with different *008/33: {identifier}")
