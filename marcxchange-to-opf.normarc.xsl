@@ -1765,6 +1765,10 @@
     <xsl:template match="*:datafield[@tag='572']">
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:choose>
+                <xsl:when test="starts-with(text(), 'Omslagstittel: ')">
+                    <xsl:variable name="value" select="replace(text(),'^Omslagstittel: ','')"/>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
+                </xsl:when>
                 <xsl:when test="starts-with(text(), 'Undertittel på omslaget: ')">
                     <xsl:variable name="value" select="replace(text(),'^Undertittel på omslaget: ','')"/>
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
