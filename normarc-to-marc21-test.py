@@ -272,11 +272,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # Handle differences in the authority registry
             normarc_line_property = normarc_line.split('property="')[1].split('"')[0] if "property=" in normarc_line else normarc_line.split("<")[1].split(">")[0].split(" ")[0]
             marc21_line_property = marc21_line.split('property="')[1].split('"')[0] if "property=" in marc21_line else marc21_line.split("<")[1].split(">")[0].split(" ")[0]
-            if normarc_line_property in ["sortingKey", "dc:creator"]:
+            if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject"]:
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
                 normarc_line = normarc_line.replace("-", " ")
                 normarc_line = remove_accents(normarc_line)
-            if marc21_line_property in ["sortingKey", "dc:creator"]:
+            if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject"]:
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
                 marc21_line = marc21_line.replace("-", " ")
                 marc21_line = remove_accents(marc21_line)
@@ -285,9 +285,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
             
-            if "*650" in normarc_line_comment:
+            if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
                 normarc_line = normarc_line.lower()
-            if "*650" in marc21_line_comment:
+            if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
                 marc21_line = marc21_line.lower()
 
             # ignore id attributes (at least for now)
