@@ -327,6 +327,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
 
             # temporary fix in marcxchange-to-opf.normarc.xsl:
             # - *490$v is not converted from NORMARC to MARC21
+            # - *490$a with series position when there is no $_ is also ignored, for easier handling of the problem with *490$v not being converted
 
             # handled in marcxchange-to-opf.normarc.xsl:
             # - *600 are sorted alphabetically in MARC21
