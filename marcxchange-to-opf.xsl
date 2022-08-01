@@ -1391,7 +1391,7 @@
                     <xsl:copy-of select="$subtitle"/>
                 </xsl:when>
                 <xsl:when test="count($subtitle) gt 1">
-                    <xsl:variable name="subtitle_context" select="(*:subfield[@code='b'], *:subfield[@code='b'])[1]"/>
+                    <xsl:variable name="subtitle_context" select="(*:subfield[@code='b'], *:subfield[@code='a'])[1]"/>
                     <xsl:call-template name="meta">
                         <xsl:with-param name="property" select="'dc:title.subTitle'"/>
                         <xsl:with-param name="value" select="string-join($subtitle, ' : ')"/>
@@ -1411,7 +1411,7 @@
                     - if there's both a $p and a $b, and a part title in *740, then treat $p as an alternative part title (dc:title.part.other)
                 -->
                 <xsl:call-template name="meta">
-                    <xsl:with-param name="property" select="if (count(../*:subfield[@code='b']) eq 0) then 'dc:title.subTitle'
+                    <xsl:with-param name="property" select="if (count($subtitle) eq 0) then 'dc:title.subTitle'
                                                             else concat('dc:title.part', if (count($part740[@property = 'dc:title.part']) eq 0) then '' else '.other')"/>
                     <xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/>
                 </xsl:call-template>
