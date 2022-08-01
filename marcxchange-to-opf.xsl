@@ -2453,9 +2453,27 @@
     </xsl:template>
 
     <!-- 760 - 79X LENKER / RELASJONER -->
-
+    
     <xsl:template match="*:datafield[@tag='780']">
-        <xsl:variable name="series-preceding-id" select="concat('series-preceding-',1+count(preceding-sibling::*:datafield[@tag='780']))"/>
+        <xsl:choose>
+            <xsl:when test="exists(preceding-sibling::*:datafield[@tag='780'])">
+                <!-- ignore everything but the first one; everything is processed in xsl:otherwise -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="../*:datafield[@tag='780']">
+                    <xsl:sort select="*:subfield[@code='w'][1]/text()"/>
+                    <xsl:call-template name="tag780">
+                        <xsl:with-param name="position" select="string(position())"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="tag780">
+        <xsl:param name="position" as="xs:string"/>
+        
+        <xsl:variable name="series-preceding-id" select="concat('series-preceding-', $position)"/>
 
         <xsl:if test="*:subfield[@code='t']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.preceding'"/><xsl:with-param name="value" select="*:subfield[@code='t']/text()"/><xsl:with-param name="id" select="$series-preceding-id"/></xsl:call-template>
@@ -2475,7 +2493,25 @@
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='785']">
-        <xsl:variable name="series-sequel-id" select="concat('series-sequel-',1+count(preceding-sibling::*:datafield[@tag='785']))"/>
+        <xsl:choose>
+            <xsl:when test="exists(preceding-sibling::*:datafield[@tag='785'])">
+                <!-- ignore everything but the first one; everything is processed in xsl:otherwise -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="../*:datafield[@tag='785']">
+                    <xsl:sort select="*:subfield[@code='w'][1]/text()"/>
+                    <xsl:call-template name="tag785">
+                        <xsl:with-param name="position" select="string(position())"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="tag785">
+        <xsl:param name="position" as="xs:string"/>
+        
+        <xsl:variable name="series-sequel-id" select="concat('series-sequel-', $position)"/>
 
         <xsl:for-each select="*:subfield[@code='t']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.sequel'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="id" select="$series-sequel-id"/></xsl:call-template>
