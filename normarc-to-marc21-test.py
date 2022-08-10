@@ -281,6 +281,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = normarc_line.replace("-", " ")
                 normarc_line = remove_accents(normarc_line)
             if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
                 marc21_line = marc21_line.replace("-", " ")
                 marc21_line = remove_accents(marc21_line)
