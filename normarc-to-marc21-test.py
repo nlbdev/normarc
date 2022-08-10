@@ -25,6 +25,9 @@ skip_records = [
 
     # *650$z converted to *650$x by mistake
     "180806",
+
+    # *785 lost in conversion
+    "181248",
 ]
 
 current_directory = os.path.dirname(__file__)
