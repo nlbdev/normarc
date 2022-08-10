@@ -428,6 +428,15 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #25): {normarc_line}")
                 continue
 
+            # Acutally, let's just ignore all series.position from *440, *490 and *830; there's a lot of problems in its conversion
+            # For instance in 200260, where $v is copied from another datafield
+            if normarc_line_property == "series.position":
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #26): {normarc_line}")
+                continue
+            if marc21_line_property == "series.position":
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
+                continue
+
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
