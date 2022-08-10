@@ -2194,6 +2194,7 @@
             <xsl:otherwise>
                 <xsl:variable name="tag655" as="element()*">
                     <xsl:for-each select="../*:datafield[@tag='655']">
+                        <xsl:sort select="string-join(*:subfield[@code='a']/text(), ' ')"/>
                         <xsl:if test="*:subfield[@code='a'] and not(*:subfield[@code='2']/text() = 'norvok')">
                             <xsl:sequence select="."/>
                         </xsl:if>
