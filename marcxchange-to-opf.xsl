@@ -2202,7 +2202,7 @@
                 </xsl:variable>
                 
                 <xsl:for-each select="$tag655">
-                    <xsl:call-template name="tag655">
+                    <xsl:call-template name="datafield655">
                         <xsl:with-param name="position" select="position()"/>
                     </xsl:call-template>
                 </xsl:for-each>
@@ -2210,7 +2210,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <xsl:template name="tag655">
+    <xsl:template name="datafield655">
         <xsl:param name="position"/>
         <xsl:variable name="subject-id" select="concat('subject-655-', $position)"/>
             

@@ -2193,20 +2193,31 @@
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-
-    <xsl:template match="*:datafield[@tag='655']">
-        <!-- when we find the first *655 -->
-        <xsl:if test="not(preceding-sibling::*:datafield[@tag='655'])">
-            <!-- then handle all *655 sorted by $a -->
-            <xsl:for-each select="../*:datafield[@tag='655']">
-                <xsl:sort select="string-join(*:subfield[@code='a']/text(), ' ')"/>
-                <xsl:call-template name="datafield655">
-                    <xsl:with-param name="position" select="position()"/>
-                </xsl:call-template>
-            </xsl:for-each>
-        </xsl:if>
-    </xsl:template>
     
+    <xsl:template match="*:datafield[@tag='655']">
+        <xsl:choose>
+            <xsl:when test="exists(preceding-sibling::*:datafield[@tag='655'])">
+                <!-- ignore, we process everything on the first match -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="tag655" as="element()*">
+                    <xsl:for-each select="../*:datafield[@tag='655']">
+                        <xsl:sort select="string-join(*:subfield[@code='a']/text(), ' ')"/>
+                        <xsl:if test="*:subfield[@code='a']">
+                            <xsl:sequence select="."/>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                
+                <xsl:for-each select="$tag655">
+                    <xsl:call-template name="datafield655">
+                        <xsl:with-param name="position" select="position()"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
     <xsl:template name="datafield655">
         <xsl:param name="position"/>
         <xsl:variable name="subject-id" select="concat('subject-655-', string($position))"/>
