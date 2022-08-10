@@ -298,6 +298,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
                 marc21_line = marc21_line.lower()
 
+            # for titles, ignore whitespace differences surrounding semicolon
+            if "dc:title" in normarc_line_property:
+                normarc_line = re.sub(r" *; *", r" ; ", normarc_line)
+            if "dc:title" in marc21_line_property:
+                marc21_line = re.sub(r" *; *", r" ; ", marc21_line)
+
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
