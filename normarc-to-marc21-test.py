@@ -24,7 +24,7 @@ skip_records = [
     "682920", "683084", "857658", "857659", "900044",
 
     # bad conversion of *650$0 - it should be *650$g
-    "112129",
+    "112129", "115117",
 ]
 
 current_directory = os.path.dirname(__file__)
