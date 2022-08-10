@@ -413,6 +413,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #24): {marc21_line}")
                 continue
 
+            # there's a discrepancy in march 2022 when the conversion were made. Ignore march 2022
+            if normarc_line_property == "dc:date.available" and "2022-03" in normarc_line:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #25): {normarc_line}")
+                continue
+            if marc21_line_property == "dc:date.available" and "2022-03" in marc21_line:
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #26): {marc21_line}")
+                continue
+
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
