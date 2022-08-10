@@ -2399,7 +2399,7 @@
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="$name">
-            <xsl:variable name="role" select="nlb:parseRole((*:subfield[@code='4'], *:subfield[@code='e'], *:subfield[@code='r'], *:subfield[@code='x'])[1]/text())"/>
+            <xsl:variable name="role" select="nlb:parseRole((*:subfield[@code='4'], *:subfield[@code='e'][last()], *:subfield[@code='r'], *:subfield[@code='x'])[1]/text())"/>
 
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="$role"/>
