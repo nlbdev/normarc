@@ -405,6 +405,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #22): {normarc_line}")
                     continue
 
+            # dc:title.original.alternative is not always present in MARC21, and not really important, so we ignore it
+            if normarc_line_property == "dc:title.original.alternative":
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #23): {normarc_line}")
+                continue
+            if marc21_line_property == "dc:title.original.alternative":
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #24): {marc21_line}")
+                continue
+
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
