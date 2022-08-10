@@ -3278,6 +3278,8 @@
                 <!-- Compiler -->
                 <xsl:value-of select="'dc:contributor.compiler'"/>
             </xsl:when>
+            
+            <!-- default to dc:contributor.other when unable to determine the role -->
             <xsl:otherwise>
                 <xsl:value-of select="'dc:contributor.other'"/>
             </xsl:otherwise>
