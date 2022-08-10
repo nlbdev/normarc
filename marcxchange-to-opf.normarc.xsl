@@ -1969,7 +1969,7 @@
     <xsl:template name="datafield600">
         <xsl:param name="position"/>
         
-        <xsl:for-each select="*:subfield[@code='0']">
+        <xsl:for-each select="*:subfield[@code='0' and not(starts-with(text(), '(NO-TrBIB)'))]">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='x']">
