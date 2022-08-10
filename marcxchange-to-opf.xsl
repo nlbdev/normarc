@@ -1457,28 +1457,34 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-
+    
     <xsl:template match="*:datafield[@tag='246']">
-        <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else 'alternative'" as="xs:string"/>
-        
-        <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
-
-        <xsl:for-each select="*:subfield[@code='b']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type, '.other')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
-
-        <xsl:for-each select="*:subfield[@code='n']">
-            <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
-            <xsl:if test="matches($position, '^\d+$')">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="$position"/></xsl:call-template>
-            </xsl:if>
-        </xsl:for-each>
-
-        <xsl:for-each select="*:subfield[@code='p']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='246'])">
+            <xsl:for-each select="../*:datafield[@tag='246']">
+                <xsl:sort select="*:subfield[@code='a'][1]/text()"/>
+                
+                <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else 'alternative'" as="xs:string"/>
+                
+                <xsl:for-each select="*:subfield[@code='a']">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='b']">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type, '.other')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='n']">
+                    <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
+                    <xsl:if test="matches($position, '^\d+$')">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="$position"/></xsl:call-template>
+                    </xsl:if>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='p']">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.subTitle.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                </xsl:for-each>
+            </xsl:for-each>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='250']">
