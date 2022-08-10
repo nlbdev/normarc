@@ -175,11 +175,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_is_deleted = False
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
+        normarc_available_in_march_2022 = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if '"dc:title.series"' in line and " id=" not in line:
                 normarc_has_490_without_refines = True
+            if "dc:date.available" in line and "2022-03" in line:
+                normarc_available_in_march_2022 = True
         for line in normarc_source:
             if "*008" in line:
                 normarc_has_008 = True
@@ -212,6 +215,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if len(normarc_marc21_008_pos_33) != 2 or normarc_marc21_008_pos_33[0] != normarc_marc21_008_pos_33[1]:
                 print(f"Skipping deleted record with different *008/33: {identifier}")
                 return True
+
+        if normarc_available_in_march_2022:
+            print(f"Skipping record that where made available during conversion from NORMARC to MARC21: {identifier}")
+            return True
         
         normarc_linenum = -1
         marc21_linenum = -1
@@ -414,14 +421,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 continue
             if marc21_line_property == "dc:title.original.alternative":
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #24): {marc21_line}")
-                continue
-
-            # there's a discrepancy in march 2022 when the conversion were made. Ignore march 2022
-            if normarc_line_property == "dc:date.available" and "2022-03" in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #25): {normarc_line}")
-                continue
-            if marc21_line_property == "dc:date.available" and "2022-03" in marc21_line:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #26): {marc21_line}")
                 continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
