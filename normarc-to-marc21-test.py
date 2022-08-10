@@ -333,19 +333,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
                 continue
 
-            # temporary fix in marcxchange-to-opf.normarc.xsl:
-            # - *490$v is not converted from NORMARC to MARC21
-            # - *490$a with series position when there is no $_ is also ignored, for easier handling of the problem with *490$v not being converted
-
-            # handled in marcxchange-to-opf.normarc.xsl:
-            # - *600 are sorted alphabetically in MARC21
-            # - *650 are usually sorted alphabetically in MARC21
-            # - *700 are sorted alphabetically in MARC21
-            # - *610$q is parenthesized and appended to *610$a in MARC21
-
-            # handled in marcxchange-to-opf.xsl:
-            # - *650 are sorted alphabetically for easier comparison with NORMARC
-            
             # the sorting keys in *100$w and *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
             if normarc_has_sortingKey_from_100w_or_245w:

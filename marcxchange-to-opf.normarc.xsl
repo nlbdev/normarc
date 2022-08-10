@@ -1634,34 +1634,28 @@
                     </xsl:call-template>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:if test="@tag='440'">
-                <!-- *490$v is not converted from NORMARC to MARC21, so let's ignore it for now -->
-                <xsl:for-each select="*:subfield[@code='v']">
-                    <xsl:if test="not(starts-with(text(), '['))">
-                        <xsl:call-template name="meta">
-                            <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
-                            <xsl:with-param name="value" select="text()"/>
-                            <xsl:with-param name="refines" select="$title-id"/>
-                        </xsl:call-template>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:if>
-            <xsl:for-each select="*:subfield[@code='a']">
-                <xsl:if test="not(../@tag='490') or exists(../*:subfield[@code='_'])">
-                    <!-- *490$v is not converted from NORMARC to MARC21, so we temporarily also ignore cases with position in *490$a and no $_ -->
-                    <xsl:variable name="positions" select="text()/tokenize(., ';')[position() gt 1]"/>
-                    <xsl:variable name="positions" select="for $position in ($positions) return normalize-space($position)"/>
-                    <xsl:variable name="positions" select="for $position in ($positions) return if (starts-with(text(), '[')) then () else $position"/>
-                    <xsl:variable name="context" select="."/>
-                    <xsl:for-each select="$positions">
-                        <xsl:call-template name="meta">
-                            <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
-                            <xsl:with-param name="value" select="."/>
-                            <xsl:with-param name="refines" select="$title-id"/>
-                            <xsl:with-param name="context" select="$context"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
+            <xsl:for-each select="*:subfield[@code='v']">
+                <xsl:if test="not(starts-with(text(), '['))">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
+                        <xsl:with-param name="value" select="text()"/>
+                        <xsl:with-param name="refines" select="$title-id"/>
+                    </xsl:call-template>
                 </xsl:if>
+            </xsl:for-each>
+            <xsl:for-each select="*:subfield[@code='a']">
+                <xsl:variable name="positions" select="text()/tokenize(., ';')[position() gt 1]"/>
+                <xsl:variable name="positions" select="for $position in ($positions) return normalize-space($position)"/>
+                <xsl:variable name="positions" select="for $position in ($positions) return if (starts-with(text(), '[')) then () else $position"/>
+                <xsl:variable name="context" select="."/>
+                <xsl:for-each select="$positions">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="nlb:prefixed-property('series.position')"/>
+                        <xsl:with-param name="value" select="."/>
+                        <xsl:with-param name="refines" select="$title-id"/>
+                        <xsl:with-param name="context" select="$context"/>
+                    </xsl:call-template>
+                </xsl:for-each>
             </xsl:for-each>
         </xsl:if>
     </xsl:template>
