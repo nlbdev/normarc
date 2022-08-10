@@ -3256,8 +3256,11 @@
             <xsl:when test="matches($role,'.*oppr.forf.*')">
                 <xsl:value-of select="'dc:contributor.bibliographic-antecedent'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*(forf|bidrag|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
+            <xsl:when test="matches($role,'.*(forf|bidrag|ansvarl|utgave|medvirk|et\.? al|medf).*')">
                 <xsl:value-of select="'dc:creator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*utg.*')">
+                <xsl:value-of select="'dc:contributor.publisher'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(medarb).*')">
                 <!-- Contributor -->

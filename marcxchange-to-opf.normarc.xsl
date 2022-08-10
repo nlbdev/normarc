@@ -1536,7 +1536,7 @@
     <xsl:function name="nlb:serialized-series" as="xs:string">
         <xsl:param name="datafield-440-490-or-830" as="element()"/>
         <xsl:variable name="values" select="$datafield-440-490-or-830/*:subfield[not(@code=('n','v','_'))]" as="element()*"/>
-        <xsl:variable name="values" select="for $subfield in ($values) return if ($subfield/@code = 'a') then replace($subfield/text(), '\(([^)]*)\)', '/$1') else $subfield/text()" as="xs:string*"/>
+        <xsl:variable name="values" select="for $subfield in ($values) return if ($subfield/@code = 'a') then replace(replace($subfield/text(), ' *;.*', ''), '\(([^)]*)\)', '/$1') else $subfield/text()" as="xs:string*"/>
         <xsl:value-of select="string-join($values, '.')"/>
     </xsl:function>
     
@@ -3267,8 +3267,11 @@
             <xsl:when test="matches($role,'.*oppr.forf.*')">
                 <xsl:value-of select="'dc:contributor.bibliographic-antecedent'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*(forf|bidrag|ansvarl|utgjeve|utgave|medvirk|et\.? al|medf).*')">
+            <xsl:when test="matches($role,'.*(forf|bidrag|ansvarl|utgave|medvirk|et\.? al|medf).*')">
                 <xsl:value-of select="'dc:creator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*utg.*')">
+                <xsl:value-of select="'dc:contributor.publisher'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(medarb).*')">
                 <!-- Contributor -->
