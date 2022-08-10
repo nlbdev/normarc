@@ -409,7 +409,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = re.sub(r'>\d+<', '>X<', marc21_line)
             
             if normarc_line != marc21_line:
-                if print_first_error_only and not error_has_occured:
+                if print_first_error_only and not error_has_occured or not print_first_error_only:
+                    if not print_first_error_only and error_has_occured:
+                        print("\n---\n")
                     if len(normarc_skip_lines) or len(marc21_skip_lines):
                         print("\n".join(normarc_skip_lines))
                         print("\n".join(marc21_skip_lines))
