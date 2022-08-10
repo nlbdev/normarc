@@ -392,9 +392,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
 
             # IDs in the authority registry have changed in many cases
-            if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_"]:
+            if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_"]:
                 normarc_line = re.sub(r'>\d+<', '>X<', normarc_line)
-            if "bibliofil-id" in marc21_line and '*' in marc21_line_comment and marc21_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_"]:
+            if "bibliofil-id" in marc21_line and '*' in marc21_line_comment and marc21_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_"]:
                 marc21_line = re.sub(r'>\d+<', '>X<', marc21_line)
             
             if normarc_line != marc21_line:
