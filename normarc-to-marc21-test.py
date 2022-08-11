@@ -458,6 +458,15 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if "245$a" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #28): {marc21_line}")
                     continue
+            
+            # it looks like *246$a is appended to *245$b for some reason, but I'm not sure. Let's ignore it for now
+            if identifier in ["209864"]:
+                if "*245$b" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #29): {normarc_line}")
+                    continue
+                if "*245$b" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #30): {marc21_line}")
+                    continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
