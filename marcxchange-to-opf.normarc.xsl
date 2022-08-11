@@ -2460,22 +2460,43 @@
             </xsl:call-template>
         </xsl:if>
     </xsl:template>
-
+    
     <xsl:template match="*:datafield[@tag='710']">
+        <xsl:choose>
+            <xsl:when test="exists(preceding-sibling::*:datafield[@tag='710'])">
+                <!-- ignore everything but the first one; everything is processed in xsl:otherwise -->
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="../*:datafield[@tag='710' and exists(*:subfield[@code='a'])]">
+                    <xsl:sort select="*:subfield[@code='a'][1]/text()"/>
+                    <xsl:call-template name="datafield710">
+                        <xsl:with-param name="position" select="string(position())"/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="datafield710">
+        <xsl:param name="position"/>
+        <xsl:variable name="creator-id" select="concat('creator-710-', $position)"/>
+        
+        <xsl:variable name="value" select="*:subfield[@code='a'][1]/text()"/>
+        <xsl:variable name="value" select="if (exists(*:subfield[@code='q'])) then concat($value, '(', *:subfield[@code='q'][1]/text(), ')') else $value"/>
+        <xsl:call-template name="meta">
+            <xsl:with-param name="property" select="'dc:creator'"/>
+            <xsl:with-param name="value" select="$value"/>
+            <xsl:with-param name="id" select="$creator-id"/>
+        </xsl:call-template>
+
+        <xsl:call-template name="bibliofil-id">
+            <xsl:with-param name="context" select="."/>
+            <xsl:with-param name="refines" select="$creator-id"/>
+        </xsl:call-template>
+        
         <xsl:for-each select="*:subfield[@code='1']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
-
-        <xsl:if test="*:subfield[@code='a']">
-            <xsl:variable name="creator-id" select="concat('creator-710-',1+count(preceding-sibling::*:datafield[@tag='710']))"/>
-
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator'"/><xsl:with-param name="value" select="*:subfield[@code='a'][1]/text()"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
-
-            <xsl:call-template name="bibliofil-id">
-                <xsl:with-param name="context" select="."/>
-                <xsl:with-param name="refines" select="$creator-id"/>
-            </xsl:call-template>
-        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='730']">
