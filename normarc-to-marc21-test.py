@@ -34,9 +34,6 @@ skip_records = [
 
     # duplicate *019 lost in conversion
     "182386",
-
-    # duplicate *245$a lost in conversion
-    "208500",
 ]
 
 current_directory = os.path.dirname(__file__)
@@ -182,6 +179,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
         normarc_available_in_march_2022 = False
+        normarc_has_multiple_245a = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
@@ -202,6 +200,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 for value in values:
                     if value not in ["aa", "a", "b", "bu", "u", "mu"]:
                         normarc_has_unknown_values_in_019a = True
+            if "*245" in line and len(line.split("$a")) > 2:
+                    normarc_has_multiple_245a = True
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
@@ -447,6 +447,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property == "series.position":
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
                 continue
+
+            if normarc_has_multiple_245a:
+                if "245$a" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #28): {normarc_line}")
+                    continue
+                if "245$a" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #28): {marc21_line}")
+                    continue
 
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
