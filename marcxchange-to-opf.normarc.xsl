@@ -1777,7 +1777,7 @@
                     </xsl:if>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="replace(text(), '^[^:]*:\s*', '')"/></xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
