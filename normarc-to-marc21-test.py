@@ -26,6 +26,9 @@ skip_records = [
     # *245$b gets a trailing " = (…)"
     "202244",
 
+    # *240$a gets a trailing " :"
+    "209240", "209241",
+
     # *650$z converted to *650$x by mistake
     "180806",
 
