@@ -1296,7 +1296,9 @@
 
     <xsl:template match="*:datafield[@tag='130']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:variable name="value" select="text()"/>
+            <xsl:variable name="value" select="if (exists(../*:subfield[@code='b'])) then concat($value, '. ', ../*:subfield[@code='b'][1]/text()) else $value"/>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="$value"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -1406,6 +1408,7 @@
                 *:subfield[@code='a']
                 )[1]"/>
             <xsl:variable name="sortingKey" select="if ($sortingKey_context[../@tag = '245' and @code = 'a']) then $title-without-subtitle else replace(nlb:identifier-in-title(replace($sortingKey_context/text(),'[\[\]]',''), $language, true()), '(^ +| +$)', '')"/>
+            <xsl:variable name="sortingKey" select="if ($sortingKey_context[../@tag = '130' and @code = 'a' and exists(../*:subfield[@code='b'])]) then concat($sortingKey, '. ', $sortingKey_context/../*:subfield[@code='b'][1]/text()) else $sortingKey"/>
             <xsl:if test="$sortingKey_context">
                 <xsl:call-template name="meta">
                     <xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/>
