@@ -34,6 +34,9 @@ skip_records = [
 
     # duplicate *019 lost in conversion
     "182386",
+
+    # duplicate *245$a lost in conversion
+    "208500",
 ]
 
 current_directory = os.path.dirname(__file__)
