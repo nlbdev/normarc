@@ -69,7 +69,7 @@ skip_records = [
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
-exit_on_error = False
+exit_on_error = True
 print_first_error_only = True
 
 config = {}
@@ -359,12 +359,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
             
             
-            """
-            
             if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
                 normarc_line = normarc_line.lower()
             if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
                 marc21_line = marc21_line.lower()
+            
+            """
 
             # for titles, ignore whitespace differences surrounding semicolon
             if "dc:title" in normarc_line_property:
@@ -424,10 +424,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_position:
-                if "series.position" in normarc_line and re.match(r".*\*(440|490|830)\$v.*", normarc_line_comment):
+                if "series.position" in normarc_line and re.match(r".*\*(440|490|830).*", normarc_line_comment):
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #12): {normarc_line}")
                     continue
-                if "series.position" in marc21_line and re.match(r".*\*(440|490|830)\$v.*", marc21_line_comment):
+                if "series.position" in marc21_line and re.match(r".*\*(440|490|830).*", marc21_line_comment):
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #13): {marc21_line}")
                     continue
             
@@ -493,8 +493,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*596$e" in marc21_line_comment:
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #25): {marc21_line}")
                 continue
+            
+            """
 
-            # Acutally, let's just ignore all series.position from *440, *490 and *830; there's a lot of problems in its conversion
+            # Actually, let's just ignore all series.position from *440, *490 and *830; there's a lot of problems in its conversion
             # For instance in 200260, where $v is copied from another datafield
             if normarc_line_property == "series.position":
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #26): {normarc_line}")
@@ -502,6 +504,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property == "series.position":
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
                 continue
+
+            """
 
             if normarc_has_multiple_245a:
                 if "245$a" in normarc_line_comment:
@@ -539,6 +543,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if marc21_line_property == "nationality":
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #33): {marc21_line}")
                     continue
+            
+            # Ignore *700$d for now, as it is not always preserved in MARC21
+            if "*700$d" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #34): {normarc_line}")
+                continue
+            if "*700$d" in marc21_line_comment:
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #35): {marc21_line}")
+                continue
             
             # IDs in the authority registry have changed in many cases
             if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_", "800$_"]:
