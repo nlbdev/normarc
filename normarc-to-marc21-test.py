@@ -16,6 +16,43 @@ skip_records = [
     # *019$d is moved to *019$b by mistake
     "106789", "383239", "683239",
     
+    # multiple *019
+    "182386", "582386", "613963",
+    
+    # missing *019$b
+    "123415", "280321", "551045", "552567", "552601", "552992", "555642", "557591", "558240", "559663",
+    "560234", "560875", "561456", "566458", "581504", "581519", "627342", "850084", "900090", "900096",
+    
+    # two *019$b
+    "115495", "120201", "120202", "120203", "120204", "120205", "120206", "120207", "120208", "120209",
+    "120210", "120211", "120212", "120213", "120214", "120215", "120216", "120217", "120218", "120219",
+    "120220", "371261", "372540", "372544", "372555", "373587", "373607", "373634", "373644", "380001",
+    "380002", "380004", "380005", "380006", "380011", "380014", "380015", "380018", "380019", "380028",
+    "380033", "380035", "380037", "380038", "380042", "380044", "380046", "380047", "380048", "380049",
+    "380050", "380052", "380059", "380061", "380062", "380065", "380066", "380068", "380069", "380070",
+    "380071", "380074", "380076", "380077", "380078", "380079", "380080", "380081", "380082", "380083",
+    "380084", "380085", "380086", "380088", "380089", "380090", "380091", "380092", "380096", "380097",
+    "380099", "380100", "380101", "380102", "380103", "380104", "380107", "380108", "380109", "380110",
+    "380111", "380112", "380113", "380114", "380115", "380116", "380117", "380119", "380123", "380124",
+    "380125", "380126", "380129", "380130", "380131", "380132", "380133", "380134", "380135", "380136",
+    "380137", "380138", "380139", "380140", "380142", "380143", "380144", "380145", "380146", "380147",
+    "380148", "380149", "380150", "380151", "380152", "380154", "380156", "380157", "380159", "380160",
+    "380161", "380162", "380164", "380166", "380341", "381170", "381172", "381176", "381188", "381446",
+    "554157", "558276", "558278", "558280", "558281", "558282", "558284", "558285", "558286", "558287",
+    "558288", "558289", "558290", "558291", "558292", "558293", "558294", "558295", "559982", "560565",
+    "561982", "561983", "561984", "564789", "565950", "566080", "580162", "581572", "582689", "582774",
+    "583553", "611823", "612045", "613748", "618360", "618363", "618720", "624576", "624578", "624580",
+    "624581", "624582", "624584", "624585", "624586", "624587", "624588", "624589", "624590", "624591",
+    "624592", "624593", "624594", "624595", "626282", "626865", "628282", "628283", "628284", "630045",
+    "632635", "681572", "682689", "682690", "682774", "683553", "849950", "849951", "849952", "849953",
+    "849954", "849955", "849956", "849957", "849958", "849959", "849960", "849961", "849962", "849963",
+    "849964", "849966", "849967", "849968", "849969", "849970", "849971", "849972", "849973", "849974",
+    "849975", "849976", "849977", "849978", "849979", "849980", "849981", "849982", "849983", "849984",
+    "849985", "849986", "849987", "849988", "849989", "849990", "849991", "849992", "849993", "849994",
+    "849995", "849996", "849997", "849998", "849999", "852355", "857816", "857818", "857823", "857824",
+    "857825", "857833", "857847", "857853", "857860", "857861", "857866", "857867", "857905", "857918",
+    "857921", "861144", "861145", "861150", "862185", "862195", "862205", "900023",
+    
     # In these records", "*100$j are not converted from Normarc to Marc 21:
     "107158", "107620", "108950", "109773", "111525", "112386", "112427", "117506", "121884", "123453",
     "124225", "124950", "180155", "180158", "180378", "181374", "183972", "183973", "183979", "183984",
@@ -45,11 +82,11 @@ skip_records = [
     "803999", "804001",
     
     # *245$a gets a trailing " ="
-    "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
-    "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
-    "302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
-    "560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
-    "682920", "683084", "857658", "857659", "900044",
+    #"104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
+    #"210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
+    #"302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
+    #"560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
+    #"682920", "683084", "857658", "857659", "900044",
 
     # *245$b gets a trailing " = (…)"
 #    "202244",
@@ -338,6 +375,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             marc21_line_property = marc21_line.split('property="')[1].split('"')[0] if "property=" in marc21_line else marc21_line.split("<")[1].split(">")[0].split(" ")[0]
             if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
                 normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
+                normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
                 normarc_line = normarc_line.replace("Ð", "D")
@@ -364,39 +402,16 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
                 marc21_line = marc21_line.lower()
             
-            """
-
             # for titles, ignore whitespace differences surrounding semicolon
             if "dc:title" in normarc_line_property:
                 normarc_line = re.sub(r" *; *", r" ; ", normarc_line)
             if "dc:title" in marc21_line_property:
                 marc21_line = re.sub(r" *; *", r" ; ", marc21_line)
-            """
 
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
 
-            # Not sure how dewey is converted yet (if at all), ignore dewey in 650 for now
-            if "dc:subject.dewey" in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #3): {normarc_line}")
-                continue
-            if "dc:subject.dewey" in marc21_line:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #4): {marc21_line}")
-                continue
-
-            """
-            
-            # Not sure how dc:title.part is converted yet (if at all), ignore part titles (from *740) for now
-            if "dc:title.part" in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #5): {normarc_line}")
-                continue
-            if "dc:title.part" in marc21_line:
-                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #6): {marc21_line}")
-                continue
-            
-            """
-            
             # sorting keys that refine the title or contributors seems to have been removed in MARC21
             if "sortingKey" in normarc_line and 'refines="' in normarc_line:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
@@ -514,9 +529,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if "245$a" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #28): {marc21_line}")
                     continue
+            """
             
             # it looks like *246$a is appended to *245$b for some reason, but I'm not sure. Let's ignore it for now
-            if identifier in ["209864"]:
+            if identifier in ["104518"]:
                 if "*245$b" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #29): {normarc_line}")
                     continue
@@ -524,6 +540,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #30): {marc21_line}")
                     continue
             
+            """
             # series.issn from *490$x is not included in MARC21
             if "*490$x" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #31): {normarc_line}")
@@ -552,11 +569,34 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #35): {marc21_line}")
                 continue
             
-            # IDs in the authority registry have changed in many cases
-            if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_", "800$_"]:
-                normarc_line = re.sub(r'>\d+<', '>X<', normarc_line)
-            if "bibliofil-id" in marc21_line and '*' in marc21_line_comment and marc21_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_", "800$_"]:
-                marc21_line = re.sub(r'>\d+<', '>X<', marc21_line)
+            # IDs in the authority registry have changed or disappeared in many cases, ignore until next trial conversion
+            if "bibliofil-id" in normarc_line:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #36): {normarc_line}")
+                continue
+            if "bibliofil-id" in marc21_line:
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #37): {marc21_line}")
+                continue
+            
+            # Dewey is not converted to MARC21
+            if "*600$1" in normarc_line_comment or "*650$1" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
+                continue
+
+            # Nationality in *800$j is not converted to MARC21
+            if "*800$j" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
+                continue
+
+            # Part title *740$a is not converted to MARC21
+            if "*740$a" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #40): {normarc_line}")
+                continue
+            
+            if identifier in ["181450"]:
+                # record has change since conversion, ignore for now
+                if "*240$a" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #41): {normarc_line}")
+                    continue
             
             if normarc_line != marc21_line:
                 if print_first_error_only and not error_has_occured or not print_first_error_only:
@@ -649,7 +689,6 @@ if not os.path.exists(records):
                     if marcname in ["normarc", "marc21"] and tablename == "vmarc" and line[1:4] == "001":
                         identifier = line.strip()[4:].lstrip("0")
 
-
 record_files_normarc = set(os.listdir(os.path.join(records, "normarc", "vmarc")))
 record_files_marc21 = set(os.listdir(os.path.join(records, "marc21", "vmarc")))
 record_files = record_files_normarc.intersection(record_files_marc21)
@@ -702,8 +741,12 @@ def handle(identifier, detailed_comparison=False):
                 print(f"- NORMARC OPF out: {normarc_opf_file}")
                 print(f"- MARC21 OPF out: {marc21_opf_file}")
                 print()
+                print("Library links:")
+                print(f"Normarc: https://websok.nlb.no/cgi-bin/websok?tnr={identifier}")
+                print(f"Marc 21: https://lydlab1.bib.no/cgi-bin/websok?tnr={identifier}")
+                print()
                 print("Open all in editor:")
-                print(f"{config.get('editor', 'subl')} {normarc_opf_file} {marc21_opf_file} {normarc_file} {marc21_file}")
+                print(f"{config.get('editor', 'subl')} {normarc_opf_file} {marc21_opf_file} {normarc_source_file} {marc21_source_file}")
             error_has_occured = True
             failed += 1
             if (successful + failed) % 10 == 0 or (successful + failed) == len(identifiers):
