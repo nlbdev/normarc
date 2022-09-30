@@ -2694,7 +2694,6 @@
     <xsl:variable name="YEAR_VALUE" select="'[^\d]'"/>
     <xsl:variable name="AVAILABLE" select="'^.*?(\d+)[\./]+(\d+)[\./]+(\d+).*?$'"/>
     <xsl:variable name="ISO_DATE" select="'^\d\d\d\d-\d\d-\d\d$'"/>
-    <xsl:variable name="DEWEY" select="'^.*?(\d+\.?\d*).*?$'"/>
 
     <xsl:function name="nlb:parseNationality">
         <xsl:param name="nationality"/>
