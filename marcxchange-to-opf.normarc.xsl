@@ -1596,14 +1596,18 @@
                 <xsl:message select="$series-unique"/>
                 
                 <xsl:for-each select="$series-unique">
-                    <xsl:call-template name="series"/>
+                    <xsl:call-template name="series">
+                        <xsl:with-param name="position" select="string(position())"/>
+                    </xsl:call-template>
                 </xsl:for-each>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
 
     <xsl:template name="series">
-        <xsl:variable name="title-id" select="concat('series-title-',1+count(preceding-sibling::*:datafield[@tag='440' or @tag='490' or @tag='830']))"/>
+        <xsl:param name="position" as="xs:string"/>
+        
+        <xsl:variable name="title-id" select="concat('series-title-', $position)"/>
 
         <xsl:variable name="series-title" as="element()?">
             <xsl:for-each select="(*:subfield[@code='a'])[1]">
