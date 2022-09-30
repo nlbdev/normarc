@@ -3331,6 +3331,10 @@
                 <!-- Compiler -->
                 <xsl:value-of select="'dc:contributor.compiler'"/>
             </xsl:when>
+            <xsl:when test="matches($role,'.*(manusforf).*')">
+                <!-- Sceenwriter-->
+                <xsl:value-of select="'dc:contributor.screenwriter'"/>
+            </xsl:when>
             
             <!-- default to dc:contributor.other when unable to determine the role -->
             <xsl:otherwise>
