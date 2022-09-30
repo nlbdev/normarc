@@ -2651,9 +2651,6 @@
     <xsl:template name="nationality">
         <xsl:param name="refines" as="xs:string"/>
         <xsl:variable name="context" select="." as="element()"/>
-
-        <!--<xsl:message select="'template nationality:'"/>-->
-        <!--<xsl:message select="."/>-->
         
         <!-- find all referenced *386 datafields -->
         <xsl:variable name="nationalities" as="element()*">
@@ -2669,8 +2666,9 @@
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
-                    <!--<xsl:message select="$nationality"/>-->
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$refines"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    <xsl:if test="$nationality != ''">
+                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$refines"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                    </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
         </xsl:variable>
@@ -2682,7 +2680,6 @@
                 <xsl:sequence select="$nationalities[$position]"/>
             </xsl:if>
         </xsl:for-each>
-        <!--<xsl:message select="'-\-\-'"/>-->
     </xsl:template>
 
     <xsl:variable name="DAY_MONTH_YEAR" select="'\d+-\d+-\d+'"/>
