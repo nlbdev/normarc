@@ -1586,12 +1586,14 @@
                 </xsl:variable>
                 
                 <!-- sort by serialized value -->
+                <xsl:message select="'sort by serialized value'"/>
                 <xsl:variable name="series-unique" as="element()*">
                     <xsl:for-each select="$series-unique">
                         <xsl:sort select="nlb:serialized-series(.)"/>
                         <xsl:sequence select="."/>
                     </xsl:for-each>
                 </xsl:variable>
+                <xsl:message select="$series-unique"/>
                 
                 <xsl:for-each select="$series-unique">
                     <xsl:call-template name="series"/>
