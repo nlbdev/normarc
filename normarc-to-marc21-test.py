@@ -14,29 +14,29 @@ import unicodedata
 
 skip_records = [
     # bad *019$a
-    "102680",
+#    "102680",
 
     # *245$a gets a trailing " ="
-    "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
-    "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
-    "302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
-    "560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
-    "682920", "683084", "857658", "857659", "900044",
+#    "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
+#    "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
+#    "302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
+#    "560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
+#    "682920", "683084", "857658", "857659", "900044",
 
     # *245$b gets a trailing " = (…)"
-    "202244",
+#    "202244",
 
     # *240$a gets a trailing " :"
-    "209240", "209241",
+#    "209240", "209241",
 
     # *650$z converted to *650$x by mistake
-    "180806",
+#    "180806",
 
     # *785 lost in conversion
-    "181248",
+#    "181248",
 
     # duplicate *019 lost in conversion
-    "182386",
+#    "182386",
 ]
 
 current_directory = os.path.dirname(__file__)
@@ -159,21 +159,24 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         marc21 = None
         normarc_source = None
         marc21_source = None
+        with open(normarc_source_path) as f:
+            normarc_source = f.readlines()
+            if "*000" in normarc_source[1] and normarc_source[1][9] == "d":
+                print(f"Skipping deleted record: {identifier}")
+                return True
+        with open(marc21_source_path) as f:
+            marc21_source = f.readlines()
         with open(normarc_path) as f:
             normarc = f.readlines()
         with open(marc21_path) as f:
             marc21 = f.readlines()
-        with open(normarc_source_path) as f:
-            normarc_source = f.readlines()
-        with open(marc21_source_path) as f:
-            marc21_source = f.readlines()
         
         linenum = 0
         normarc_skip_lines = []
         marc21_skip_lines = []
 
         normarc_has_sortingKey_from_100w_or_245w = False
-        normarc_has_490_without_refines = False
+        normarc_has_490_without_position = False
         normarc_574a_without_Originaltittel = []
         normarc_has_Originaltittel_in_572a = False
         marc21_has_spaces_in_019a = False
@@ -181,15 +184,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_is_deleted = False
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
-        normarc_available_in_march_2022 = False
+        normarc_available_during_conversion = False
         normarc_has_multiple_245a = False
         for line in normarc:
-            if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
+            if "sortingKey" in line and "*100$w" in line:  # "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
-            if '"dc:title.series"' in line and " id=" not in line:
-                normarc_has_490_without_refines = True
-            if "dc:date.available" in line and "2022-03" in line:
-                normarc_available_in_march_2022 = True
+            if "dc:date.available" in line and re.match(r"2022-(1|0[3-9])", line):
+                normarc_available_during_conversion = True
         for line in normarc_source:
             if "*008" in line:
                 normarc_has_008 = True
@@ -204,7 +205,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     if value not in ["aa", "a", "b", "bu", "u", "mu"]:
                         normarc_has_unknown_values_in_019a = True
             if "*245" in line and len(line.split("$a")) > 2:
-                    normarc_has_multiple_245a = True
+                normarc_has_multiple_245a = True
+            if '*490' in line and "$v" not in line:
+                normarc_has_490_without_position = True
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
                 if not a.startswith("Originaltittel:") and not a.startswith("Originaltittel :"):
@@ -225,8 +228,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 print(f"Skipping deleted record with different *008/33: {identifier}")
                 return True
 
-        if normarc_available_in_march_2022:
-            print(f"Skipping record that where made available during conversion from NORMARC to MARC21: {identifier}")
+        if normarc_available_during_conversion:
+            print(f"Skipping record that were made available during conversion from NORMARC to MARC21: {identifier}")
             return True
         
         normarc_linenum = -1
@@ -289,10 +292,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 [marc21_line, marc21_line_comment] = marc21_line.split(" <!--", 1)
                 marc21_line_comment = "<!--" + marc21_line_comment
             
+            """
+            
             # *490$v is set to 1 when there's no *440$v, or copied from *440$v, even when that isn't necessarily correct
             if re.match(r'<meta property="series.position" refines="#series-title-X">\d+</meta>', marc21_line) and "*490$v" in marc21_line_comment:
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #1): {marc21_line}")
                 continue
+            
+            """
 
             # Handle differences in the authority registry
             normarc_line_property = normarc_line.split('property="')[1].split('"')[0] if "property=" in normarc_line else normarc_line.split("<")[1].split(">")[0].split(" ")[0]
@@ -301,18 +308,25 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
+                normarc_line = normarc_line.replace("Ð", "D")
+                normarc_line = normarc_line.replace("ð", "d")
                 normarc_line = normarc_line.replace("-", " ")
                 normarc_line = remove_accents(normarc_line)
             if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
                 marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
+                marc21_line = marc21_line.replace("Ð", "D")
+                marc21_line = marc21_line.replace("ð", "d")
                 marc21_line = marc21_line.replace("-", " ")
                 marc21_line = remove_accents(marc21_line)
 
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
+            
+            
+            """
             
             if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
                 normarc_line = normarc_line.lower()
@@ -324,6 +338,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = re.sub(r" *; *", r" ; ", normarc_line)
             if "dc:title" in marc21_line_property:
                 marc21_line = re.sub(r" *; *", r" ; ", marc21_line)
+            """
 
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
@@ -342,6 +357,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #4): {marc21_line}")
                 continue
 
+            """
+            
             # Not sure how dc:title.part is converted yet (if at all), ignore part titles (from *740) for now
             if "dc:title.part" in normarc_line:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #5): {normarc_line}")
@@ -350,10 +367,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #6): {marc21_line}")
                 continue
             
+            """
+            
             # sorting keys that refine the title or contributors seems to have been removed in MARC21
-            if "sortingKey" in normarc_line and 'refines="' in normarc_line:
+            if "sortingKey" in normarc_line and 'refines="' in normarc_line    and '*100$w' in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
                 continue
+            
+            """
             
             # *653$q are not copied to MARC21
             if "*653$q" in normarc_line_comment:
@@ -364,6 +385,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*650$w" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
                 continue
+            
+            """
 
             # the sorting keys in *100$w and *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
@@ -376,13 +399,15 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     continue
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
-            if normarc_has_490_without_refines:
-                if "series.position" in normarc_line and "refines=" not in normarc_line and "*490" in normarc_line_comment:
+            if normarc_has_490_without_position:
+                if "series.position" in normarc_line and "*440$v" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #12): {normarc_line}")
                     continue
-                if "series.position" in marc21_line and "refines=" not in marc21_line and "*490" in marc21_line_comment:
+                if "series.position" in marc21_line and "*490$v" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #13): {marc21_line}")
                     continue
+            
+            """
             
             if identifier in ["9115", "9275", "9518"]:
                 # strange conversion of series metadata, skip for now
@@ -392,8 +417,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if "*440" in marc21_line_comment or "*490" in marc21_line_comment or "*830" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #15): {marc21_line}")
                     continue
+            """
             
-            if marc21_has_spaces_in_019a or normarc_has_unknown_values_in_019a:
+            if marc21_has_spaces_in_019a    :# or normarc_has_unknown_values_in_019a:
                 # bad conversion of *019$a, skip for now
                 if '"typicalAgeRange"' in normarc_line or '"audience"' in normarc_line:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #16): {normarc_line}")
@@ -401,6 +427,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if '"typicalAgeRange"' in marc21_line or '"audience"' in marc21_line:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #17): {marc21_line}")
                     continue
+            """
             
             # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
             if normarc_574a_without_Originaltittel or normarc_has_Originaltittel_in_572a:
@@ -476,6 +503,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # refines attribute names differ when there is both a *440 and a *490 in NORMARC, so just ignore the numbering in those cases
             normarc_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', normarc_line)
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
+            
+            """
 
             # IDs in the authority registry have changed in many cases
             if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_", "800$_"]:
@@ -514,7 +543,7 @@ if not os.path.exists(records):
 
     for marcname in ["normarc", "marc21"]:
         for tablename in ["vmarc"]:
-            infile = os.path.join(config["source_data"], marcname, f"data.{tablename}.txt")
+            infile = os.path.join(current_directory, "resources/dumpreg", marcname, f"data.{tablename}.txt")
             outdir = os.path.join(records, marcname, tablename)
             os.makedirs(outdir, exist_ok=True)
 
