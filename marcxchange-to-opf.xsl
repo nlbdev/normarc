@@ -1363,6 +1363,7 @@
         <xsl:if test="count(*:subfield[@code='a'])">
             <xsl:variable name="title" select="*:subfield[@code='a'][1]/text()" as="xs:string"/>
             <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
+            <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove parallel title marker if present -->
             <xsl:variable name="title-without-subtitle" select="replace($title, '^([^;:]*[^;: ]).*', '$1')"/>
             <xsl:variable name="title-without-subtitle" select="nlb:identifier-in-title($title-without-subtitle, $language, false())"/>
             <xsl:for-each select="*:subfield[@code='a']">
