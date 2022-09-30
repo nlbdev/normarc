@@ -481,7 +481,7 @@
             <xsl:when test="$POS21 = 'z'"><!-- "Andre typer periodika": Not in use; ignore for now --></xsl:when>
         </xsl:choose>
         
-        <xsl:variable name="tag385sub0_contexts" select="../*:datafield[@tag='385']/*:subfield[@code='0']" as="element()*"/>
+        <xsl:variable name="tag385sub0_contexts" select="../*:datafield[@tag='385']/*:subfield[@code='0' and replace(text(), '^.*/', '') = ('TG1000', 'TG1001', 'TG1002', 'TG1003', 'TG1004', 'TG1005', 'TG1015', 'TG1016')]" as="element()*"/>
         <xsl:variable name="tag385sub0" select="$tag385sub0_contexts/text()" as="xs:string*"/>
         <xsl:variable name="ageRangesFrom385sub0" as="xs:string*">
             <xsl:for-each select="$tag385sub0">
