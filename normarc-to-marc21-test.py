@@ -13,6 +13,37 @@ skip_records = [
     # bad *019$a
 #    "102680",
 
+    # *019$d is moved to *019$b by mistake
+    "106789", "383239", "683239",
+    
+    # In these records", "*100$j are not converted from Normarc to Marc 21:
+    "107158", "107620", "108950", "109773", "111525", "112386", "112427", "117506", "121884", "123453",
+    "124225", "124950", "180155", "180158", "180378", "181374", "183972", "183973", "183979", "183984",
+    "183986", "183990", "184005", "184006", "184009", "184010", "184011", "184018", "184025", "184026",
+    "184027", "184028", "184054", "184055", "184057", "184062", "184067", "184068", "184070", "184075",
+    "184079", "184080", "184081", "184082", "184083", "184084", "184086", "185055", "220702", "223578",
+    "229350", "280149", "282438", "283941", "283989", "283993", "284002", "284012", "284029", "284034",
+    "284036", "284040", "284041", "284045", "284048", "284059", "284072", "284076", "361257", "361260",
+    "370814", "371294", "372679", "373701", "373764", "373778", "375440", "375444", "375680", "376053",
+    "380149", "381374", "382438", "383941", "383972", "383979", "383984", "383986", "383987", "383989",
+    "383990", "383993", "384002", "384005", "384006", "384009", "384010", "384011", "384012", "384018",
+    "384022", "384029", "384034", "384036", "384040", "384041", "384045", "384048", "384054", "384055",
+    "384056", "384057", "384059", "384062", "384067", "384068", "384070", "384072", "384075", "384076",
+    "384079", "384080", "384081", "384082", "384083", "384084", "394080", "524225", "550854", "551750",
+    "552573", "554325", "555186", "555227", "557502", "560378", "564684", "566150", "580149", "580155",
+    "580158", "580378", "580412", "581374", "582438", "583972", "583973", "583979", "583984", "583986",
+    "583987", "583989", "583990", "583993", "584002", "584005", "584006", "584009", "584010", "584011",
+    "584012", "584018", "584022", "584025", "584026", "584028", "584029", "584034", "584036", "584040",
+    "584041", "584045", "584048", "584054", "584055", "584056", "584057", "584059", "584062", "584067",
+    "584068", "584070", "584072", "584075", "584076", "584079", "584080", "584081", "584082", "584083",
+    "584084", "584086", "604068", "605679", "606934", "607275", "608343", "612673", "613800", "614445",
+    "616162", "616379", "616380", "616381", "616555", "616970", "618050", "618671", "620625", "621486",
+    "627102", "630716", "630984", "680155", "680158", "680412", "681374", "683972", "683973", "683979",
+    "683983", "683984", "683986", "683987", "683990", "683996", "684005", "684006", "684009", "684010",
+    "684011", "684018", "684022", "684049", "684050", "684051", "684052", "684054", "684055", "684056",
+    "684057", "684067", "684068", "684075", "684079", "684080", "684081", "684082", "684083", "684084",
+    "803999", "804001",
+    
     # *245$a gets a trailing " ="
     "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
     "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
@@ -38,7 +69,7 @@ skip_records = [
 
 current_directory = os.path.dirname(__file__)
 lock = threading.RLock()
-exit_on_error = True
+exit_on_error = False
 print_first_error_only = True
 
 config = {}
@@ -133,6 +164,7 @@ def xslt(stylesheet=None, source=None, target=None, parameters={}, template=None
         logging.exception(f"The XSLT timed out: {stylesheet}")
 
     except Exception:
+        logging.error(" ".join(command))
         logging.exception(f"An error occured while running the XSLT: {stylesheet}")
     
     return success
@@ -177,12 +209,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_574a_without_Originaltittel = []
         normarc_has_Originaltittel_in_572a = False
         marc21_has_spaces_in_019a = False
-        normarc_has_unknown_values_in_019a = False  # for instance: only "bu" is extracted from "[b,bu,u]"
+        normarc_has_unknown_values_in_019a = False
         normarc_is_deleted = False
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
         normarc_available_during_conversion = False
         normarc_has_multiple_245a = False
+        normarc_has_authority_with_multiple_nationalities = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
@@ -211,6 +244,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     normarc_574a_without_Originaltittel.append(f">{a}<")  # adding >< for easier comparison with meta elements
             if "*572" in line and re.match(r".*\$a\s*Ori?gi(na|an)l(ens )?tit\w*\s*:?\s*.*", line):
                 normarc_has_Originaltittel_in_572a = True
+            if len(line.split("$j")) > 2:
+                normarc_has_authority_with_multiple_nationalities = True
         for line in marc21_source:
             if "*008" in line and len(line) > 4+33:
                 normarc_marc21_008_pos_33.append(line[4+33])  # *008/33
@@ -310,6 +345,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = normarc_line.replace("-", " ")
                 normarc_line = remove_accents(normarc_line)
             if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
@@ -341,11 +377,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
 
-            ## Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
-            #if '<meta property="nationality" refines=' in normarc_line:
-            #    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #2): {normarc_line}")
-            #    continue
-            
             # Not sure how dewey is converted yet (if at all), ignore dewey in 650 for now
             if "dc:subject.dewey" in normarc_line:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #3): {normarc_line}")
@@ -376,14 +407,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #8): {normarc_line}")
                 continue
 
-            """
-            
             # *650$w are not copied to MARC21
             if "*650$w" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
                 continue
-            
-            """
 
             # the sorting keys in *100$w and *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
@@ -416,7 +443,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     continue
             """
             
-            if marc21_has_spaces_in_019a    :# or normarc_has_unknown_values_in_019a:
+            if marc21_has_spaces_in_019a or normarc_has_unknown_values_in_019a:
                 # bad conversion of *019$a, skip for now
                 if '"typicalAgeRange"' in normarc_line or '"audience"' in normarc_line:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #16): {normarc_line}")
@@ -424,12 +451,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if '"typicalAgeRange"' in marc21_line or '"audience"' in marc21_line:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #17): {marc21_line}")
                     continue
-            """
             
             # *574$a without "Originaltittel:" prefix is not properly converted to *246$a in MARC21
-            if normarc_574a_without_Originaltittel or normarc_has_Originaltittel_in_572a:
+            if normarc_574a_without_Originaltittel    :# or normarc_has_Originaltittel_in_572a:
                 # bad conversion of *574$a or *572$a; skip for now
-                if "*574" in normarc_line_comment or "*572" in normarc_line_comment:
+                if "*574" in normarc_line_comment    :#or "*572" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #18): {normarc_line}")
                     continue
                 if "*500" in marc21_line_comment:
@@ -440,6 +466,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if "*246" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #20): {marc21_line}")
                     break
+            
+            """
 
             # skip checking the number of pages and volumes for the braille newsletter
             if identifier in ["120209"]:
@@ -502,7 +530,16 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             marc21_line = re.sub(r'(refines="#series-title)-\d+', r'\1-X', marc21_line)
             
             """
-
+            
+            # authorities with multiple nationalities are not properly converted to MARC21
+            if normarc_has_authority_with_multiple_nationalities:
+                if normarc_line_property == "nationality":
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #32): {normarc_line}")
+                    continue
+                if marc21_line_property == "nationality":
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #33): {marc21_line}")
+                    continue
+            
             # IDs in the authority registry have changed in many cases
             if "bibliofil-id" in normarc_line and '*' in normarc_line_comment and normarc_line_comment.split('*')[1].split(' ')[0] in ["100$_", "260$_", "260$3", "600$_", "610$_", "611$_", "650$_", "651$_", "653$_", "655$_", "700$_", "710$_", "800$_"]:
                 normarc_line = re.sub(r'>\d+<', '>X<', normarc_line)
@@ -517,10 +554,31 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                         print("\n".join(normarc_skip_lines))
                         print("\n".join(marc21_skip_lines))
                         print()
+                    
                     print("Lines are different:")
+                    print(f"NORMARC (line{normarc_linenum + 1 : 3}) --> {normarc_line}  {normarc_line_comment}")
+                    print(f"MARC21 (line{marc21_linenum + 1 : 3})  --> {marc21_line}  {marc21_line_comment}")
                     print()
-                    print(f"NORMARC (line {normarc_linenum + 1}): {normarc_line}  {normarc_line_comment}")
-                    print(f"MARC21 (line {marc21_linenum + 1}):  {marc21_line}  {marc21_line_comment}")
+                    
+                    print("Lines are different (with context):")
+                    print()
+                    
+                    # NORMARC lines with context
+                    for prev_line in normarc[max(normarc_linenum - 2, 0) : normarc_linenum]:
+                        print(f"                      {re.sub(r' +', ' ', prev_line.strip())}")
+                    print(f"NORMARC (line{normarc_linenum + 1 : 3}) --> {normarc_line}  {normarc_line_comment}")
+                    for next_line in normarc[normarc_linenum + 1 : min(normarc_linenum + 3, len(normarc) - 1)]:
+                        print(f"                      {re.sub(r' +', ' ', next_line.strip())}")
+                    
+                    print()
+                    
+                    # MARC 21 lines with context
+                    for prev_line in marc21[max(marc21_linenum - 2, 0) : marc21_linenum]:
+                        print(f"                      {re.sub(r' +', ' ', prev_line.strip())}")
+                    print(f"MARC21 (line{marc21_linenum + 1 : 3})  --> {marc21_line}  {marc21_line_comment}")
+                    for next_line in marc21[marc21_linenum + 1 : min(marc21_linenum + 3, len(marc21) - 1)]:
+                        print(f"                      {re.sub(r' +', ' ', next_line.strip())}")
+                    
                     print()
                 return False
             
@@ -677,6 +735,9 @@ if handled_in_this_run >= 3:
         if error_has_occured and exit_on_error:
             sys.exit(1)
         if identifier in already_handled:
+            continue
+        if identifier in skip_records:
+            mark_as_handled(identifier)
             continue
         while len(thread_pool) >= 10:
             if error_has_occured and exit_on_error:
