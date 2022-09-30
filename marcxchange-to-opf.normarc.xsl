@@ -1204,7 +1204,9 @@
             </xsl:for-each>
             
             <xsl:if test="$sortingKey">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="$sortingKey"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>                
+                <xsl:for-each select="(*:subfield[@code='w'])[1]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('sortingKey')"/><xsl:with-param name="value" select="$sortingKey"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
+                </xsl:for-each>
             </xsl:if>
 
             <xsl:for-each select="*:subfield[@code='d']">
