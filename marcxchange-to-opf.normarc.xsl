@@ -1218,8 +1218,10 @@
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deathDate')"/><xsl:with-param name="value" select="$birthDeath[2]"/><xsl:with-param name="refines" select="$creator-id"/></xsl:call-template>
                 </xsl:if>
             </xsl:for-each>
-
-            <xsl:for-each select="*:subfield[@code='j']">
+            
+            <!-- conversion to MARC21 does not handle multiple nationalities,
+                 so we only include the first nationality here in Normarc as well, for easier comparison -->
+            <xsl:for-each select="*:subfield[@code='j'][1]">
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
