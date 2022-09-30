@@ -1,11 +1,8 @@
 #!/usr/bin/python3
 
 import os
-import tempfile
-import shutil
 import sys
 import subprocess
-import traceback
 import logging
 import re
 import threading
@@ -17,11 +14,11 @@ skip_records = [
 #    "102680",
 
     # *245$a gets a trailing " ="
-#    "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
-#    "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
-#    "302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
-#    "560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
-#    "682920", "683084", "857658", "857659", "900044",
+    "104518", "104539", "106040", "106494", "116583", "1757", "202191", "204531", "208801", "209448",
+    "210485", "213772", "223879", "280156", "282998", "302315", "302344", "302369", "302387", "302388",
+    "302389", "302394", "361878", "371346", "372453", "380156", "382059", "382998", "400020", "559383",
+    "560679", "580156", "582059", "582998", "601757", "610424", "610846", "612493", "625559", "625683",
+    "682920", "683084", "857658", "857659", "900044",
 
     # *245$b gets a trailing " = (…)"
 #    "202244",
@@ -187,7 +184,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_available_during_conversion = False
         normarc_has_multiple_245a = False
         for line in normarc:
-            if "sortingKey" in line and "*100$w" in line:  # "*245$w" in line or "*100$w" in line:
+            if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
                 normarc_has_sortingKey_from_100w_or_245w = True
             if "dc:date.available" in line and re.match(r"2022-(1|0[3-9])", line):
                 normarc_available_during_conversion = True
@@ -206,7 +203,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                         normarc_has_unknown_values_in_019a = True
             if "*245" in line and len(line.split("$a")) > 2:
                 normarc_has_multiple_245a = True
-            if '*490' in line and "$v" not in line:
+            if '*490' in line and "$v" not in line and not re.match(r".*\$a[^$]*;.*", line):
                 normarc_has_490_without_position = True
             if "*574" in line and "$a" in line:
                 a = line.split("$a")[1].split("$")[0]
@@ -344,10 +341,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
 
-            # Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
-            if '<meta property="nationality" refines=' in normarc_line:
-                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #2): {normarc_line}")
-                continue
+            ## Nationality in *100$j etc. not converted properly to MARC21 for some reason. Ignore for now
+            #if '<meta property="nationality" refines=' in normarc_line:
+            #    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #2): {normarc_line}")
+            #    continue
             
             # Not sure how dewey is converted yet (if at all), ignore dewey in 650 for now
             if "dc:subject.dewey" in normarc_line:
@@ -370,17 +367,17 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             """
             
             # sorting keys that refine the title or contributors seems to have been removed in MARC21
-            if "sortingKey" in normarc_line and 'refines="' in normarc_line    and '*100$w' in normarc_line_comment:
+            if "sortingKey" in normarc_line and 'refines="' in normarc_line:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
                 continue
-            
-            """
             
             # *653$q are not copied to MARC21
             if "*653$q" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #8): {normarc_line}")
                 continue
 
+            """
+            
             # *650$w are not copied to MARC21
             if "*650$w" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
@@ -400,10 +397,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             # *490$v is copied from *440$v when there is no *490$v; ignore for now
             if normarc_has_490_without_position:
-                if "series.position" in normarc_line and "*440$v" in normarc_line_comment:
+                if "series.position" in normarc_line and re.match(r".*\*(440|490|830)\$v.*", normarc_line_comment):
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #12): {normarc_line}")
                     continue
-                if "series.position" in marc21_line and "*490$v" in marc21_line_comment:
+                if "series.position" in marc21_line and re.match(r".*\*(440|490|830)\$v.*", marc21_line_comment):
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #13): {marc21_line}")
                     continue
             
