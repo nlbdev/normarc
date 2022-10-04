@@ -578,7 +578,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 continue
             
             # Dewey is not converted to MARC21
-            if "*600$1" in normarc_line_comment or "*650$1" in normarc_line_comment:
+            if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0] in ["600$1", "650$1", "651$1"]:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
                 continue
 
@@ -596,6 +596,24 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 # record has change since conversion, ignore for now
                 if "*240$a" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #41): {normarc_line}")
+                    continue
+            
+            if identifier in ["212559", "213453", "218103", "225747", "228024"]:
+                # Ignore conversion of parallel title. It looks correct in Marc 21, but it's not clear how it was converted.
+                if "*245" in normarc_line_comment or "*246" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #42): {normarc_line}")
+                    continue
+                if "*245" in marc21_line_comment or "*246" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #43): {marc21_line}")
+                    continue
+            
+            if identifier in ["181450", "213312", "381450", "581450"]:
+                # Problem with conversion of original title, should be fixed in next conversion
+                if "*574" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #44): {normarc_line}")
+                    continue
+                if "*246" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #45): {marc21_line}")
                     continue
             
             if normarc_line != marc21_line:
@@ -769,11 +787,7 @@ for identifier in identifiers:
         continue
 
     success = False
-    try:
-        success = handle(identifier, detailed_comparison=detailed_comparison)
-    except Exception as e:
-        print(f"An error occured when handling {identifier}: {e}")
-        continue
+    success = handle(identifier, detailed_comparison=detailed_comparison)
     
     if success:
         handled_in_this_run += 1
