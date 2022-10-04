@@ -3272,6 +3272,10 @@
             <xsl:when test="$role = 'wst'"><xsl:value-of select="'dc:contributor.supplementary-textual-content'"/></xsl:when>
             
             <!-- parse the role from the free text subfield (as we did in NORMARC) -->
+            <xsl:when test="matches($role,'.*(manusforf).*')">
+                <!-- Sceenwriter-->
+                <xsl:value-of select="'dc:contributor.screenwriter'"/>
+            </xsl:when>
             <xsl:when test="matches($role,'^fr.\s.*') or matches($role,'^til\s.*') or matches($role,'^p.\s.*') or matches($role,'.*(overs|.versett|overatt|omsett).*')">
                 <xsl:value-of select="'dc:contributor.translator'"/>
             </xsl:when>
@@ -3337,10 +3341,6 @@
             <xsl:when test="matches($role,'.*(samlet|utvalg).*')">
                 <!-- Compiler -->
                 <xsl:value-of select="'dc:contributor.compiler'"/>
-            </xsl:when>
-            <xsl:when test="matches($role,'.*(manusforf).*')">
-                <!-- Sceenwriter-->
-                <xsl:value-of select="'dc:contributor.screenwriter'"/>
             </xsl:when>
             
             <!-- default to dc:contributor.other when unable to determine the role -->
