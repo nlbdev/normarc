@@ -1363,8 +1363,10 @@
         <xsl:if test="count(*:subfield[@code='a'])">
             <xsl:variable name="title" select="*:subfield[@code='a'][1]/text()" as="xs:string"/>
             <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
-            <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove parallel title marker if present -->
-            <xsl:variable name="title-without-subtitle" select="replace($title, '^([^;:]*[^;: ]).*', '$1')"/>
+            <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove trailing parallel title marker if present -->
+            <xsl:variable name="parallel-title" select="if (contains($title, '=')) then replace($title, '^.*= *', '') else ''" as="xs:string"/>
+            <xsl:variable name="title-without-parallel-title" select="if (contains($title, '=')) then replace($title, ' *=.*$', $title) else $title" as="xs:string"/>
+            <xsl:variable name="title-without-subtitle" select="replace($title-without-parallel-title, '^([^;:]*[^;: ]).*', '$1')"/>
             <xsl:variable name="title-without-subtitle" select="nlb:identifier-in-title($title-without-subtitle, $language, false())"/>
             <xsl:for-each select="*:subfield[@code='a']">
                 <xsl:call-template name="meta">
@@ -1372,6 +1374,14 @@
                     <xsl:with-param name="context" select="."/>
                     <xsl:with-param name="value" select="$title-without-subtitle"/>
                 </xsl:call-template>
+                
+                <xsl:if test="string-length($parallel-title) gt 0">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="'dc:title.parallel'"/>
+                        <xsl:with-param name="context" select="."/>
+                        <xsl:with-param name="value" select="$parallel-title"/>
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
             
             <xsl:variable name="subtitle" as="element()*">
@@ -1462,10 +1472,10 @@
             <xsl:for-each select="../*:datafield[@tag='246']">
                 <xsl:sort select="*:subfield[@code='a'][1]/text()"/>
                 
-                <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else 'alternative'" as="xs:string"/>
+                <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else if (@ind2 = '1') then 'parallel' else 'alternative'" as="xs:string"/>
                 
                 <xsl:for-each select="*:subfield[@code='a']">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="replace(text(), ' *:$', '')"/></xsl:call-template>
                 </xsl:for-each>
                 
                 <xsl:for-each select="*:subfield[@code='b']">
