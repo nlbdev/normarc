@@ -1161,12 +1161,12 @@
     <!-- 050 - 099 KLASSIFIKASJONSKODER -->
 
     <xsl:template match="*:datafield[@tag='082']">
-        <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
-        <xsl:for-each select="*:subfield[@code='b']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-        </xsl:for-each>
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='082'])">
+            <xsl:for-each select="../*:datafield[@tag='082']/*:subfield[@code=('a','b')]">
+                <xsl:sort select="text()"/>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:datafield[matches(@tag,'09\d')]">
