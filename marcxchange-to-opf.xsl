@@ -333,7 +333,7 @@
             <xsl:message terminate="yes" select="'No property name was given'"/>
         </xsl:if>
         <xsl:if test="not($value)">
-            <xsl:message terminate="yes" select="'No value was given'"/>
+            <xsl:message terminate="yes" select="concat('No value was given (value=', string($value), ')')"/>
         </xsl:if>
 
         <xsl:variable name="dublin-core" select="$property = ('dc:contributor', 'dc:coverage', 'dc:creator', 'dc:date', 'dc:description', 'dc:format', 'dc:identifier',
