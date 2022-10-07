@@ -2186,13 +2186,12 @@
         <xsl:variable name="subject-id" select="concat('subject-651-', $position)"/>
 
         <xsl:if test="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="*:subfield[@code='a']/replace(text(),'[\[\]]','')"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
+            <xsl:variable name="subject-name" select="*:subfield[@code='a']/replace(text(),'[\[\]]','')"/>
+            <xsl:variable name="subject-name" select="string-join(($subject-name, *:subfield[@code='q']/concat('(', text(), ')')), ' ')"/>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="$subject-name"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
 
             <xsl:for-each select="*:subfield[@code='1']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
-            </xsl:for-each>
-            <xsl:for-each select="*:subfield[@code='q']">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='z']">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
