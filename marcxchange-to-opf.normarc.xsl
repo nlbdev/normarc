@@ -1342,6 +1342,7 @@
             <xsl:variable name="subtitle" as="element()*">
                 <xsl:for-each select="*:subfield[@code='a']">
                     <xsl:variable name="subtitle" select="if (matches($title, '.*[;:].*')) then replace($title, '^[^;:]*[;:] *', '') else ()"/>
+                    <xsl:variable name="subtitle" select="replace($subtitle, ';', ':')"/>
                     <xsl:if test="$subtitle">
                         <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.subTitle'"/><xsl:with-param name="value" select="$subtitle"/></xsl:call-template>
                     </xsl:if>
