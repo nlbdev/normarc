@@ -1993,8 +1993,23 @@
     </xsl:template>
 
     <!-- 6XX EMNEINNFØRSLER -->
-
+    
     <xsl:template match="*:datafield[@tag='600']">
+        <!-- when we find the first *600 -->
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='600'])">
+            <!-- then handle all *600 sorted by $a and $b -->
+            <xsl:for-each select="../*:datafield[@tag='600']">
+                <xsl:sort select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='b']/text(), *:subfield[@code='c']/text(), *:subfield[@code='d']/text()), ' ')"/>
+                <xsl:call-template name="datafield600">
+                    <xsl:with-param name="position" select="position()"/>
+                </xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="datafield600">
+        <xsl:param name="position"/>
+        
         <xsl:for-each select="*:subfield[@code=('g', '0') and not(starts-with(text(), '(NO-TrBIB)'))]">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
@@ -2002,7 +2017,7 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
 
-        <xsl:variable name="subject-id" select="concat('subject-600-',1+count(preceding-sibling::*:datafield[@tag='600']))"/>
+        <xsl:variable name="subject-id" select="concat('subject-600-',string($position))"/>
         <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="not($name='')">
