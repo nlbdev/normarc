@@ -1476,7 +1476,7 @@
                 <xsl:variable name="type" select="if (*:subfield[@code='i' and text()='Originaltittel']) then 'original' else if (@ind2 = '1') then 'parallel' else 'alternative'" as="xs:string"/>
                 
                 <xsl:for-each select="*:subfield[@code='a']">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="replace(text(), ' *:$', '')"/></xsl:call-template>
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="concat('dc:title.', $type)"/><xsl:with-param name="value" select="replace(text(), ' *[:.]$', '')"/></xsl:call-template>
                 </xsl:for-each>
                 
                 <xsl:for-each select="*:subfield[@code='b']">
