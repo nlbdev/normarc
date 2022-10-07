@@ -3333,7 +3333,10 @@
             <xsl:when test="matches($role,'.*bearb.*')">
                 <xsl:value-of select="'dc:contributor.adapter'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'.*(forord|innl|intro).*')">
+            <xsl:when test="matches($role,'.*(innl).*')">
+                <xsl:value-of select="'dc:contributor.narrator'"/>
+            </xsl:when>
+            <xsl:when test="matches($role,'.*(forord|intro).*')">
                 <xsl:value-of select="'dc:creator.foreword'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*etterord.*')">
