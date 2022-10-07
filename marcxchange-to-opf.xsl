@@ -1784,6 +1784,10 @@
                     </xsl:call-template>
                 </xsl:for-each>
                 
+                <xsl:call-template name="nationality">
+                    <xsl:with-param name="refines" select="$contributor-id"/>
+                </xsl:call-template>
+                
                 <xsl:if test="contains(lower-case($contributor-name), 'talesyntese')">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>

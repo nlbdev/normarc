@@ -1735,6 +1735,21 @@
                     </xsl:call-template>
                 </xsl:for-each>
                 
+                <xsl:for-each select="../*:subfield[@code='j']">
+                    <xsl:variable name="context" select="."/>
+                    <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
+                        <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
+                        <xsl:if test="$nationality">
+                            <xsl:call-template name="meta">
+                                <xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/>
+                                <xsl:with-param name="value" select="$nationality"/>
+                                <xsl:with-param name="refines" select="$contributor-id"/>
+                                <xsl:with-param name="context" select="$context"/>
+                            </xsl:call-template>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:for-each>
+                
                 <xsl:if test="contains(lower-case($contributor-name), 'talesyntese')">
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
