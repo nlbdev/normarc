@@ -2375,12 +2375,27 @@
 
     <!-- 700 - 75X BIINNFØRSLER -->
     
+    <xsl:function name="nlb:actorRoleID">
+        <!-- this is a function used to filter out duplicate (actor + role) relationships. For instance if an actor comes up with the "narrator" role twice.  -->
+        <xsl:param name="actor" as="element()"/>
+        <xsl:param name="result-elements" as="element()*"/>
+        
+        <xsl:variable name="actor-role" select="$actor/concat(name(), @property)" as="xs:string"/>
+        <xsl:variable name="actor-name" select="$actor/text()" as="xs:string"/>
+        <xsl:variable name="actor-bibliofil-id" select="($result-elements[ends-with(@property, 'bibliofil-id') and @refines = $actor/concat('#', @id)])[1]/text()" as="xs:string?"/>
+        
+        <xsl:value-of select="concat($actor-role, $actor-name, $actor-bibliofil-id)"/>
+    </xsl:function>
+    
     <xsl:template match="*:datafield[@tag='700']">
+        <xsl:variable name="debug-context" select="."/>
         <!-- when we find the first *700 -->
         <xsl:if test="not(preceding-sibling::*:datafield[@tag='700'])">
             <!-- then handle all *700 in sorted order -->
             <xsl:variable name="results" as="element()*">
-                <xsl:for-each select="../*:datafield[@tag='700']/*:subfield[@code=('4', 'e', 'r', 'x')] | ../*:datafield[@tag='700' and not(*:subfield/@code=('4', 'e', 'r', 'x'))]">
+                <xsl:variable name="role-subfields" select="../*:datafield[@tag='700']/*:subfield[@code=('4', 'e', 'r', 'x') and not(nlb:parseRole(text()) = 'dc:contributor.other')]" as="element()*"/>
+                <xsl:variable name="datafields-without-role-subfield" select="../*:datafield[@tag='700' and not(*:subfield = $role-subfields)]" as="element()*"/>
+                <xsl:for-each select="$role-subfields | $datafields-without-role-subfield">
                     <xsl:sort select="string-join(((.|..)/*:subfield[@code='a']/text(), (.|..)/*:subfield[@code='d']/text(), (.|..)/*:subfield[@code='e']/text()), '')"/>
                     <xsl:call-template name="datafield700">
                         <xsl:with-param name="position" select="position()"/>
@@ -2392,7 +2407,10 @@
             <xsl:variable name="main-results" as="element()*">
                 <xsl:for-each select="1 to count($results)">
                     <xsl:variable name="position" select="."/>
-                    <xsl:if test="$results[$position]/@id and not($results[$position]/concat(name(), @property) = $results[position() lt $position]/concat(name(), @property))">
+                    
+                    <xsl:variable name="actorRoleID" select="$results[$position]/nlb:actorRoleID(., $results)"/>
+                    
+                    <xsl:if test="$results[$position]/@id and not($actorRoleID = $results[position() lt $position]/nlb:actorRoleID(., $results))">
                         <xsl:sequence select="$results[$position]"/>
                     </xsl:if>
                 </xsl:for-each>

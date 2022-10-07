@@ -2581,5 +2581,84 @@
             <dc:creator id="...">Jacobsen, Knut A.</dc:creator>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="Regression test for *700">
+        <x:context>
+            <marcxchange:record>
+                
+                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="0">(NO-LaBS)613101-1</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="0">(NO-LaBS)613101-2</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="0">(NO-LaBS)613101-3</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="0">(NO-LaBS)613101-4</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="511" ind1="0" ind2=" ">
+                    <marcxchange:subfield code="a">Flere innlesere</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17326200</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
+                    <marcxchange:subfield code="a">Halvorsen, Stein Johan Grieg</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
+                    <marcxchange:subfield code="4">act</marcxchange:subfield>
+                    <marcxchange:subfield code="6">(NO-LaBS)613101-2</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056700</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
+                    <marcxchange:subfield code="a">Krogh, Frank</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
+                    <marcxchange:subfield code="4">act</marcxchange:subfield>
+                    <marcxchange:subfield code="6">(NO-LaBS)613101-3</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056800</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
+                    <marcxchange:subfield code="a">Nordberg, Nils</marcxchange:subfield>
+                    <marcxchange:subfield code="e">regissør</marcxchange:subfield>
+                    <marcxchange:subfield code="4">drt</marcxchange:subfield>
+                    <marcxchange:subfield code="_">14952500</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
+                    <marcxchange:subfield code="a">Vardund, Ingerid</marcxchange:subfield>
+                    <marcxchange:subfield code="d">1927-2006</marcxchange:subfield>
+                    <marcxchange:subfield code="4">act</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
+                    <marcxchange:subfield code="6">(NO-LaBS)613101-4</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056600</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta id="contributor-700-1" property="dc:contributor.actor">Halvorsen, Stein Johan Grieg</meta>
+            <meta refines="#contributor-700-1" property="bibliofil-id">19056700</meta>
+            <meta refines="#contributor-700-1" property="nationality">no</meta>
+            <meta id="contributor-700-3" property="dc:contributor.actor">Krogh, Frank</meta>
+            <meta refines="#contributor-700-3" property="bibliofil-id">19056800</meta>
+            <meta refines="#contributor-700-3" property="nationality">no</meta>
+            <meta id="contributor-700-7" property="dc:contributor.actor">Vardund, Ingerid</meta>
+            <meta refines="#contributor-700-7" property="bibliofil-id">19056600</meta>
+            <meta refines="#contributor-700-7" property="birthDate">1927</meta>
+            <meta refines="#contributor-700-7" property="deathDate">2006</meta>
+            <meta refines="#contributor-700-7" property="nationality">no</meta>
+            <meta id="contributor-700-5" property="dc:contributor.director">Nordberg, Nils</meta>
+            <meta refines="#contributor-700-5" property="bibliofil-id">14952500</meta>
+            <meta id="contributor-511-1" property="dc:contributor.narrator">Flere innlesere</meta>
+            <meta refines="#contributor-511-1" property="bibliofil-id">17326200</meta>
+        </x:expect>
+    </x:scenario>
+    
         
 </x:description>

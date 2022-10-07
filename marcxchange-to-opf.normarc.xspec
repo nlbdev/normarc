@@ -2584,5 +2584,62 @@
             <meta property="bibliofil-id" refines="#contributor-700-3">17264600</meta>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="Regression test for *700">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:datafield tag="511" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="a">Flere innlesere</marcxchange:subfield>
+                    <marcxchange:subfield code="j">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuesp.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17326200</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Halvorsen, Stein Johan Grieg</marcxchange:subfield>
+                    <marcxchange:subfield code="j">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuesp.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056700</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Krogh, Frank</marcxchange:subfield>
+                    <marcxchange:subfield code="j">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuesp.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056800</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Nordberg, Nils</marcxchange:subfield>
+                    <marcxchange:subfield code="e">regissør</marcxchange:subfield>
+                    <marcxchange:subfield code="_">14952500</marcxchange:subfield>
+                </marcxchange:datafield>
+                <marcxchange:datafield tag="700" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Vardund, Ingerid</marcxchange:subfield>
+                    <marcxchange:subfield code="d">1927-2006</marcxchange:subfield>
+                    <marcxchange:subfield code="j">n.</marcxchange:subfield>
+                    <marcxchange:subfield code="4">d5</marcxchange:subfield>
+                    <marcxchange:subfield code="e">skuesp.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19056600</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
         
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta id="contributor-700-1" property="dc:contributor.actor">Halvorsen, Stein Johan Grieg</meta>
+            <meta refines="#contributor-700-1" property="bibliofil-id">19056700</meta>
+            <meta refines="#contributor-700-1" property="nationality">no</meta>
+            <meta id="contributor-700-2" property="dc:contributor.actor">Krogh, Frank</meta>
+            <meta refines="#contributor-700-2" property="bibliofil-id">19056800</meta>
+            <meta refines="#contributor-700-2" property="nationality">no</meta>
+            <meta id="contributor-700-4" property="dc:contributor.actor">Vardund, Ingerid</meta>
+            <meta refines="#contributor-700-4" property="bibliofil-id">19056600</meta>
+            <meta refines="#contributor-700-4" property="birthDate">1927</meta>
+            <meta refines="#contributor-700-4" property="deathDate">2006</meta>
+            <meta refines="#contributor-700-4" property="nationality">no</meta>
+            <meta id="contributor-700-3" property="dc:contributor.director">Nordberg, Nils</meta>
+            <meta refines="#contributor-700-3" property="bibliofil-id">14952500</meta>
+            <meta id="contributor-511-1" property="dc:contributor.narrator">Flere innlesere</meta>
+            <meta refines="#contributor-511-1" property="bibliofil-id">17326200</meta>
+            <meta refines="#contributor-511-1" property="nationality">no</meta>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>
