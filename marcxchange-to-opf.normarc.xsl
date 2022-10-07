@@ -3317,7 +3317,7 @@
                 <!-- Sceenwriter-->
                 <xsl:value-of select="'dc:contributor.screenwriter'"/>
             </xsl:when>
-            <xsl:when test="matches($role,'^fr.\s.*') or matches($role,'^til\s.*') or matches($role,'^p.\s.*') or matches($role,'.*(overs|.versett|overatt|omsett).*')">
+            <xsl:when test="matches($role,'^fr.\s.*') or matches($role,'^til\s.*') or matches($role,'^p.\s.*') or matches($role,'^[^(]*(overs|.versett|overatt|omsett).*')">
                 <xsl:value-of select="'dc:contributor.translator'"/>
             </xsl:when>
             <xsl:when test="matches($role,'.*(foto|billed).*')">
