@@ -2116,7 +2116,7 @@
         <xsl:if test="not(preceding-sibling::*:datafield[@tag='650'])">
             <!-- then handle all *650 sorted by $a and $0 -->
             <xsl:for-each select="../*:datafield[@tag='650' and exists(*:subfield[@code='a'])]">
-                <xsl:sort select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='0']/text()), ' ')"/>
+                <xsl:sort select="string-join((*:subfield[@code='a']/text(), *:subfield[@code='q']/text(), *:subfield[@code='0']/text()), ' ')"/>
                 <xsl:call-template name="datafield650">
                     <xsl:with-param name="position" select="position()"/>
                 </xsl:call-template>
