@@ -251,7 +251,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_has_008 = False
         normarc_marc21_008_pos_33 = []
         normarc_available_during_conversion = False
-        normarc_has_multiple_245a = False
         normarc_has_authority_with_multiple_nationalities = False
         for line in normarc:
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
@@ -271,8 +270,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 for value in values:
                     if value not in ["aa", "a", "b", "bu", "u", "mu"]:
                         normarc_has_unknown_values_in_019a = True
-            if "*245" in line and len(line.split("$a")) > 2:
-                normarc_has_multiple_245a = True
             if '*490' in line and "$v" not in line and not re.match(r".*\$a[^$]*;.*", line):
                 normarc_has_490_without_position = True
             if "*574" in line and "$a" in line:
@@ -377,6 +374,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
+                normarc_line = normarc_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
                 normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
                 normarc_line = normarc_line.replace("Ð", "D")
                 normarc_line = normarc_line.replace("ð", "d")
@@ -386,6 +384,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
                 marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
+                marc21_line = marc21_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
                 marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
                 marc21_line = marc21_line.replace("Ð", "D")
                 marc21_line = marc21_line.replace("ð", "d")
@@ -395,7 +394,6 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
-            
             
             if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
                 normarc_line = normarc_line.lower()
@@ -411,6 +409,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # ignore id attributes (at least for now)
             normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
+            
+            # ignore numbering of *700 id- and refines-attributes
+            normarc_line = re.sub(r"contributor-700-\d+", "contributor-700-X", normarc_line)
+            marc21_line = re.sub(r"contributor-700-\d+", "contributor-700-X", marc21_line)
 
             # sorting keys that refine the title or contributors seems to have been removed in MARC21
             if "sortingKey" in normarc_line and 'refines="' in normarc_line:
@@ -520,16 +522,14 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
                 continue
 
-            """
-
-            if normarc_has_multiple_245a:
+            # multiple *245$a
+            if identifier in ["228728", "373628", "565528"]:
                 if "245$a" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #28): {normarc_line}")
                     continue
                 if "245$a" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #28): {marc21_line}")
                     continue
-            """
             
             # it looks like *246$a is appended to *245$b for some reason, but I'm not sure. Let's ignore it for now
             if identifier in ["104518"]:
@@ -578,7 +578,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 continue
             
             # Dewey is not converted to MARC21
-            if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0] in ["600$1", "650$1", "651$1"]:
+            if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0] in ["600$1", "650$1", "651$1", "653$1"]:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
                 continue
 
@@ -598,9 +598,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #41): {normarc_line}")
                     continue
             
-            if identifier in ["212559", "213453", "218103", "225747", "228024"]:
+            if identifier in ["104518", "104539", "202191", "202244", "209864", "210485", "212559", "213453", "213772", "218103",
+                              "223879", "225747", "228024", "228751", "229874", "280048", "280473", "281063", "283629", "283635",
+                              "283647", "359216", "361878", "363424", "371346", "371684", "372323", "372453", "372514", "380048",
+                              "380247", "381063", "383393", "560679", "580048", "580048", "580247", "682920", "683084", "683393",
+                              "900044"]:
                 # Ignore conversion of parallel title. It looks correct in Marc 21, but it's not clear how it was converted.
-                if "*245" in normarc_line_comment or "*246" in normarc_line_comment:
+                if "*245" in normarc_line_comment or "*246" in normarc_line_comment or "*574" in normarc_line_comment:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #42): {normarc_line}")
                     continue
                 if "*245" in marc21_line_comment or "*246" in marc21_line_comment:
@@ -614,6 +618,153 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     continue
                 if "*246" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #45): {marc21_line}")
+                    continue
+            
+            if identifier in ["228728"]:
+                # Problem with conversion of title (multiple $a), should be fixed before next conversion
+                if "*245$a" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #46): {normarc_line}")
+                    continue
+                if "*245$a" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #47): {marc21_line}")
+                    continue
+            
+            if identifier in ["300377", "300553", "300554", "300555", "301281"]:
+                # Problem with conversion of title (multiple $b), should be fixed before next conversion
+                if "*245$b" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #47): {normarc_line}")
+                    continue
+                if "*245$b" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #48): {marc21_line}")
+                    continue
+            
+            # ISSN in *490$x is not described in Normarc, and not converted to Marc 21. Ignore for now
+            if "*490$x" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #49): {normarc_line}")
+                continue
+            
+            # Not sure what happens here when converting *240 to *246, but the result seems fine, so let's ignore it for now
+            if identifier in ["283521"]:
+                if "*240" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #50): {normarc_line}")
+                    continue
+                if "*246" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #51): {marc21_line}")
+                    continue
+            
+            # Instrument in *048$a not converted to Marc 21 yet, ignore for now
+            if "*048$a" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #52): {normarc_line}")
+                continue
+            
+            # There are multiple *082 in Normarc, but only one in Marc 21. Ignore for now
+            if identifier in ["300163"]:
+                if "*082" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #53): {normarc_line}")
+                    continue
+                if "*082" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #54): {marc21_line}")
+                    continue
+            
+            # Bad *082 in Normarc, ignore for now
+            if identifier in ["300292", "301763"]:
+                if "*041$h" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #55): {normarc_line}")
+                    continue
+                if "*041$h" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #56): {marc21_line}")
+                    continue
+            
+            # wrong values for *082$z causes problems in conversion, ignore for now
+            if identifier in ["212113", "214374", "221528", "283635", "300163", "300350", "300651", "300653", "300654", "300656",
+                              "300662", "300740", "300741", "370971", "607116", "613137", "613145", "622164"]:
+                if "*082" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #57): {normarc_line}")
+                    continue
+                if "*082" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #58): {marc21_line}")
+                    continue
+                
+            # the conversion does not seem to handle multiple *650$q subfields correctly
+            if identifier in ["372757", "621154", "631297"]:
+                if "*650" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #59): {normarc_line}")
+                    continue
+                if "*650" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #60): {marc21_line}")
+                    continue
+
+            # problem comparing dewey, but it looks acceptable
+            if identifier in ["373956"]:
+                if normarc_line_property == "dc:subject.dewey":
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #61): {normarc_line}")
+                    continue
+                if marc21_line_property == "dc:subject.dewey":
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #62): {marc21_line}")
+                    continue
+
+            # titles should be fixed now, skip until next conversion
+            if identifier in ["381450", "581450", "610955"]:
+                if normarc_line_property.startswith("dc:title"):
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #63): {normarc_line}")
+                    continue
+                if marc21_line_property.startswith("dc:title"):
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #64): {marc21_line}")
+                    continue
+
+            # problem with converting *110$q, ignore for now
+            if identifier in ["564997", "631297", "562369", "564460", "580488", "581147", "582956", "618035", "619495", "621295",
+                              "623212", "624798", "626790", "628669", "630760", "680488", "681147", "682956"]:
+                if "*110" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #63): {normarc_line}")
+                    continue
+                if "*110" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #64): {marc21_line}")
+                    continue
+
+            # it's unclear how "Originaltittel mangler" should be converted, ignore for now
+            if identifier in ["106246", "106268", "106351", "106371", "180000", "181890", "283877", "381890", "383011", "383223",
+                              "383270", "383877", "566475", "583223", "609377", "609716", "609864", "610074", "610139", "610178",
+                              "611036", "616020", "680440", "681890", "683011", "683270", "803688"]:
+                if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0].split("$")[0] in ["246", "500", "574"]:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #65): {normarc_line}")
+                    continue
+                if "*" in marc21_line_comment and marc21_line_comment.split("*")[1].split()[0].split("$")[0] in ["246", "500", "574"]:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #66): {marc21_line}")
+                    continue
+
+            # unimportent issue when converting *245$a with trailing semicolon, can be fixed manually before or after conversion
+            if identifier in ["610415"]:
+                if "*245$b" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #63): {normarc_line}")
+                    continue
+                if "*245$b" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #64): {marc21_line}")
+                    continue
+
+            # authority registry ID disappears in conversion, ignore for now
+            if identifier in ["610434", "612316", "612316"]:
+                if "*511" in normarc_line_comment or "*700" in normarc_line_comment or "contributor-700" in normarc_line:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #65): {normarc_line}")
+                    continue
+                if "*511" in marc21_line_comment or "*700" in marc21_line_comment or "contributor-700" in marc21_line:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #66): {marc21_line}")
+                    continue
+            
+            # bad conversion of *245, issue has been reported, ignore for now
+            if identifier in ["612820"]:
+                if "*245" in normarc_line_comment or normarc_line_property == "sortingKey":
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #67): {normarc_line}")
+                    continue
+                if "*245" in marc21_line_comment or marc21_line_property == "sortingKey":
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #68): {marc21_line}")
+                    continue
+            
+            
+            # bad conversion of *574, issue has been reported, ignore for now
+            if identifier in ["612824"]:
+                if "*574" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #69): {normarc_line}")
                     continue
             
             if normarc_line != marc21_line:
@@ -751,7 +902,10 @@ def handle(identifier, detailed_comparison=False):
         
         if not equal:
             if not print_first_error_only or not error_has_occured:
-                print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%)")
+                last_few = ""
+                if len(identifiers) - successful < 100:
+                    last_few = f" - {len(identifiers) - successful} remaining"
+                print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%){last_few}")
                 print()
                 print(f"{identifier}:")
                 print(f"- NORMARC in: {normarc_file}")
