@@ -3313,6 +3313,10 @@
             <xsl:when test="$role = 'wpr'"><xsl:value-of select="'dc:contributor.preface'"/></xsl:when>
             <xsl:when test="$role = 'wst'"><xsl:value-of select="'dc:contributor.supplementary-textual-content'"/></xsl:when>
             
+            <xsl:when test="matches($role,'.*(utøv).*')">
+                <!-- Performer -->
+                <xsl:value-of select="'dc:contributor.performer'"/>
+            </xsl:when>
             <xsl:when test="matches($role,'.*(skuesp).*')">
                 <!-- Actor -->
                 <xsl:value-of select="'dc:contributor.actor'"/>

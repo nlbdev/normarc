@@ -3303,6 +3303,10 @@
             <xsl:when test="$role = 'wst'"><xsl:value-of select="'dc:contributor.supplementary-textual-content'"/></xsl:when>
             
             <!-- parse the role from the free text subfield (as we did in NORMARC) -->
+            <xsl:when test="matches($role,'.*(utøv).*')">
+                <!-- Performer -->
+                <xsl:value-of select="'dc:contributor.performer'"/>
+            </xsl:when>
             <xsl:when test="matches($role,'.*(skuesp).*')">
                 <!-- Actor -->
                 <xsl:value-of select="'dc:contributor.actor'"/>
