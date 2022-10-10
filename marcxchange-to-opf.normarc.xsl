@@ -2615,13 +2615,16 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.preceding'"/><xsl:with-param name="value" select="*:subfield[@code='t']/text()"/><xsl:with-param name="id" select="$series-preceding-id"/></xsl:call-template>
         </xsl:if>
         <xsl:for-each select="*:subfield[@code='w']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.preceding.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',text())"/><xsl:with-param name="refines" select="$series-preceding-id"/></xsl:call-template>
-            <xsl:call-template name="meta">
-                <xsl:with-param name="property" select="'dc:identifier.series.preceding'"/>
-                <xsl:with-param name="value" select="text()"/>
-                <xsl:with-param name="id" select="if (not(count(parent::*/*:subfield[@code='t']))) then $series-preceding-id else ()"/>
-                <xsl:with-param name="refines" select="if (count(parent::*/*:subfield[@code='t'])) then $series-preceding-id else ()"/>
-            </xsl:call-template>
+            <xsl:variable name="identifier" select="replace(replace(text(), '\([^)]*\)', ''), '\s', '')"/>
+            <xsl:if test="matches($identifier, '^\d+$')">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.preceding.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',$identifier)"/><xsl:with-param name="refines" select="$series-preceding-id"/></xsl:call-template>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'dc:identifier.series.preceding'"/>
+                    <xsl:with-param name="value" select="$identifier"/>
+                    <xsl:with-param name="id" select="if (not(count(parent::*/*:subfield[@code='t']))) then $series-preceding-id else ()"/>
+                    <xsl:with-param name="refines" select="if (count(parent::*/*:subfield[@code='t'])) then $series-preceding-id else ()"/>
+                </xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.preceding.alternative'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$series-preceding-id"/></xsl:call-template>
@@ -2653,13 +2656,16 @@
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.sequel'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="id" select="$series-sequel-id"/></xsl:call-template>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='w']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.sequel.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',text())"/><xsl:with-param name="refines" select="$series-sequel-id"/></xsl:call-template>
-            <xsl:call-template name="meta">
-                <xsl:with-param name="property" select="'dc:identifier.series.sequel'"/>
-                <xsl:with-param name="value" select="text()"/>
-                <xsl:with-param name="id" select="if (not(count(parent::*/*:subfield[@code='t']))) then $series-sequel-id else ()"/>
-                <xsl:with-param name="refines" select="if (count(parent::*/*:subfield[@code='t'])) then $series-sequel-id else ()"/>
-            </xsl:call-template>
+            <xsl:variable name="identifier" select="replace(replace(text(), '\([^)]*\)', ''), '\s', '')"/>
+            <xsl:if test="matches($identifier, '^\d+$')">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:identifier.series.sequel.uri'"/><xsl:with-param name="value" select="concat('urn:NBN:no-nb_nlb_',$identifier)"/><xsl:with-param name="refines" select="$series-sequel-id"/></xsl:call-template>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'dc:identifier.series.sequel'"/>
+                    <xsl:with-param name="value" select="$identifier"/>
+                    <xsl:with-param name="id" select="if (not(count(parent::*/*:subfield[@code='t']))) then $series-sequel-id else ()"/>
+                    <xsl:with-param name="refines" select="if (count(parent::*/*:subfield[@code='t'])) then $series-sequel-id else ()"/>
+                </xsl:call-template>
+            </xsl:if>
         </xsl:for-each>
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.series.sequel.alternative'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$series-sequel-id"/></xsl:call-template>
