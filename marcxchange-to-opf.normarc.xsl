@@ -1329,7 +1329,10 @@
         <xsl:if test="count(*:subfield[@code='a'])">
             <xsl:variable name="title" select="*:subfield[@code='a'][1]/normalize-space(replace(text(), '[\s&#160;]', ' '))" as="xs:string"/>
             <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
-            <xsl:variable name="title-without-subtitle" select="replace($title, '^([^;:]*[^;: ]).*', '$1')"/>
+            <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove trailing parallel title marker if present -->
+            <xsl:variable name="parallel-title" select="if (contains($title, '=')) then replace($title, '^.*= *', '') else ''" as="xs:string"/>
+            <xsl:variable name="title-without-parallel-title" select="if (contains($title, '=')) then replace($title, ' *=.*$', '') else $title" as="xs:string"/>
+            <xsl:variable name="title-without-subtitle" select="replace($title-without-parallel-title, '^([^;:]*[^;: ]).*', '$1')"/>
             <xsl:variable name="title-without-subtitle" select="nlb:identifier-in-title($title-without-subtitle, $language, false())"/>
             <xsl:for-each select="*:subfield[@code='a']">
                 <xsl:call-template name="meta">
@@ -1337,6 +1340,14 @@
                     <xsl:with-param name="context" select="."/>
                     <xsl:with-param name="value" select="$title-without-subtitle"/>
                 </xsl:call-template>
+                
+                <xsl:if test="string-length($parallel-title) gt 0">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="'dc:title.parallel'"/>
+                        <xsl:with-param name="context" select="."/>
+                        <xsl:with-param name="value" select="$parallel-title"/>
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:for-each>
             
             <xsl:variable name="subtitle" as="element()*">
