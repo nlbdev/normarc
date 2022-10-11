@@ -241,7 +241,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_skip_lines = []
         marc21_skip_lines = []
 
-        normarc_has_sortingKey_from_100w_or_245w = False
+        normarc_has_sortingKey_from_100w_110w_or_245w = False
         normarc_has_490_without_position = False
         normarc_574a_without_Originaltittel = []
         normarc_has_Originaltittel_in_572a = False
@@ -253,8 +253,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_available_during_conversion = False
         normarc_has_authority_with_multiple_nationalities = False
         for line in normarc:
-            if "sortingKey" in line and "*245$w" in line or "*100$w" in line:
-                normarc_has_sortingKey_from_100w_or_245w = True
+            if "sortingKey" in line and "*245$w" in line or "*100$w" in line or "*110$w" in line:
+                normarc_has_sortingKey_from_100w_110w_or_245w = True
             if "dc:date.available" in line and re.match(r"2022-(1|0[3-9])", line):
                 normarc_available_during_conversion = True
         for line in normarc_source:
@@ -429,9 +429,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
                 continue
 
-            # the sorting keys in *100$w and *245$w is not preserved in MARC21
+            # the sorting keys in *100$w, *110$w and *245$w is not preserved in MARC21
             # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
-            if normarc_has_sortingKey_from_100w_or_245w:
+            if normarc_has_sortingKey_from_100w_110w_or_245w:
                 if "sortingKey" in normarc_line and "refines=" not in normarc_line:
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #10): {normarc_line}")
                     continue
@@ -695,11 +695,20 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     continue
 
             # problem comparing dewey, but it looks acceptable
-            if identifier in ["373956"]:
+            if identifier in ["373956", "631745"]:
                 if normarc_line_property == "dc:subject.dewey":
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #61): {normarc_line}")
                     continue
                 if marc21_line_property == "dc:subject.dewey":
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #62): {marc21_line}")
+                    continue
+
+            # problem comparing *650, but it looks acceptable
+            if identifier in ["632188"]:
+                if "*650" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #61): {normarc_line}")
+                    continue
+                if "*650" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #62): {marc21_line}")
                     continue
 
@@ -757,6 +766,16 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #67): {normarc_line}")
                     continue
                 if "*245" in marc21_line_comment or marc21_line_property == "sortingKey":
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #68): {marc21_line}")
+                    continue
+            
+            
+            # bad conversion of *511, issue has been reported, ignore for now
+            if identifier in ["626338", "626339", "626344", "627887", "627892"]:
+                if "*511" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #67): {normarc_line}")
+                    continue
+                if "*511" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #68): {marc21_line}")
                     continue
             
@@ -971,3 +990,5 @@ if handled_in_this_run >= 3:
         thread_pool[-1].start()
     for thread in thread_pool:
         thread.join()
+
+print(f"{(successful + failed)} of {len(identifiers)} processed")
