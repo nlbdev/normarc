@@ -1361,7 +1361,7 @@
         <xsl:variable name="language" select="string(($language/dc:language[not(@refines)])[1])"/>
         
         <xsl:if test="count(*:subfield[@code='a'])">
-            <xsl:variable name="title" select="*:subfield[@code='a'][1]/text()" as="xs:string"/>
+            <xsl:variable name="title" select="*:subfield[@code='a'][1]/normalize-space(replace(text(), '[\s&#160;]', ' '))" as="xs:string"/>
             <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
             <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove trailing parallel title marker if present -->
             <xsl:variable name="parallel-title" select="if (contains($title, '=')) then replace($title, '^.*= *', '') else ''" as="xs:string"/>
