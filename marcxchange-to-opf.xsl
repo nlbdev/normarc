@@ -1365,7 +1365,7 @@
             <xsl:variable name="title" select="replace(normalize-space($title), '^\[\s*(.*?)\s*\]$', '$1')"/>
             <xsl:variable name="title" select="replace($title, ' *= *$', '')"/>  <!-- remove trailing parallel title marker if present -->
             <xsl:variable name="parallel-title" select="if (contains($title, '=')) then replace($title, '^.*= *', '') else ''" as="xs:string"/>
-            <xsl:variable name="title-without-parallel-title" select="if (contains($title, '=')) then replace($title, ' *=.*$', $title) else $title" as="xs:string"/>
+            <xsl:variable name="title-without-parallel-title" select="if (contains($title, '=')) then replace($title, ' *=.*$', '') else $title" as="xs:string"/>
             <xsl:variable name="title-without-subtitle" select="replace($title-without-parallel-title, '^([^;:]*[^;: ]).*', '$1')"/>
             <xsl:variable name="title-without-subtitle" select="nlb:identifier-in-title($title-without-subtitle, $language, false())"/>
             <xsl:for-each select="*:subfield[@code='a']">

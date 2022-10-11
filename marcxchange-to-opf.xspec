@@ -2585,7 +2585,6 @@
     <x:scenario label="Regression test for *700">
         <x:context>
             <marcxchange:record>
-                
                 <marcxchange:datafield tag="386" ind1=" " ind2=" ">
                     <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
                     <marcxchange:subfield code="b">n.</marcxchange:subfield>
@@ -2660,5 +2659,22 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="test parsing of parallel title in *245$a">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:datafield tag="245" ind1="0" ind2="0">
+                    <marcxchange:subfield code="a">Helse =HO : barne- og ungdomsarbeider VG2 og VG3</marcxchange:subfield>
+                    <marcxchange:subfield code="h">elektronisk punktskrift</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
         
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:title>Helse</dc:title>
+            <meta property="dc:title.parallel">HO : barne- og ungdomsarbeider VG2 og VG3</meta>
+            <meta property="dc:title.subTitle">barne- og ungdomsarbeider VG2 og VG3</meta>
+            <meta property="bookEdition">1</meta>
+            <meta property="sortingKey">Helse</meta>
+        </x:expect>
+    </x:scenario>
 </x:description>
