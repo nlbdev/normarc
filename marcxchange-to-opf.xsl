@@ -1525,12 +1525,13 @@
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:publisher.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="if ($primary) then () else $publisher-id"/></xsl:call-template>
         </xsl:for-each>
-        <xsl:for-each select="*:subfield[@code='c']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.issued'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="if ($primary) then () else $publisher-id"/></xsl:call-template>
-        </xsl:for-each>
-
+        <xsl:if test="$issued">
+            <xsl:for-each select="*:subfield[@code='c']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.issued'"/><xsl:with-param name="value" select="string($issued)"/><xsl:with-param name="refines" select="if ($primary) then () else $publisher-id"/></xsl:call-template>
+            </xsl:for-each>
+        </xsl:if>
         <xsl:for-each select="*:subfield[@code='9' and text()='n']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'none'"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'false'"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
@@ -1983,7 +1984,7 @@
 
     <xsl:template match="*:datafield[@tag='599']">
         <xsl:choose>
-            <xsl:when test="exists(*:subfield[@code='b']) and (*:subfield[@code='a']/text() = ('EPUB-nr', 'EPUB', 'DTB-nr') or not(exists(*:subfield[@code='a'])) and matches(*:subfield[@code='b'][1]/text(), '^\d{6}$'))">
+            <xsl:when test="exists(*:subfield[@code='b']) and (*:subfield[@code='a']/text() = ('EPUB-nr', 'EPUB', 'DTB-nr') or not(exists(*:subfield[@code='a'])) and matches(*:subfield[@code='b'][1]/text(), '^\d+$'))">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('epub-nr')"/><xsl:with-param name="value" select="(*:subfield[@code='b'])[1]/text()"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
@@ -2696,7 +2697,7 @@
 
     <xsl:template match="*:datafield[@tag='856']">
         <xsl:if test="*:subfield[@code='s' and matches(text(), '\d+')]">
-            <xsl:for-each select="*:subfield[@code='s']">
+            <xsl:for-each select="*:subfield[@code='s' and matches(text(), '^\d+$')]">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('fileSize')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
             </xsl:for-each>
         </xsl:if>
