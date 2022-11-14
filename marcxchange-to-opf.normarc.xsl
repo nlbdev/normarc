@@ -1464,8 +1464,8 @@
 
     <xsl:template match="*:datafield[@tag='260']">
         <xsl:variable name="publisher-id" select="concat('publisher-260-',1+count(preceding-sibling::*:datafield[@tag='260']))"/>
-        <xsl:variable name="issued" select="min(../*:datafield[@tag='260']/*:subfield[@code='c' and matches(text(),'^\d+$')]/xs:integer(text()))"/>
-        <xsl:variable name="primary" select="(not($issued) and not(preceding-sibling::*:datafield[@tag='260'])) or (*:subfield[@code='c']/text() = string($issued) and not(preceding-sibling::*:datafield[@tag='260']/*:subfield[@code='c' and text() = string($issued)]))"/>
+        <xsl:variable name="issued" select="min(../*:datafield[@tag='260']/*:subfield[@code='c' and nlb:parseYear(text(), false())]/nlb:parseYear(text(), false()))"/>
+        <xsl:variable name="primary" select="(not($issued) and not(preceding-sibling::*:datafield[@tag='260'])) or (*:subfield[@code='c']/nlb:parseYear(text(), false()) = string($issued) and not(preceding-sibling::*:datafield[@tag='260']/*:subfield[@code='c' and nlb:parseYear(text(), false()) = string($issued)]))"/>
 
         <xsl:if test="*:subfield[@code='b']">
             <xsl:call-template name="meta">
