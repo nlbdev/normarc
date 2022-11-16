@@ -4,7 +4,8 @@
                xmlns:marcxchange="info:lc/xmlns/marcxchange-v1"
                xmlns:dc="http://purl.org/dc/elements/1.1/"
                xmlns:opf="http://www.idpf.org/2007/opf"
-               xmlns="http://www.idpf.org/2007/opf">
+               xmlns="http://www.idpf.org/2007/opf"
+               stylesheet="marcxchange-to-opf.xsl">  <!-- stylesheet is default if you run this directly, but you should run marcxchange.*.xspec instead -->
     
     <x:scenario label="parse birthDate/deathDate - #1">
         <x:call function="nlb:parseBirthDeath">
@@ -350,15 +351,15 @@
                 <marcxchange:datafield tag="700" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Windt-Val, Benedicta</marcxchange:subfield>
                     <marcxchange:subfield code="e">overs.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">19594200</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19594200</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:contributor.translator" id="contributor-700-1">Windt-Val, Benedicta</meta>
-        <meta property="bibliofil-id" refines="#contributor-700-1">19594200</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta property="dc:contributor.translator" id="contributor-700-1">Windt-Val, Benedicta</meta>
+            <meta property="bibliofil-id" refines="#contributor-700-1">19594200</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Navn på innleser(e)">
@@ -366,21 +367,21 @@
             <marcxchange:record>
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Fornavn Etternavn</marcxchange:subfield>
-                    <marcxchange:subfield code="3">19209901</marcxchange:subfield>
+                    <marcxchange:subfield code="_">19209901</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Fry, Stephen</marcxchange:subfield>
-                    <marcxchange:subfield code="3">17738500</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17738500</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:contributor.narrator" id="contributor-511-1">Fornavn Etternavn</meta>
-        <meta property="bibliofil-id" refines="#contributor-511-1">19209901</meta>
-        <meta property="dc:contributor.narrator" id="contributor-511-2">Fry, Stephen</meta>
-        <meta property="bibliofil-id" refines="#contributor-511-2">17738500</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta property="dc:contributor.narrator" id="contributor-511-1">Fornavn Etternavn</meta>
+            <meta property="bibliofil-id" refines="#contributor-511-1">19209901</meta>
+            <meta property="dc:contributor.narrator" id="contributor-511-2">Fry, Stephen</meta>
+            <meta property="bibliofil-id" refines="#contributor-511-2">17738500</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Bibliotek">
@@ -1227,13 +1228,13 @@
                     <marcxchange:subfield code="a">Sødal, Helje Kringlebotn</marcxchange:subfield>
                     <marcxchange:subfield code="d">1962-</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">17265000</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17265000</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Sødal, Helje Kringlebotn</marcxchange:subfield>
                     <marcxchange:subfield code="d">1962-</marcxchange:subfield>
                     <marcxchange:subfield code="e">red.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">17265000</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17265000</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1373,7 +1374,7 @@
                     <marcxchange:subfield code="a">Ragde, Anne Birkefeldt</marcxchange:subfield>
                     <marcxchange:subfield code="j">n.</marcxchange:subfield>
                     <marcxchange:subfield code="%">  </marcxchange:subfield>
-                    <marcxchange:subfield code="3">10856500</marcxchange:subfield>
+                    <marcxchange:subfield code="_">10856500</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
@@ -1381,13 +1382,13 @@
                 <marcxchange:datafield tag="900" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Birkefeldt Ragde, Anne</marcxchange:subfield>
                     <marcxchange:subfield code="%"> 0</marcxchange:subfield>
-                    <marcxchange:subfield code="3">10856501</marcxchange:subfield>
+                    <marcxchange:subfield code="_">10856501</marcxchange:subfield>
                     <marcxchange:subfield code="~">15538600</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="950" ind1=" " ind2="0">
                     <marcxchange:subfield code="a">Ragde, Anne B.</marcxchange:subfield>
                     <marcxchange:subfield code="%"> 0</marcxchange:subfield>
-                    <marcxchange:subfield code="3">10856502</marcxchange:subfield>
+                    <marcxchange:subfield code="_">10856502</marcxchange:subfield>
                     <marcxchange:subfield code="~">17941800</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
@@ -1410,7 +1411,7 @@
                     <marcxchange:subfield code="a">Don Giovanni, klaver, sopran, Batti, Batti o bel Masetto740</marcxchange:subfield>
                     <marcxchange:subfield code="a">Don Giovanni, klaver, sopran, Batti, Batti o bel Ma</marcxchange:subfield>
                     <marcxchange:subfield code="%"><![CDATA[  ]]></marcxchange:subfield>
-                    <marcxchange:subfield code="3">17159800</marcxchange:subfield>
+                    <marcxchange:subfield code="_">17159800</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
@@ -1478,7 +1479,7 @@
                 
                 <marcxchange:datafield tag="697" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Lydbok med tekst</marcxchange:subfield>
-                    <marcxchange:subfield code="3">21203600</marcxchange:subfield>
+                    <marcxchange:subfield code="_">21203600</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
