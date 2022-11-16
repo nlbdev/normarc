@@ -1129,7 +1129,7 @@
             <marcxchange:record>
                 <marcxchange:datafield tag="100" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
-                    <marcxchange:subfield code="3">123</marcxchange:subfield>
+                    <marcxchange:subfield code="_">123</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
@@ -1137,40 +1137,38 @@
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">123</marcxchange:subfield>
+                    <marcxchange:subfield code="_">123</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Alice</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">456</marcxchange:subfield>  <!-- different author with the same name -->
+                    <marcxchange:subfield code="_">456</marcxchange:subfield>  <!-- different author with the same name -->
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">789</marcxchange:subfield>
+                    <marcxchange:subfield code="_">789</marcxchange:subfield>
                 </marcxchange:datafield>
                 <marcxchange:datafield tag="700" ind1="1" ind2="0">
                     <marcxchange:subfield code="a">Bob</marcxchange:subfield>
                     <marcxchange:subfield code="e">red.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">789</marcxchange:subfield>
+                    <marcxchange:subfield code="_">789</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:creator id="creator-1">Alice</dc:creator>
-        <meta property="bibliofil-id" refines="#creator-1">123</meta>
-        <dc:creator id="contributor-700-1">Alice</dc:creator>
-        <meta property="bibliofil-id" refines="#contributor-700-1">123</meta>
-        <dc:creator id="contributor-700-2">Alice</dc:creator>
-        <meta property="bibliofil-id" refines="#contributor-700-2">456</meta>
-        <dc:creator id="contributor-700-3">Bob</dc:creator>
-        <meta property="bibliofil-id" refines="#contributor-700-3">789</meta>
-        <meta property="dc:contributor.editor" id="contributor-700-4">Bob</meta>
-        <meta property="bibliofil-id" refines="#contributor-700-4">789</meta>
-        <meta property="bookEdition">1</meta>
-        <meta property="sortingKey">Alice</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:creator id="creator-1">Alice</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-1">123</meta>
+            <dc:creator id="contributor-700-1">Alice</dc:creator>
+            <meta property="bibliofil-id" refines="#contributor-700-1">123</meta>
+            <dc:creator id="contributor-700-2">Alice</dc:creator>
+            <meta property="bibliofil-id" refines="#contributor-700-2">456</meta>
+            <dc:creator id="contributor-700-3">Bob</dc:creator>
+            <meta property="bibliofil-id" refines="#contributor-700-3">789</meta>
+            <meta property="dc:contributor.editor" id="contributor-700-4">Bob</meta>
+            <meta property="bibliofil-id" refines="#contributor-700-4">789</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Flere originalforlag">
