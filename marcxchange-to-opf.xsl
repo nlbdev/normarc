@@ -2340,19 +2340,23 @@
     <xsl:template match="*:datafield[@tag='697']">
         <xsl:variable name="subject-id" select="concat('subject-697-',1+count(preceding-sibling::*:datafield[@tag='697']))"/>
 
-        <xsl:if test="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
-
-            <xsl:call-template name="bibliofil-id">
-                <xsl:with-param name="context" select="."/>
-                <xsl:with-param name="refines" select="$subject-id"/>
-            </xsl:call-template>
-
-            <xsl:if test="*:subfield[@code='a']/text() = 'Lydbok med tekst'">
+        <xsl:for-each select="*:subfield[@code='a']">
+            <xsl:if test="text() = 'Lydbok med tekst'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="'dc:subject.keyword'"/>
+                    <xsl:with-param name="value" select="text()"/>
+                    <xsl:with-param name="id" select="$subject-id"/>
+                </xsl:call-template>
+                
+                <xsl:call-template name="bibliofil-id">
+                    <xsl:with-param name="context" select=".."/>
+                    <xsl:with-param name="refines" select="$subject-id"/>
+                </xsl:call-template>
+                
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.audio'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:if>
-        </xsl:if>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='699']">
