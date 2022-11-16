@@ -207,17 +207,17 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.genre">Textbook</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="dc:type.genre">Textbook</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="educationalUse">true</meta>
+                <meta property="typicalAgeRange">16-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="019$d">
@@ -231,18 +231,18 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Lærebok</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">L</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="dc:type.literaryForm" id="literary-form-019d-1">Lærebok</meta>
+                <meta property="normarc-id" refines="#literary-form-019d-1">L</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="educationalUse">true</meta>
+                <meta property="typicalAgeRange">16-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="019$d with bibliofilId - 1">

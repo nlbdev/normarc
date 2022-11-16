@@ -193,7 +193,7 @@
         <x:scenario label="850$a">
             <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
+                    <marcxchange:controlfield tag="008">171220                e          10nob</marcxchange:controlfield>
                     
                     <marcxchange:datafield tag="850" ind1=" " ind2=" ">
                         <marcxchange:subfield code="a">NLB/S</marcxchange:subfield>
@@ -201,23 +201,23 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.genre">Textbook</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">16-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="dc:type.genre">Textbook</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="educationalUse">true</meta>
+                <meta property="typicalAgeRange">18-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="019$d">
             <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
+                    <marcxchange:controlfield tag="008">171220                e          10nob</marcxchange:controlfield>
                     
                     <marcxchange:datafield tag="019" ind1=" " ind2=" ">
                         <marcxchange:subfield code="d">L</marcxchange:subfield>
@@ -225,18 +225,18 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Lærebok</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">L</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">16-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="dc:type.literaryForm" id="literary-form-019d-1">Lærebok</meta>
+                <meta property="normarc-id" refines="#literary-form-019d-1">L</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="educationalUse">true</meta>
+                <meta property="typicalAgeRange">18-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="019$d with bibliofilId - 1">
