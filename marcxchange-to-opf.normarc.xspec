@@ -143,12 +143,12 @@
                     <marcxchange:subfield code="h">engtib</marcxchange:subfield>
                 </marcxchange:datafield>
                 
-                <marcxchange:datafield tag="240" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">La Mucama de Omicunle</marcxchange:subfield>
+                <marcxchange:datafield tag="240" ind1="1" ind2=" ">
+                    <marcxchange:subfield code="a">Denne originaltittelen velges hvis det ikke finnes noe i *574</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="574" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">Originaltittel:  (denne brukes kun når ikke *240 finnes)</marcxchange:subfield>
+                    <marcxchange:subfield code="a">Originaltittel:  Denne foretrekkes</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="596" ind1=" " ind2=" ">
@@ -162,18 +162,18 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:date.issued.original">2017</meta>
-        <meta property="dc:format.extent.pages.original">414</meta>
-        <meta property="dc:language.original">tib</meta>
-        <meta property="dc:language.original.intermediary">eng</meta>
-        <meta property="dc:publisher.location.original">Oslo</meta>
-        <meta property="dc:publisher.original">Cappelen Damm akademisk</meta>
-        <meta property="dc:title.original">La Mucama de Omicunle</meta>
-        <meta property="dc:title.original.alternative">(denne brukes kun når ikke *240 finnes)</meta>
-        <meta property="bookEdition.original">3. utg.</meta>
-        <meta property="isbn.original">978-82-02-53797-5</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta property="dc:date.issued.original">2017</meta>
+            <meta property="dc:format.extent.pages.original">414</meta>
+            <meta property="dc:language.original">tib</meta>
+            <meta property="dc:language.original.intermediary">eng</meta>
+            <meta property="dc:publisher.location.original">Oslo</meta>
+            <meta property="dc:publisher.original">Cappelen Damm akademisk</meta>
+            <meta property="dc:title.original">Denne foretrekkes</meta>
+            <meta property="dc:title.original.alternative">Denne originaltittelen velges hvis det ikke finnes noe i *574</meta>
+            <meta property="bookEdition.original">3. utg.</meta>
+            <meta property="isbn.original">978-82-02-53797-5</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Bruk registreringsdato som tilgjengeliggjøringsdato for katalogposter eldre enn år 2000">
