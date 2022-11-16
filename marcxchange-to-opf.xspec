@@ -4,10 +4,7 @@
                xmlns:marcxchange="info:lc/xmlns/marcxchange-v1"
                xmlns:dc="http://purl.org/dc/elements/1.1/"
                xmlns:opf="http://www.idpf.org/2007/opf"
-               xmlns="http://www.idpf.org/2007/opf"
-               stylesheet="marcxchange-to-opf.xsl">
-    
-    <x:param name="verbose" select="true()"/>
+               xmlns="http://www.idpf.org/2007/opf">
     
     <x:scenario label="parse birthDate/deathDate - #1">
         <x:call function="nlb:parseBirthDeath">
@@ -286,94 +283,6 @@
         </x:expect>
     </x:scenario>
     
-    <x:scenario label="Informasjon om den trykte boka">
-        <x:context xml:space="preserve">
-            <!-- ett språk -->
-            <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
-            
-            <!-- flere språk -->
-            <marcxchange:controlfield tag="008">171220                a          10mul</marcxchange:controlfield>
-            <marcxchange:datafield tag="041" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">engsve</marcxchange:subfield>
-            </marcxchange:datafield>
-            
-            <marcxchange:datafield tag="245" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">Tommy flytter</marcxchange:subfield>
-                <marcxchange:subfield code="b">[Tigergjengen]</marcxchange:subfield>
-                <marcxchange:subfield code="h">daisy 2.02</marcxchange:subfield>
-                <marcxchange:subfield code="c">Nina Skauge</marcxchange:subfield>
-                <marcxchange:subfield code="n">2</marcxchange:subfield>
-                <marcxchange:subfield code="p">[Tittel for del av verk]</marcxchange:subfield>
-                <marcxchange:subfield code="w">[Sorteringsnøkkel for tittel for del av verk]</marcxchange:subfield>
-            </marcxchange:datafield>
-            
-            <marcxchange:datafield tag="250" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">3. utgave</marcxchange:subfield>
-            </marcxchange:datafield>
-            <marcxchange:datafield tag="503" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">Første gang utgitt 1968</marcxchange:subfield>
-            </marcxchange:datafield>
-            
-            <marcxchange:datafield tag="300" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">387 s.</marcxchange:subfield>
-            </marcxchange:datafield>
-            <marcxchange:datafield tag="300" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">25 b.</marcxchange:subfield>
-            </marcxchange:datafield>
-            <marcxchange:datafield tag="300" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">11 t 18 min</marcxchange:subfield>
-            </marcxchange:datafield>
-            <marcxchange:datafield tag="449" ind1=" " ind2=" ">
-                <marcxchange:subfield code="n">2</marcxchange:subfield>
-            </marcxchange:datafield>
-            
-            <marcxchange:datafield tag="020" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">82-02-02743-8</marcxchange:subfield>
-            </marcxchange:datafield>
-            <marcxchange:datafield tag="022" ind1=" " ind2=" ">
-                <marcxchange:subfield code="a">1600-6208</marcxchange:subfield>
-            </marcxchange:datafield>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <meta property="dc:date.registered">2017-12-20</meta>
-            <meta property="typicalAgeRange">17-</meta>
-            <meta property="audience">Adult</meta>
-            <meta property="dc:type.fiction">true</meta>
-            <meta property="dc:type.genre">Fiction</meta>
-            <meta property="dc:type.genre">Non-biography</meta>
-            <dc:language>nob</dc:language>
-            
-            <meta property="dc:date.registered">2017-12-20</meta>
-            <meta property="typicalAgeRange">17-</meta>
-            <meta property="audience">Adult</meta>
-            <meta property="dc:type.fiction">true</meta>
-            <meta property="dc:type.genre">Fiction</meta>
-            <meta property="dc:type.genre">Non-biography</meta>
-            <dc:language>eng</dc:language>
-            <dc:language>sve</dc:language>
-            
-            <dc:title id="title-245-1">Tommy flytter</dc:title>
-            <meta property="sortingKey" refines="#title-245-1">Sorteringsnøkkel for tittel for del av verk</meta>
-            <meta property="dc:title.subTitle">Tigergjengen</meta>
-            <meta property="dc:title.part">Tittel for del av verk</meta>
-            <meta property="position">2</meta>
-            <meta property="nlbbib:responsibilityStatement">Nina Skauge</meta>
-            <meta property="sortingKey">Sorteringsnøkkel for tittel for del av verk</meta>
-            
-            <meta property="bookEdition">3. utgave</meta>
-            <meta property="bookEdition.history">Første gang utgitt 1968</meta>
-            
-            <meta property="dc:format.extent.pages">387</meta>
-            <meta property="dc:format.extent.volumes">25</meta>
-            <meta property="dc:format.extent.duration">11 t. 18 min.</meta>
-            <meta property="dc:format.extent.cd">2</meta>
-            
-            <meta property="isbn">82-02-02743-8</meta>
-            <meta property="issn">1600-6208</meta>
-        </x:expect>
-    </x:scenario>
-    
     <x:scenario label="Manglende utgave">
         <x:context xml:space="preserve">
             <marcxchange:record>
@@ -410,86 +319,6 @@
         
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <meta property="bookEdition.original">1</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Bruk forlag fra eldste utgave som inneholder årstall">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:datafield tag="260" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">Trondheim</marcxchange:subfield>
-                    <marcxchange:subfield code="b">Tapir</marcxchange:subfield>
-                    <marcxchange:subfield code="c">2018</marcxchange:subfield>
-                    <marcxchange:subfield code="3">123456789</marcxchange:subfield>
-                </marcxchange:datafield>
-                
-                <marcxchange:datafield tag="260" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">[Oslo]</marcxchange:subfield>
-                    <marcxchange:subfield code="b">Cappelen Damm lyd</marcxchange:subfield>
-                    <marcxchange:subfield code="c">2015</marcxchange:subfield>
-                    <marcxchange:subfield code="3">19295500</marcxchange:subfield>
-                </marcxchange:datafield>
-                
-                <marcxchange:datafield tag="260" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">Bergen</marcxchange:subfield>
-                    <marcxchange:subfield code="b">Tanum</marcxchange:subfield>
-                    <marcxchange:subfield code="3">987654321</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:publisher id="publisher-260-2">Cappelen Damm lyd</dc:publisher>
-        <meta property="bibliofil-id" refines="#publisher-260-2">19295500</meta>
-        <meta property="dc:date.issued">2015</meta>
-        <meta property="dc:publisher.location">Oslo</meta>
-        <meta property="dc:publisher.other" id="publisher-260-1">Tapir</meta>
-        <meta property="bibliofil-id" refines="#publisher-260-1">123456789</meta>
-        <meta property="dc:date.issued" refines="#publisher-260-1">2018</meta>
-        <meta property="dc:publisher.location" refines="#publisher-260-1">Trondheim</meta>
-        <meta property="dc:publisher.other" id="publisher-260-3">Tanum</meta>
-        <meta property="bibliofil-id" refines="#publisher-260-3">987654321</meta>
-        <meta property="dc:publisher.location" refines="#publisher-260-3">Bergen</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Informasjon om originalboka">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:datafield tag="041" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="h">engtib</marcxchange:subfield>
-                </marcxchange:datafield>
-                
-                <marcxchange:datafield tag="240" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">La Mucama de Omicunle</marcxchange:subfield>
-                </marcxchange:datafield>
-                
-                <marcxchange:datafield tag="574" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">Originaltittel:  (denne brukes kun når ikke *240 finnes)</marcxchange:subfield>
-                </marcxchange:datafield>
-                
-                <marcxchange:datafield tag="596" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">[Oslo]</marcxchange:subfield>
-                    <marcxchange:subfield code="b">Cappelen Damm akademisk</marcxchange:subfield>
-                    <marcxchange:subfield code="c">2017</marcxchange:subfield>
-                    <marcxchange:subfield code="d">3. utg.</marcxchange:subfield>
-                    <marcxchange:subfield code="e">414 s.</marcxchange:subfield>
-                    <marcxchange:subfield code="f">978-82-02-53797-5</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:date.issued.original">2017</meta>
-        <meta property="dc:format.extent.pages.original">414</meta>
-        <meta property="dc:language.original">tib</meta>
-        <meta property="dc:language.original.intermediary">eng</meta>
-        <meta property="dc:publisher.location.original">Oslo</meta>
-        <meta property="dc:publisher.original">Cappelen Damm akademisk</meta>
-        <meta property="dc:title.original">La Mucama de Omicunle</meta>
-        <meta property="dc:title.original.alternative">(denne brukes kun når ikke *240 finnes)</meta>
-        <meta property="bookEdition.original">3. utg.</meta>
-        <meta property="isbn.original">978-82-02-53797-5</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -1537,25 +1366,6 @@
     </metadata></x:expect>
     </x:scenario>
     
-    <x:scenario label="Bruk registreringsdato som tilgjengeliggjøringsdato for katalogposter eldre enn år 2000">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:controlfield tag="008">971220                a          10nob</marcxchange:controlfield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.available">1997-12-20</meta>
-        <meta property="dc:date.registered">1997-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
     <x:scenario label="EPUB-nr i *599">
         <x:context xml:space="preserve">
             <marcxchange:record>
@@ -1624,106 +1434,6 @@
         <meta property="dc:title.alternative">Don Giovanni, klaver, sopran, Batti, Batti o bel Masetto740</meta>
         <meta property="dc:title.alternative">Don Giovanni, klaver, sopran, Batti, Batti o bel Ma</meta>
     </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Student audience">
-        <x:scenario label="850$a">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
-                    
-                    <marcxchange:datafield tag="850" ind1=" " ind2=" ">
-                        <marcxchange:subfield code="a">NLB/S</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.genre">Textbook</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="019$d">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
-                    
-                    <marcxchange:datafield tag="019" ind1=" " ind2=" ">
-                        <marcxchange:subfield code="d">L</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Lærebok</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">L</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="educationalUse">true</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="019$d with bibliofilId - 1">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:datafield tag="019" ind1=" " ind2=" ">
-                        <marcxchange:subfield code="d">N</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Novelle</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">N</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="019$d with bibliofilId - 2">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:datafield tag="019" ind1=" " ind2=" ">
-                        <marcxchange:subfield code="d">BD</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Billedbok</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">B</meta>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-2">Dikt</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-2">D</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="019$d with bibliofilId - 3">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:datafield tag="019" ind1=" " ind2=" ">
-                        <marcxchange:subfield code="d">RS</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-1">Roman</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-1">R</meta>
-        <meta property="dc:type.literaryForm" id="literary-form-019d-2">Skuespill</meta>
-        <meta property="normarc-id" refines="#literary-form-019d-2">S</meta>
-    </metadata></x:expect>
-        </x:scenario>
     </x:scenario>
     
     <x:scenario label="Child audience">
@@ -1824,86 +1534,6 @@
         <meta property="dc:type.text">true</meta>
         <meta property="dc:type.tts">true</meta>
         <meta property="audience">Child</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="audiences">
-        <x:scenario label="adult">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="adolescent">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
-                    <marcxchange:datafield tag="019">
-                        <marcxchange:subfield code="a">u,mu</marcxchange:subfield>
-                    </marcxchange:datafield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adolescent</meta>
-        <meta property="typicalAgeRange">11-16</meta>
-    </metadata></x:expect>
-        </x:scenario>
-        
-        <x:scenario label="child">
-            <x:context xml:space="preserve">
-                <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
-                </marcxchange:record>
-            </x:context>
-            
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Child</meta>
-    </metadata></x:expect>
-        </x:scenario>
-    </x:scenario>
-    
-    <x:scenario label="date sent to production / ordered">
-        <x:context xml:space="preserve">
-            <marcxchange:record format="normarc" type="Bibliographic">
-                <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
-                <marcxchange:datafield tag="591">
-                    <marcxchange:subfield code="a">06.08.2001</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.ordered">2001-08-06</meta>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">17-</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -2032,41 +1662,10 @@
         
         <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
         <dc:title id="title-245-1">Aktiv læring</dc:title>
-        <meta property="sortingKey" refines="#title-245-1">ktiv læring :</meta>
         <meta property="dc:title.subTitle">et bidrag til variasjon</meta>
         <meta property="nlbbib:responsibilityStatement">Thorsteinn Sigurjonsson, Dag Andre Nilsen, Tor Solbakken</meta>
         <meta property="bookEdition">1</meta>
         <meta property="sortingKey">ktiv læring :</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Importer *008/34 på samme måte som *655  $aBiografisk$_19880600">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:controlfield tag="008">171220                a          11nob</marcxchange:controlfield>
-                <marcxchange:datafield tag="655" ind1=" " ind2="1">
-                    <marcxchange:subfield code="a">Hester</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19882100</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Biography</meta>
-        <meta property="dc:type.genre" id="subject-008">Biografisk</meta>
-        <meta property="bibliofil-id" refines="#subject-008">19880600</meta>
-        <meta property="dc:type.genre.no" refines="#subject-008">Biografisk</meta>
-        <meta property="dc:type.mainGenre" refines="#subject-008">Biografisk</meta>
-        <meta property="dc:type.genre" id="subject-655-1">Hester</meta>
-        <meta property="bibliofil-id" refines="#subject-655-1">19882100</meta>
-        <meta property="dc:type.genre.no" refines="#subject-655-1">Hester</meta>
-        <meta property="dc:type.mainGenre" refines="#subject-655-1">Hester</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">17-</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -2579,102 +2178,6 @@
         <x:expect label="the metadata should be extracted as expected" test="*">
             <meta property="dc:contributor.editor" id="...">Jacobsen, Knut A.</meta>
             <dc:creator id="...">Jacobsen, Knut A.</dc:creator>
-        </x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Regression test for *700">
-        <x:context>
-            <marcxchange:record>
-                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
-                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
-                    <marcxchange:subfield code="0">(NO-LaBS)613101-1</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
-                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
-                    <marcxchange:subfield code="0">(NO-LaBS)613101-2</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
-                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
-                    <marcxchange:subfield code="0">(NO-LaBS)613101-3</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="386" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
-                    <marcxchange:subfield code="b">n.</marcxchange:subfield>
-                    <marcxchange:subfield code="0">(NO-LaBS)613101-4</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="511" ind1="0" ind2=" ">
-                    <marcxchange:subfield code="a">Flere innlesere</marcxchange:subfield>
-                    <marcxchange:subfield code="_">17326200</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
-                    <marcxchange:subfield code="a">Halvorsen, Stein Johan Grieg</marcxchange:subfield>
-                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
-                    <marcxchange:subfield code="4">act</marcxchange:subfield>
-                    <marcxchange:subfield code="6">(NO-LaBS)613101-2</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19056700</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
-                    <marcxchange:subfield code="a">Krogh, Frank</marcxchange:subfield>
-                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
-                    <marcxchange:subfield code="4">act</marcxchange:subfield>
-                    <marcxchange:subfield code="6">(NO-LaBS)613101-3</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19056800</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
-                    <marcxchange:subfield code="a">Nordberg, Nils</marcxchange:subfield>
-                    <marcxchange:subfield code="e">regissør</marcxchange:subfield>
-                    <marcxchange:subfield code="4">drt</marcxchange:subfield>
-                    <marcxchange:subfield code="_">14952500</marcxchange:subfield>
-                </marcxchange:datafield>
-                <marcxchange:datafield tag="700" ind1="1" ind2=" ">
-                    <marcxchange:subfield code="a">Vardund, Ingerid</marcxchange:subfield>
-                    <marcxchange:subfield code="d">1927-2006</marcxchange:subfield>
-                    <marcxchange:subfield code="4">act</marcxchange:subfield>
-                    <marcxchange:subfield code="e">skuespiller</marcxchange:subfield>
-                    <marcxchange:subfield code="6">(NO-LaBS)613101-4</marcxchange:subfield>
-                    <marcxchange:subfield code="_">19056600</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" test="*/*">
-            <meta id="contributor-700-1" property="dc:contributor.actor">Halvorsen, Stein Johan Grieg</meta>
-            <meta refines="#contributor-700-1" property="bibliofil-id">19056700</meta>
-            <meta refines="#contributor-700-1" property="nationality">no</meta>
-            <meta id="contributor-700-3" property="dc:contributor.actor">Krogh, Frank</meta>
-            <meta refines="#contributor-700-3" property="bibliofil-id">19056800</meta>
-            <meta refines="#contributor-700-3" property="nationality">no</meta>
-            <meta id="contributor-700-7" property="dc:contributor.actor">Vardund, Ingerid</meta>
-            <meta refines="#contributor-700-7" property="bibliofil-id">19056600</meta>
-            <meta refines="#contributor-700-7" property="birthDate">1927</meta>
-            <meta refines="#contributor-700-7" property="deathDate">2006</meta>
-            <meta refines="#contributor-700-7" property="nationality">no</meta>
-            <meta id="contributor-700-5" property="dc:contributor.director">Nordberg, Nils</meta>
-            <meta refines="#contributor-700-5" property="bibliofil-id">14952500</meta>
-            <meta id="contributor-511-1" property="dc:contributor.narrator">Flere innlesere</meta>
-            <meta refines="#contributor-511-1" property="bibliofil-id">17326200</meta>
-        </x:expect>
-    </x:scenario>
-    
-    <x:scenario label="test parsing of parallel title in *245$a">
-        <x:context>
-            <marcxchange:record>
-                <marcxchange:datafield tag="245" ind1="0" ind2="0">
-                    <marcxchange:subfield code="a">Helse =HO : barne- og ungdomsarbeider VG2 og VG3</marcxchange:subfield>
-                    <marcxchange:subfield code="h">elektronisk punktskrift</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" test="*/*">
-            <dc:title>Helse</dc:title>
-            <meta property="dc:title.parallel">HO : barne- og ungdomsarbeider VG2 og VG3</meta>
-            <meta property="dc:title.subTitle">barne- og ungdomsarbeider VG2 og VG3</meta>
-            <meta property="bookEdition">1</meta>
-            <meta property="sortingKey">Helse</meta>
         </x:expect>
     </x:scenario>
 </x:description>
