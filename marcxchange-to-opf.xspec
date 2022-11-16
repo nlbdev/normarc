@@ -1571,13 +1571,13 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:title id="title-245-1">Aktiv læring</dc:title>
-        <meta property="dc:title.subTitle">et bidrag til variasjon</meta>
-        <meta property="nlbbib:responsibilityStatement">Thorsteinn Sigurjonsson, Dag Andre Nilsen, Tor Solbakken</meta>
-        <meta property="bookEdition">1</meta>
-        <meta property="sortingKey">ktiv læring :</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:title>Aktiv læring</dc:title>
+            <meta property="dc:title.subTitle">et bidrag til variasjon</meta>
+            <meta property="nlbbib:responsibilityStatement">Thorsteinn Sigurjonsson, Dag Andre Nilsen, Tor Solbakken</meta>
+            <meta property="bookEdition">1</meta>
+            <meta property="sortingKey">ktiv læring :</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Subtitles, part titles and part positions">
