@@ -1416,8 +1416,6 @@
     <x:scenario label="access modes (text / audio)">
         <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
-                <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
-                
                 <marcxchange:datafield tag="697" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Lydbok med tekst</marcxchange:subfield>
                     <marcxchange:subfield code="_">21203600</marcxchange:subfield>
@@ -1425,43 +1423,29 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:subject.keyword" id="subject-697-1">Lydbok med tekst</meta>
-        <meta property="bibliofil-id" refines="#subject-697-1">21203600</meta>
-        <meta property="dc:type.audio">true</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.text">true</meta>
-        <meta property="audience">Child</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta property="dc:subject.keyword" id="subject-697-1">Lydbok med tekst</meta>
+            <meta property="bibliofil-id" refines="#subject-697-1">21203600</meta>
+            <meta property="dc:type.audio">true</meta>
+            <meta property="dc:type.text">true</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="TTS">
         <x:context xml:space="preserve">
             <marcxchange:record format="normarc" type="Bibliographic">
-                <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
-                
                 <marcxchange:datafield tag="511" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">Brage Talesyntese</marcxchange:subfield>
                 </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:contributor.narrator">Brage Talesyntese</meta>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.audio">true</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="dc:type.text">true</meta>
-        <meta property="dc:type.tts">true</meta>
-        <meta property="audience">Child</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <meta property="dc:contributor.narrator">Brage Talesyntese</meta>
+            <meta property="dc:type.audio">true</meta>
+            <meta property="dc:type.text">true</meta>
+            <meta property="dc:type.tts">true</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="parsing of volumes">
