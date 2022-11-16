@@ -362,16 +362,9 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.ordered">2001-08-06</meta>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">16-</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*[@property='dc:date.ordered']">
+            <meta property="dc:date.ordered">2001-08-06</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Importer *008/34 på samme måte som *655  $aBiografisk$_19880600">
