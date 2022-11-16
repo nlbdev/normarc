@@ -62,14 +62,7 @@
         <xsl:variable name="result" as="element()*">
             <xsl:next-match/>
         </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="count($result)">
-                <xsl:sequence select="$result"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <metadata/>
-            </xsl:otherwise>
-        </xsl:choose>
+        <xsl:sequence select="$result"/>
     </xsl:template>
 
     <xsl:template match="SRU:*">
@@ -332,7 +325,7 @@
         <xsl:if test="not($property)">
             <xsl:message terminate="yes" select="'No property name was given'"/>
         </xsl:if>
-        <xsl:if test="not($value)">
+        <xsl:if test="count($value) = 0">
             <xsl:message terminate="yes" select="concat('No value was given (value=', string($value), ')')"/>
         </xsl:if>
 
@@ -1505,9 +1498,11 @@
 
     <xsl:template match="*:datafield[@tag='260']">
         <xsl:variable name="publisher-id" select="concat('publisher-260-',1+count(preceding-sibling::*:datafield[@tag='260']))"/>
-        <xsl:variable name="issued" select="min(../*:datafield[@tag='260']/*:subfield[@code='c' and matches(text(),'^\d+$')]/xs:integer(text()))"/>
-        <xsl:variable name="primary" select="(not($issued) and not(preceding-sibling::*:datafield[@tag='260'])) or (*:subfield[@code='c']/text() = string($issued) and not(preceding-sibling::*:datafield[@tag='260']/*:subfield[@code='c' and text() = string($issued)]))"/>
-
+        <xsl:variable name="issued" select="(*:subfield[@code='c' and nlb:parseYear(text(), false())])[1]/nlb:parseYear(text(), false())" as="xs:string?"/>
+        <xsl:variable name="first-issued" select="min(../*:datafield[@tag='260']/*:subfield[@code='c']/nlb:parseYear(text(), false()))" as="xs:string?"/>
+        <xsl:variable name="first-publisher" select="(../*:datafield[@tag='260' and *:subfield[@code='c']/nlb:parseYear(text(), false()) = $first-issued])[1]"/>
+        <xsl:variable name="primary" select=". intersect $first-publisher"/>
+        
         <xsl:if test="*:subfield[@code='b']">
             <xsl:call-template name="meta">
                 <xsl:with-param name="property" select="if ($primary) then 'dc:publisher' else 'dc:publisher.other'"/>
@@ -1515,13 +1510,13 @@
                 <xsl:with-param name="id" select="$publisher-id"/>
                 <xsl:with-param name="context" select="(*:subfield[@code='b'])[1]"/>
             </xsl:call-template>
-
+            
             <xsl:call-template name="bibliofil-id">
                 <xsl:with-param name="context" select="."/>
                 <xsl:with-param name="refines" select="$publisher-id"/>
             </xsl:call-template>
         </xsl:if>
-
+        
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:publisher.location'"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/><xsl:with-param name="refines" select="if ($primary) then () else $publisher-id"/></xsl:call-template>
         </xsl:for-each>
@@ -3422,7 +3417,7 @@
         </xsl:choose>
     </xsl:function>
 
-    <xsl:function name="nlb:parseYear">
+    <xsl:function name="nlb:parseYear" as="xs:string?">
         <xsl:param name="value"/>
         <xsl:param name="assume-negative"/>
 
