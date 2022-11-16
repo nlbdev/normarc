@@ -561,7 +561,6 @@
         <xsl:variable name="ageRangeFrom" select="if (count($ageRanges) = 0) then '' else xs:integer(min(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[1])))"/>
         <xsl:variable name="ageMax" select="if (count($ageRanges) = 0) then '' else max(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[2]))"/>
         <xsl:variable name="ageRangeTo" select="if ($ageMax and $ageMax = xs:double('INF') or $POS22 = 'e') then '' else $ageMax"/>
-        <xsl:variable name="juvenileAgeLimit" select="if (count($ageRangesFrom385sub0)) then 13 else 14"/> <!-- because the 008/22 age range 14-17 fits better than 9-13 -->
 
         <xsl:if test="$ageRangeFrom or $ageRangeTo">
             <xsl:call-template name="meta">
@@ -578,10 +577,10 @@
             - else, use "Child"
         -->
         <xsl:choose>
-            <xsl:when test="(string($ageRangeFrom) != '' and $ageRangeFrom ge 18) or $POS22='e'">
+            <xsl:when test="$POS22='e'">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
             </xsl:when>
-            <xsl:when test="string($ageRangeTo) = '' or $ageRangeTo ge $juvenileAgeLimit">
+            <xsl:when test="$POS22='d' or $tag385sub0 = ('https://schema.nb.no/Bibliographic/Values/TG1005', 'https://schema.nb.no/Bibliographic/Values/TG1015')">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
             </xsl:when>
             <xsl:otherwise>

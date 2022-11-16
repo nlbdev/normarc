@@ -303,15 +303,15 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">17-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="typicalAgeRange">16-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="adolescent">
@@ -324,15 +324,15 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adolescent</meta>
-        <meta property="typicalAgeRange">11-16</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adolescent</meta>
+                <meta property="typicalAgeRange">11-15</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="child">
@@ -342,14 +342,15 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Child</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Child</meta>
+                <meta property="typicalAgeRange">0-15</meta>
+            </x:expect>
         </x:scenario>
     </x:scenario>
     

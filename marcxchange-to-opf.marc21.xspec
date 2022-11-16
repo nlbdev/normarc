@@ -293,40 +293,44 @@
         <x:scenario label="adult">
             <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                a          10nob</marcxchange:controlfield>
+                    <marcxchange:controlfield tag="008">171220                e          10nob</marcxchange:controlfield>
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">16-</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adult</meta>
+                <meta property="typicalAgeRange">18-</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="adolescent">
             <x:context xml:space="preserve">
                 <marcxchange:record format="normarc" type="Bibliographic">
-                    <marcxchange:controlfield tag="008">171220                j          10nob</marcxchange:controlfield>
-                    <marcxchange:datafield tag="019">
-                        <marcxchange:subfield code="a">u,mu</marcxchange:subfield>
+                    <marcxchange:controlfield tag="008">171220                d          10nob</marcxchange:controlfield>
+                    
+                    <marcxchange:datafield tag="385">
+                        <marcxchange:subfield code="0">https://schema.nb.no/Bibliographic/Values/TG1004</marcxchange:subfield> <!-- 11-12 -->
+                    </marcxchange:datafield>
+                    <marcxchange:datafield tag="385">
+                        <marcxchange:subfield code="0">https://schema.nb.no/Bibliographic/Values/TG1005</marcxchange:subfield> <!-- 13-15 -->
                     </marcxchange:datafield>
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Adolescent</meta>
-        <meta property="typicalAgeRange">11-16</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adolescent</meta>
+                <meta property="typicalAgeRange">11-15</meta>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="child">
@@ -336,14 +340,15 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Non-biography</meta>
-        <meta property="audience">Child</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Child</meta>
+                <meta property="typicalAgeRange">0-15</meta>
+            </x:expect>
         </x:scenario>
     </x:scenario>
     
