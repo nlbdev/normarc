@@ -370,7 +370,7 @@
     <x:scenario label="Importer *008/34 på samme måte som *655  $aBiografisk$_19880600">
         <x:context xml:space="preserve">
             <marcxchange:record>
-                <marcxchange:controlfield tag="008">171220                a          11nob</marcxchange:controlfield>
+                <marcxchange:controlfield tag="008">171220b        xx     e          1dnob d</marcxchange:controlfield>
                 <marcxchange:datafield tag="655" ind1=" " ind2="1">
                     <marcxchange:subfield code="a">Hester</marcxchange:subfield>
                     <marcxchange:subfield code="_">19882100</marcxchange:subfield>
@@ -378,23 +378,23 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:language>nob</dc:language>
-        <meta property="dc:date.registered">2017-12-20</meta>
-        <meta property="dc:type.fiction">true</meta>
-        <meta property="dc:type.genre">Fiction</meta>
-        <meta property="dc:type.genre">Biography</meta>
-        <meta property="dc:type.genre" id="subject-008">Biografisk</meta>
-        <meta property="bibliofil-id" refines="#subject-008">19880600</meta>
-        <meta property="dc:type.genre.no" refines="#subject-008">Biografisk</meta>
-        <meta property="dc:type.mainGenre" refines="#subject-008">Biografisk</meta>
-        <meta property="dc:type.genre" id="subject-655-1">Hester</meta>
-        <meta property="bibliofil-id" refines="#subject-655-1">19882100</meta>
-        <meta property="dc:type.genre.no" refines="#subject-655-1">Hester</meta>
-        <meta property="dc:type.mainGenre" refines="#subject-655-1">Hester</meta>
-        <meta property="audience">Adult</meta>
-        <meta property="typicalAgeRange">16-</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:language>nob</dc:language>
+            <meta property="dc:date.registered">2017-12-20</meta>
+            <meta property="dc:type.fiction">true</meta>
+            <meta property="dc:type.genre">Fiction</meta>
+            <meta property="dc:type.genre">Biography</meta>
+            <meta property="dc:type.genre" id="subject-008">Biografisk</meta>
+            <meta property="bibliofil-id" refines="#subject-008">19880600</meta>
+            <meta property="dc:type.genre.no" refines="#subject-008">Biografisk</meta>
+            <meta property="dc:type.mainGenre" refines="#subject-008">Biografisk</meta>
+            <meta property="dc:type.genre" id="subject-655-1">Hester</meta>
+            <meta property="bibliofil-id" refines="#subject-655-1">19882100</meta>
+            <meta property="dc:type.genre.no" refines="#subject-655-1">Hester</meta>
+            <meta property="dc:type.mainGenre" refines="#subject-655-1">Hester</meta>
+            <meta property="audience">Adult</meta>
+            <meta property="typicalAgeRange">18-</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="Flere $e og $4 på samme *700">
