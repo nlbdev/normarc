@@ -265,24 +265,6 @@
         <x:expect label="the result should be as expected" select="','" test="string(.)"/>
     </x:scenario>
     
-    <x:scenario label="Tittel" pending="">
-        <x:context xml:space="preserve">
-            <!-- TODO -->
-        </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-    <!-- TODO -->
-        </x:expect>
-    </x:scenario>
-    
-    <x:scenario label="Forfatter(e)" pending="">
-        <x:context xml:space="preserve">
-            <!-- TODO -->
-        </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-    <!-- TODO -->
-        </x:expect>
-    </x:scenario>
-    
     <x:scenario label="Manglende utgave">
         <x:context xml:space="preserve">
             <marcxchange:record>
@@ -331,30 +313,35 @@
                     <marcxchange:subfield code="b">XIV</marcxchange:subfield>
                     <marcxchange:subfield code="d">1935-</marcxchange:subfield>
                     <marcxchange:subfield code="j">tib.</marcxchange:subfield>
-                    <marcxchange:subfield code="3">18927000</marcxchange:subfield>
+                    <marcxchange:subfield code="6">(NO-LaBS)107239-1</marcxchange:subfield>
+                    <marcxchange:subfield code="_">18927000</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="110" ind1="0" ind2="0">
                     <marcxchange:subfield code="a">NLB</marcxchange:subfield>
                     <marcxchange:subfield code="q">Norsk Lyd- og blindeskriftbibliotek</marcxchange:subfield>
-                    <marcxchange:subfield code="3">18158500</marcxchange:subfield>
+                    <marcxchange:subfield code="_">18158500</marcxchange:subfield>
                 </marcxchange:datafield>
                 
                 <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
+                
+                <marcxchange:datafield tag="386" ind1="0" ind2="0">
+                    <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                    <marcxchange:subfield code="b">tib.</marcxchange:subfield>
+                    <marcxchange:subfield code="0">(NO-LaBS)107239-1</marcxchange:subfield>
+                </marcxchange:datafield>
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <dc:creator id="creator-1">Hans Hellighet Dalai Lama</dc:creator>
-        <meta property="bibliofil-id" refines="#creator-1">18927000</meta>
-        <meta property="birthDate" refines="#creator-1">1935</meta>
-        <meta property="honorificSuffix" refines="#creator-1">XIV</meta>
-        <meta property="nationality" refines="#creator-1">tib</meta>
-        <dc:creator id="creator-2">NLB</dc:creator>
-        <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
-        <meta property="bookEdition">1</meta>
-        <meta property="sortingKey">Dalai Lama</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:creator id="creator-1">Hans Hellighet Dalai Lama</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-1">18927000</meta>
+            <meta property="birthDate" refines="#creator-1">1935</meta>
+            <meta property="honorificSuffix" refines="#creator-1">XIV</meta>
+            <meta property="nationality" refines="#creator-1">tib</meta>
+            <dc:creator id="creator-2">NLB</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
+        </x:expect>
     </x:scenario>
     
     <x:scenario label="For oversatte bøker: Navn på oversetter(e)">
