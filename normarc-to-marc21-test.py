@@ -413,12 +413,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # # ignore numbering of *700 id- and refines-attributes
             # normarc_line = re.sub(r"contributor-700-\d+", "contributor-700-X", normarc_line)
             # marc21_line = re.sub(r"contributor-700-\d+", "contributor-700-X", marc21_line)
-            # 
-            # # sorting keys that refine the title or contributors seems to have been removed in MARC21
-            # if "sortingKey" in normarc_line and 'refines="' in normarc_line:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
-            #     continue
-            # 
+            
+            # sorting keys that refine the title or contributors have been removed in MARC21
+            if "sortingKey" in normarc_line and 'refines="' in normarc_line:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #7): {normarc_line}")
+                continue
+            
             # # *653$q are not copied to MARC21
             # if "*653$q" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #8): {normarc_line}")
