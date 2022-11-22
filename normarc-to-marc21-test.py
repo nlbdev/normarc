@@ -252,7 +252,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_marc21_008_pos_33 = []
         normarc_available_during_conversion = False
         normarc_has_authority_with_multiple_nationalities = False
+        normarc_dewey_without_refines = []
         for line in normarc:
+            if "dc:subject.dewey" in line and "refines" not in line:
+                normarc_dewey_without_refines.append(line.split("</meta")[0].split(">")[1])
             if "sortingKey" in line and "*245$w" in line or "*100$w" in line or "*110$w" in line:
                 normarc_has_sortingKey_from_100w_110w_or_245w = True
             if "dc:date.available" in line and re.match(r"2022-(1|0[3-9])", line):
@@ -583,11 +586,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "bibliofil-id" in marc21_line:
                 marc21_line = re.sub(r">\d+</meta>", ">(…)</meta>", marc21_line)
             
-            # # Dewey is not converted to MARC21
-            # if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0] in ["600$1", "650$1", "651$1", "653$1"]:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
-            #     continue
-            # 
+            # Dewey with refines is not converted to MARC21
+            if normarc_line_property == "dc:subject.dewey" and "refines" in normarc_line:
+                dewey = normarc_line.split("</meta")[0].split(">")[1]
+                if dewey in normarc_dewey_without_refines:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
+                    continue
+            
             # # Nationality in *800$j is not converted to MARC21
             # if "*800$j" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
