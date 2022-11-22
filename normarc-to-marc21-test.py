@@ -382,6 +382,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             
             # Handle differences in the authority registry
             if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                normarc_line = normarc_line.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
+                normarc_line = normarc_line.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
                 normarc_line = normarc_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
                 normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
@@ -393,6 +395,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_line = normarc_line.replace("-", " ")
                 normarc_line = remove_accents(normarc_line)
             if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                marc21_line = marc21_line.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
+                marc21_line = marc21_line.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
                 marc21_line = marc21_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
                 marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
                 marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
