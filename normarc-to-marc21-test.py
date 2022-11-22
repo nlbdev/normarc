@@ -568,15 +568,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # if "*700$d" in marc21_line_comment:
             #     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #35): {marc21_line}")
             #     continue
-            # 
-            # # IDs in the authority registry have changed or disappeared in many cases, ignore until next trial conversion
-            # if "bibliofil-id" in normarc_line:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #36): {normarc_line}")
-            #     continue
-            # if "bibliofil-id" in marc21_line:
-            #     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #37): {marc21_line}")
-            #     continue
-            # 
+            
+            # IDs in the authority registry have changed in many cases, replace them with placeholders
+            if "bibliofil-id" in normarc_line:
+                normarc_line = re.sub(r">\d+</meta>", ">(…)</meta>", normarc_line)
+            if "bibliofil-id" in marc21_line:
+                marc21_line = re.sub(r">\d+</meta>", ">(…)</meta>", marc21_line)
+            
             # # Dewey is not converted to MARC21
             # if "*" in normarc_line_comment and normarc_line_comment.split("*")[1].split()[0] in ["600$1", "650$1", "651$1", "653$1"]:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
