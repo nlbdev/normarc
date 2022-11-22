@@ -374,33 +374,35 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             normarc_line_property = normarc_line.split('property="')[1].split('"')[0] if "property=" in normarc_line else normarc_line.split("<")[1].split(">")[0].split(" ")[0]
             marc21_line_property = marc21_line.split('property="')[1].split('"')[0] if "property=" in marc21_line else marc21_line.split("<")[1].split(">")[0].split(" ")[0]
             
-            # # Handle differences in the authority registry
-            # if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
-            #     normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
-            #     normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
-            #     normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
-            #     normarc_line = normarc_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
-            #     normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
-            #     normarc_line = normarc_line.replace("Ð", "D")
-            #     normarc_line = normarc_line.replace("ð", "d")
-            #     normarc_line = normarc_line.replace("-", " ")
-            #     normarc_line = remove_accents(normarc_line)
-            # if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
-            #     marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
-            #     marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
-            #     marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
-            #     marc21_line = marc21_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
-            #     marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
-            #     marc21_line = marc21_line.replace("Ð", "D")
-            #     marc21_line = marc21_line.replace("ð", "d")
-            #     marc21_line = marc21_line.replace("-", " ")
-            #     marc21_line = remove_accents(marc21_line)
-            
             # Ignore difference in inverted form of name in sortingKey
             if normarc_line_property == "sortingKey":
                 normarc_line = re.sub(r">([^<,]*?) *, *([^<]*?)<", r">\2 \1<", normarc_line)
             if marc21_line_property == "sortingKey":
                 marc21_line = re.sub(r">([^<,]*?) *, *([^<]*?)<", r">\2 \1<", marc21_line)
+            
+            # Handle differences in the authority registry
+            if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                normarc_line = normarc_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
+                normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
+                normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
+                normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
+                normarc_line = normarc_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
+                normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
+                normarc_line = normarc_line.replace("Ð", "D")
+                normarc_line = normarc_line.replace("ð", "d")
+                normarc_line = normarc_line.replace("-", " ")
+                normarc_line = remove_accents(normarc_line)
+            if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+                marc21_line = marc21_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
+                marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
+                marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
+                marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
+                marc21_line = marc21_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
+                marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
+                marc21_line = marc21_line.replace("Ð", "D")
+                marc21_line = marc21_line.replace("ð", "d")
+                marc21_line = marc21_line.replace("-", " ")
+                marc21_line = remove_accents(marc21_line)
             
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
