@@ -390,11 +390,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             #     marc21_line = marc21_line.replace("ð", "d")
             #     marc21_line = marc21_line.replace("-", " ")
             #     marc21_line = remove_accents(marc21_line)
-            # 
-            # # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
-            # if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
-            #     normarc_line = '<meta property="typicalAgeRange">18-</meta>'
-            # 
+            
+            # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
+            if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
+                normarc_line = '<meta property="typicalAgeRange">18-</meta>'
+            
             # if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
             #     normarc_line = normarc_line.lower()
             # if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
