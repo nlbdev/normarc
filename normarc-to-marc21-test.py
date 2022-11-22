@@ -417,10 +417,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # # ignore id attributes (at least for now)
             # normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
             # marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
-            # 
-            # # ignore numbering of *700 id- and refines-attributes
-            # normarc_line = re.sub(r"contributor-700-\d+", "contributor-700-X", normarc_line)
-            # marc21_line = re.sub(r"contributor-700-\d+", "contributor-700-X", marc21_line)
+            
+            # ignore numbering of *700 id- and refines-attributes
+            normarc_line = re.sub(r"contributor-700-\d+", "contributor-700-X", normarc_line)
+            marc21_line = re.sub(r"contributor-700-\d+", "contributor-700-X", marc21_line)
             
             # sorting keys that refine the title or contributors have been removed in MARC21
             if "sortingKey" in normarc_line and 'refines="' in normarc_line:
