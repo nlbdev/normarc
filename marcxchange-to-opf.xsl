@@ -2735,7 +2735,7 @@
         
         <!-- find all referenced *386 datafields -->
         <xsl:variable name="nationalities" as="element()*">
-            <xsl:for-each select="*:subfield[@code = ('0', '6')]">
+            <xsl:for-each select="*:subfield[@code = ('0', '6', 'g')]">
                 <xsl:variable name="identifier" select="text()"/>
                 <xsl:sequence select="../../*:datafield[@tag='386' and *:subfield[@code='m']/text() = 'Nasjonalitet/regional gruppe' and *:subfield[@code='0']/text() = $identifier]"/>
             </xsl:for-each>

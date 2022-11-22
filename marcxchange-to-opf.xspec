@@ -2021,4 +2021,28 @@
             <dc:creator id="...">Jacobsen, Knut A.</dc:creator>
         </x:expect>
     </x:scenario>
+
+    <x:scenario label="Regresjonstest: tolking av nasjonalitet for bidragsyter" focus="">
+        <x:context>
+            <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                <marcxchange:subfield code="b">n.</marcxchange:subfield>
+                <marcxchange:subfield code="0">(NO-TrBIB)90530396</marcxchange:subfield>
+            </marcxchange:datafield>
+            <marcxchange:datafield tag="700" ind1="1" ind2=" ">
+                <marcxchange:subfield code="a">Bjørneboe, Jens</marcxchange:subfield>
+                <marcxchange:subfield code="d">1920-1976</marcxchange:subfield>
+                <marcxchange:subfield code="g">(NO-TrBIB)90530396</marcxchange:subfield>
+                <marcxchange:subfield code="_">23643000</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <meta property="dc:contributor.other" id="contributor-700-1">Bjørneboe, Jens</meta>
+            <meta property="birthDate" refines="#contributor-700-1">1920</meta>
+            <meta property="deathDate" refines="#contributor-700-1">1976</meta>
+            <meta property="nationality" refines="#contributor-700-1">no</meta>
+            <meta property="bibliofil-id" refines="#contributor-700-1">23643000</meta>
+        </x:expect>
+    </x:scenario>
 </x:description>
