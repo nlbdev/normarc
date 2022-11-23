@@ -381,6 +381,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = re.sub(r">([^<,]*?) *, *([^<]*?)<", r">\2 \1<", marc21_line)
             
             # Handle differences in the authority registry
+            # TODO: replace with python-Levenshtein package and use similarity ratio instead
             if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
                 normarc_line = normarc_line.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
                 normarc_line = normarc_line.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
