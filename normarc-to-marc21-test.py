@@ -530,16 +530,21 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             #     continue
             # 
             # """
-            # 
-            # # Actually, let's just ignore all series.position from *440, *490 and *830; there's a lot of problems in its conversion
-            # # For instance in 200260, where $v is copied from another datafield
-            # if normarc_line_property == "series.position":
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #26): {normarc_line}")
-            #     continue
-            # if marc21_line_property == "series.position":
-            #     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
-            #     continue
-            # 
+            
+            # Actually, let's just ignore all series.position from *440, *490 and *830; there's a lot of problems in its conversion
+            # For instance in 200260, where $v is copied from another datafield.
+            # We also need to ignore id attributes on dc:title.series for now.
+            if normarc_line_property == "series.position":
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #26): {normarc_line}")
+                continue
+            if marc21_line_property == "series.position":
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #27): {marc21_line}")
+                continue
+            if normarc_line_property == "dc:title.series":
+                normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
+            if marc21_line_property == "dc:title.series":
+                marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
+            
             # # multiple *245$a
             # if identifier in ["228728", "373628", "565528"]:
             #     if "245$a" in normarc_line_comment:
