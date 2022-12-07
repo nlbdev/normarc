@@ -1498,7 +1498,13 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             #     if "*574" in normarc_line_comment:
             #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #69): {normarc_line}")
             #         continue
-            # 
+            
+            # *246$a is copied into *245$b. For instance: 104518 and 104539
+            if marc21_line_property == "dc:title.subTitle" and normarc_line_property != "dc:title.subTitle" and "dc:title.parallel" in marc21[prev_marc21_linenum]:
+                marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #70): {marc21_line}")
+                continue
+            
+            
             if normarc_line != marc21_line:
                 if print_first_error_only and not error_has_occured or not print_first_error_only:
                     if not print_first_error_only and error_has_occured:
