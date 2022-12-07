@@ -1063,31 +1063,41 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # Handle differences in the authority registry
             # TODO: replace with python-Levenshtein package and use similarity ratio instead
             if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
-                normarc_line = normarc_line.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
-                normarc_line = normarc_line.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
-                normarc_line = normarc_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
-                normarc_line = normarc_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
-                normarc_line = normarc_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
-                normarc_line = normarc_line.replace("Den Norske kirke", "Norske kirke")
-                normarc_line = normarc_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
-                normarc_line = normarc_line.replace("å", "aa").replace("Å", "Aa")
-                normarc_line = normarc_line.replace("Ð", "D")
-                normarc_line = normarc_line.replace("ð", "d")
-                normarc_line = normarc_line.replace("-", " ")
-                normarc_line = remove_accents(normarc_line)
+                [prefix, suffix] = normarc_line.split("</", 1)
+                [prefix, name] = prefix.split(">", 1)
+                prefix = prefix + ">"
+                suffix = "</" + suffix
+                name = name.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
+                name = name.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
+                name = name.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
+                name = name.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
+                name = name.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
+                name = name.replace("Den Norske kirke", "Norske kirke")
+                name = name.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
+                name = name.replace("å", "aa").replace("Å", "Aa")
+                name = name.replace("Ð", "D")
+                name = name.replace("ð", "d")
+                name = name.replace("-", " ")
+                name = remove_accents(name)
+                normarc_line = prefix + name + suffix
             if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
-                marc21_line = marc21_line.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
-                marc21_line = marc21_line.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
-                marc21_line = marc21_line.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
-                marc21_line = marc21_line.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
-                marc21_line = marc21_line.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
-                marc21_line = marc21_line.replace("Den Norske kirke", "Norske kirke")
-                marc21_line = marc21_line.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
-                marc21_line = marc21_line.replace("å", "aa").replace("Å", "Aa")
-                marc21_line = marc21_line.replace("Ð", "D")
-                marc21_line = marc21_line.replace("ð", "d")
-                marc21_line = marc21_line.replace("-", " ")
-                marc21_line = remove_accents(marc21_line)
+                [prefix, suffix] = marc21_line.split("</", 1)
+                [prefix, name] = prefix.split(">", 1)
+                prefix = prefix + ">"
+                suffix = "</" + suffix
+                name = name.replace("Karl Friedrich Hieronymus Mynchhausen", "Karl Friedrich Hieronymus Munchhausen")
+                name = name.replace("Gunilla Bergstrøm", "Gunilla Bergstrom")
+                name = name.replace("Anne Cath. Vestly", "Anne-Cath. Vestly")
+                name = name.replace("Verdenskrigen 1939-1945", "Verdenskrigen")
+                name = name.replace("Kommunenes sentralforbund(KS)", "Kommunenes sentralforbund")
+                name = name.replace("Den Norske kirke", "Norske kirke")
+                name = name.replace("Alexander L. Kielland(oljeplattform)", "Alexander L. Kielland (oljeplattform)")
+                name = name.replace("å", "aa").replace("Å", "Aa")
+                name = name.replace("Ð", "D")
+                name = name.replace("ð", "d")
+                name = name.replace("-", " ")
+                name = remove_accents(name)
+                marc21_line = prefix + name + suffix
             
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
