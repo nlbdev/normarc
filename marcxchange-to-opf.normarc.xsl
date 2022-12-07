@@ -1430,7 +1430,7 @@
 
     <xsl:template match="*:datafield[@tag='246']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.alternative'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:title.parallel'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
         </xsl:for-each>
 
         <xsl:for-each select="*:subfield[@code='b']">
