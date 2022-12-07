@@ -1278,17 +1278,22 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "bibliofil-id" in marc21_line:
                 marc21_line = re.sub(r">\d+</meta>", ">(…)</meta>", marc21_line)
             
-            # # Dewey with refines is not converted to MARC21
-            # if normarc_line_property == "dc:subject.dewey" and "refines" in normarc_line:
-            #     dewey = normarc_line.split("</meta")[0].split(">")[1]
-            #     if dewey in normarc_dewey_without_refines:
-            #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
-            #         continue
-            # 
-            # # Dewey in *653$1 is not converted to MARC21 (example: 100833)
-            # if normarc_line_property == "dc:subject.dewey" and "*653$1" in normarc_line_comment:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.2): {normarc_line}")
-            #     continue
+            # Dewey with refines is not converted to MARC21
+            if normarc_line_property == "dc:subject.dewey" and "refines" in normarc_line:
+                dewey = normarc_line.split("</meta")[0].split(">")[1]
+                if dewey in normarc_dewey_without_refines:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38): {normarc_line}")
+                    continue
+            
+            # Dewey in *653$1 is not converted to MARC21 (example: 100061)
+            if normarc_line_property == "dc:subject.dewey" and "*653$1" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.2): {normarc_line}")
+                continue
+            
+            # Dewey in *650$1 is not converted to MARC21 (example: 102751)
+            if normarc_line_property == "dc:subject.dewey" and "*650$1" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.3): {normarc_line}")
+                continue
             
             # # Nationality in *800$j is not converted to MARC21
             # if "*800$j" in normarc_line_comment:
