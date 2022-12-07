@@ -1126,17 +1126,17 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # if "*650$w" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #9): {normarc_line}")
             #     continue
-            # 
-            # # the sorting keys in *100$w, *110$w and *245$w is not preserved in MARC21
-            # # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
-            # if normarc_has_sortingKey_from_100w_110w_or_245w:
-            #     if "sortingKey" in normarc_line and "refines=" not in normarc_line:
-            #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #10): {normarc_line}")
-            #         continue
-            #     if "sortingKey" in marc21_line and "refines=" not in marc21_line:
-            #         marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #11): {marc21_line}")
-            #         continue
-            # 
+            
+            # the sorting keys in *100$w, *110$w and *245$w is not preserved in MARC21
+            # so if it is present, we need to ignore the main sortingKey both in NORMARC and in MARC21
+            if normarc_has_sortingKey_from_100w_110w_or_245w:
+                if "sortingKey" in normarc_line and "refines=" not in normarc_line:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #10): {normarc_line}")
+                    continue
+                if "sortingKey" in marc21_line and "refines=" not in marc21_line:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #11): {marc21_line}")
+                    continue
+            
             # # *490$v is copied from *440$v when there is no *490$v; ignore for now
             # if normarc_has_490_without_position:
             #     if "series.position" in normarc_line and re.match(r".*\*(440|490|830).*", normarc_line_comment):
