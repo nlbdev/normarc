@@ -1204,7 +1204,7 @@
     
     <xsl:template match="*:datafield[@tag='082']">
         <xsl:if test="not(preceding-sibling::*:datafield[@tag='082'])">
-            <xsl:for-each select="../*:datafield[@tag='082']/*:subfield[@code='a']">
+            <xsl:for-each select="../*:datafield[@tag='082' and not(*:subfield[@code='z']/text() = 'b')]/*:subfield[@code='a']">
                 <xsl:sort select="text()"/>
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.dewey'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
             </xsl:for-each>
