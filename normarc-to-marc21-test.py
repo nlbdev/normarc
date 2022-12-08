@@ -1137,10 +1137,10 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             #     normarc_line = re.sub(r" *; *", r" ; ", normarc_line)
             # if "dc:title" in marc21_line_property:
             #     marc21_line = re.sub(r" *; *", r" ; ", marc21_line)
-            # 
-            # # ignore id attributes (at least for now)
-            # normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
-            # marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
+            
+            # ignore id attributes (at least for now)
+            normarc_line = re.sub(r' id="[^"]*"', "", normarc_line)
+            marc21_line = re.sub(r' id="[^"]*"', "", marc21_line)
             
             # ignore numbering of *700 id- and refines-attributes
             normarc_line = re.sub(r"contributor-700-\d+", "contributor-700-X", normarc_line)
