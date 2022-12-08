@@ -1344,6 +1344,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.6): {normarc_line}")
                 continue
             
+            # Dewey in *699$1 is not converted to MARC21 (example: 115410)
+            if normarc_line_property == "dc:subject.dewey" and "*699$1" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.6): {normarc_line}")
+                continue
+            
             # # Nationality in *800$j is not converted to MARC21
             # if "*800$j" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
