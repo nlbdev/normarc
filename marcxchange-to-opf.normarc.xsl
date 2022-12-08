@@ -2437,7 +2437,14 @@
         <xsl:if test="not(preceding-sibling::*:datafield[@tag='700'])">
             <!-- then handle all *700 in sorted order -->
             <xsl:variable name="results" as="element()*">
-                <xsl:variable name="role-subfields" select="../*:datafield[@tag='700']/*:subfield[@code=('4', 'e', 'r', 'x') and not(nlb:parseRole(text()) = 'dc:contributor.other')]" as="element()*"/>
+                <xsl:variable name="role-subfields" as="element()*">
+                    <xsl:for-each select="../*:datafield[@tag='700']">
+                        <xsl:sequence select="(*:subfield[@code='4' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
+                            *:subfield[@code='e' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
+                            *:subfield[@code='r' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
+                            *:subfield[@code='x' and not(nlb:parseRole(text()) = 'dc:contributor.other')])[1]"/>
+                    </xsl:for-each>
+                </xsl:variable>
                 <xsl:variable name="datafields-without-role-subfield" select="../*:datafield[@tag='700' and not(*:subfield = $role-subfields)]" as="element()*"/>
                 <xsl:for-each select="$role-subfields | $datafields-without-role-subfield">
                     <xsl:sort select="string-join(((.|..)/*:subfield[@code='a']/text(), (.|..)/*:subfield[@code='d']/text(), (.|..)/*:subfield[@code='e']/text()), '')"/>
