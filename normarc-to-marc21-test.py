@@ -1699,9 +1699,7 @@ def handle(identifier, detailed_comparison=False):
         if not equal:
             if not print_first_error_only or not error_has_occured:
                 last_few = ""
-                if len(identifiers) - successful < 100:
-                    last_few = f" - {len(identifiers) - successful} remaining"
-                print(f"{successful} of {len(identifiers)} successful so far ({int(10000 * successful / len(identifiers)) / 100}%){last_few}")
+                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. {len(identifiers) - successful - failed} remaining. Last: {identifier})")
                 print()
                 print(f"{identifier}:")
                 print(f"- NORMARC in: {normarc_file}")
@@ -1718,13 +1716,13 @@ def handle(identifier, detailed_comparison=False):
             error_has_occured = True
             failed += 1
             if (successful + failed) % 10 == 0 or (successful + failed) == len(identifiers):
-                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. Last: {identifier})")
+                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. {len(identifiers) - successful - failed} remaining. Last: {identifier})")
             return False
         else:
             mark_as_handled(identifier)
             successful += 1
             if (successful + failed) % 10 == 0 or (successful + failed) == len(identifiers):
-                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. Last: {identifier})")
+                print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. {len(identifiers) - successful - failed} remaining. Last: {identifier})")
             return True
 
 detailed_comparison = "--detailed-comparison" in sys.argv
