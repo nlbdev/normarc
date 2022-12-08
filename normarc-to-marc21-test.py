@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 
-import os
-import sys
-import subprocess
 import logging
+import os
 import re
+import subprocess
+import sys
 import threading
 import time
 import unicodedata
+
+from Levenshtein import distance
 
 deleted_records = [
 "1","2","3","4","8","9","10","13","14","15","16","17","20","21","22","23","25","26","30","31","34","35","37","39","40","41","43","44","46","47","48","49","52","53","54","55","56","57","59","60","61","63","64","65","66","68","69","70","71","72",
@@ -1060,9 +1062,9 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property == "sortingKey":
                 marc21_line = re.sub(r">([^<,]*?) *, *([^<]*?)<", r">\2 \1<", marc21_line)
             
-            # Handle differences in the authority registry
-            # TODO: replace with python-Levenshtein package and use similarity ratio instead
-            if normarc_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+            # Handle known differences in the authority registry
+            authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix"]
+            if normarc_line_property in authority_registry_fields:
                 [prefix, suffix] = normarc_line.split("</", 1)
                 [prefix, name] = prefix.split(">", 1)
                 prefix = prefix + ">"
@@ -1080,7 +1082,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 name = name.replace("-", " ")
                 name = remove_accents(name)
                 normarc_line = prefix + name + suffix
-            if marc21_line_property in ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword"]:
+            if marc21_line_property in authority_registry_fields:
                 [prefix, suffix] = marc21_line.split("</", 1)
                 [prefix, name] = prefix.split(">", 1)
                 prefix = prefix + ">"
@@ -1098,6 +1100,16 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 name = name.replace("-", " ")
                 name = remove_accents(name)
                 marc21_line = prefix + name + suffix
+            
+            # Handle unknown differences in the authority registry using fuzzy string matching
+            if marc21_line_property in authority_registry_fields and marc21_line_property == normarc_line_property:
+                normarc_name = normarc_line.split("</", 1)[0].split(">", 1)[1]
+                [marc21_prefix, marc21_suffix] = marc21_line.split("</", 1)
+                [marc21_prefix, marc21_name] = marc21_prefix.split(">", 1)
+                marc21_prefix = marc21_prefix + ">"
+                marc21_suffix = "</" + marc21_suffix
+                if normarc_name != marc21_name and distance(normarc_name, marc21_name) < 5:
+                    marc21_line = marc21_prefix + normarc_name + marc21_suffix
             
             # The definition of "adult" has changed from 16+ in NORMARC to 18+ in MARC21
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
