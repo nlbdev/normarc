@@ -935,6 +935,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
         normarc_available_during_conversion = False
         normarc_has_authority_with_multiple_nationalities = False
         normarc_dewey_without_refines = []
+        normarc_082 = []
         for line in normarc:
             if "dc:subject.dewey" in line and "refines" not in line:
                 normarc_dewey_without_refines.append(line.split("</meta")[0].split(">")[1])
@@ -955,6 +956,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 for value in values:
                     if value not in ["aa", "a", "b", "bu", "u", "mu"]:
                         normarc_has_unknown_values_in_019a = True
+            if "*082" in line:
+                normarc_082.append(line)
             if '*490' in line and "$v" not in line and not re.match(r".*\$a[^$]*;.*", line):
                 normarc_has_490_without_position = True
             if "*574" in line and "$a" in line:
@@ -1423,16 +1426,16 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # if "*048$a" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #52): {normarc_line}")
             #     continue
-            # 
-            # # There are multiple *082 in Normarc, but only one in Marc 21. Ignore for now
-            # if identifier in ["300163"]:
-            #     if "*082" in normarc_line_comment:
-            #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #53): {normarc_line}")
-            #         continue
-            #     if "*082" in marc21_line_comment:
-            #         marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #54): {marc21_line}")
-            #         continue
-            # 
+            
+            # There are multiple *082 in Normarc. Ignore for now
+            if len(normarc_082) > 1:
+                if "*082" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #53): {normarc_line}")
+                    continue
+                if "*082" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #54): {marc21_line}")
+                    continue
+            
             # # Bad *082 in Normarc, ignore for now
             # if identifier in ["300292", "301763"]:
             #     if "*041$h" in normarc_line_comment:
