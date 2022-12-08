@@ -1730,7 +1730,6 @@ for identifier in identifiers:
         continue
 
     if identifier in skip_records:
-        mark_as_handled(identifier)
         continue
 
     success = False
@@ -1753,7 +1752,6 @@ if handled_in_this_run >= 3:
         if identifier in already_handled:
             continue
         if identifier in skip_records:
-            mark_as_handled(identifier)
             continue
         while len(thread_pool) >= 10:
             if error_has_occured and exit_on_error:
