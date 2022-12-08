@@ -1103,6 +1103,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if normarc_line == '<meta property="typicalAgeRange">16-</meta>':
                 normarc_line = '<meta property="typicalAgeRange">18-</meta>'
             
+            # Remove badly spelled "Originaltittel: " prefix from dc:title.original
+            if normarc_line_property == "dc:title.original":
+                normarc_line = re.sub(r">Or[^:;]*[:;] *", ">", normarc_line)
+            if marc21_line_property == "dc:title.original":
+                marc21_line = re.sub(r">Or[^:;]*[:;] *", ">", marc21_line)
+            
             # if "*" in normarc_line_comment and normarc_line_comment.split("*")[1][:3] in ["600", "650"]:
             #     normarc_line = normarc_line.lower()
             # if "*" in marc21_line_comment and marc21_line_comment.split("*")[1][:3] in ["600", "650"]:
