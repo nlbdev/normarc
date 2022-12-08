@@ -1062,6 +1062,12 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property == "sortingKey":
                 marc21_line = re.sub(r">([^<,]*?) *, *([^<]*?)<", r">\2 \1<", marc21_line)
             
+            # Ignore difference in ' ; ' vs ' : ' in dc:title.subTitle
+            if normarc_line_property == "dc:title.subTitle":
+                normarc_line = normarc_line.replace(" : ", " ; ")
+            if marc21_line_property == "dc:title.subTitle":
+                marc21_line = marc21_line.replace(" : ", " ; ")
+            
             # Handle known differences in the authority registry
             authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix"]
             if normarc_line_property in authority_registry_fields:
