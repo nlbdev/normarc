@@ -1357,11 +1357,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
                 continue
             
-            # # Part title *740$a is not converted to MARC21
-            # if "*740$a" in normarc_line_comment:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #40): {normarc_line}")
-            #     continue
-            # 
+            # Part title *740$a is not converted to MARC21 (this is ok according to the librarians)
+            if "*740$a" in normarc_line_comment and normarc_line_property == "dc:title.part":
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #40): {normarc_line}")
+                continue
+
             # if identifier in ["181450"]:
             #     # record has change since conversion, ignore for now
             #     if "*240$a" in normarc_line_comment:
