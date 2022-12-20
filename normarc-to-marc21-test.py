@@ -1367,20 +1367,19 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             #     if "*240$a" in normarc_line_comment:
             #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #41): {normarc_line}")
             #         continue
-            # 
-            # if identifier in ["104518", "104539", "202191", "202244", "209864", "210485", "212559", "213453", "213772", "218103",
-            #                   "223879", "225747", "228024", "228751", "229874", "280048", "280473", "281063", "283629", "283635",
-            #                   "283647", "359216", "361878", "363424", "371346", "371684", "372323", "372453", "372514", "380048",
-            #                   "380247", "381063", "383393", "560679", "580048", "580048", "580247", "682920", "683084", "683393",
-            #                   "900044"]:
-            #     # Ignore conversion of parallel title. It looks correct in Marc 21, but it's not clear how it was converted.
-            #     if "*245" in normarc_line_comment or "*246" in normarc_line_comment or "*574" in normarc_line_comment:
-            #         normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #42): {normarc_line}")
-            #         continue
-            #     if "*245" in marc21_line_comment or "*246" in marc21_line_comment:
-            #         marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #43): {marc21_line}")
-            #         continue
-            # 
+            
+            if identifier in ["106494", "116583", "184682", "212559", "213453", "218103", "225747", "228024", "229874", "280048",
+                              "280156", "281063", "282998", "283629", "283635", "283647", "284720", "300605", "371684", "372323",
+                              "372514", "380048", "380156", "380247", "381063", "382998", "383393", "559383", "580048", "580156",
+                              "582998", "601757", "610424", "612493", "622385", "625683", "683393", "852238", "852239", "852240"]:
+                # Ignore conversion of parallel title. It looks correct in Marc 21, but it's not clear how it was converted.
+                if "*245" in normarc_line_comment or "*246" in normarc_line_comment or "*574" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #42): {normarc_line}")
+                    continue
+                if "*245" in marc21_line_comment or "*246" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #43): {marc21_line}")
+                    continue
+            
             # if identifier in ["181450", "213312", "381450", "581450"]:
             #     # Problem with conversion of original title, should be fixed in next conversion
             #     if "*574" in normarc_line_comment:
