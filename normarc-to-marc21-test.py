@@ -1361,7 +1361,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*740$a" in normarc_line_comment and normarc_line_property == "dc:title.part":
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #40): {normarc_line}")
                 continue
-
+            
             # if identifier in ["181450"]:
             #     # record has change since conversion, ignore for now
             #     if "*240$a" in normarc_line_comment:
@@ -1559,6 +1559,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             # *246$a is copied into *245$b. For instance: 104518 and 104539
             if marc21_line_property == "dc:title.subTitle" and normarc_line_property != "dc:title.subTitle" and "dc:title.parallel" in marc21[prev_marc21_linenum]:
                 marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #70): {marc21_line}")
+                continue
+
+            # *650$z is moved to *650$x for some reason (example: 180806)
+            if "*650$z" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #71): {normarc_line}")
                 continue
             
             
