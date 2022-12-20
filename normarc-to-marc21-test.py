@@ -1569,6 +1569,15 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if "*650$z" in normarc_line_comment:
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #71): {normarc_line}")
                 continue
+
+            # ignore *710 for this record. We'll check it after conversion (example: 180806)
+            if identifier in ["212755"]:
+                if "*710" in normarc_line_comment:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #72): {normarc_line}")
+                    continue
+                if "*710" in marc21_line_comment:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #72): {marc21_line}")
+                    continue
             
             
             if normarc_line != marc21_line:
