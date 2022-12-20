@@ -1730,6 +1730,11 @@ def handle(identifier, detailed_comparison=False):
                 print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. {len(identifiers) - successful - failed} remaining. Last: {identifier})")
             return True
 
+remaining_file = os.path.join(target, "remaining.txt")
+remaining_lines = [f"{identifier}\n" for identifier in identifiers if identifier not in already_handled and identifier not in skip_records]
+with open(remaining_file, "w") as f:
+    f.writelines(remaining_lines)
+
 detailed_comparison = "--detailed-comparison" in sys.argv
 for identifier in identifiers:
     if identifier in already_handled:
