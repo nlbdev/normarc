@@ -1352,11 +1352,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #38.6): {normarc_line}")
                 continue
             
-            # # Nationality in *800$j is not converted to MARC21
-            # if "*800$j" in normarc_line_comment:
-            #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
-            #     continue
-            # 
+            # Nationality in *800$j is not converted to MARC21 (example: 123066)
+            if "*800$j" in normarc_line_comment:
+                normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #39): {normarc_line}")
+                continue
+            
             # # Part title *740$a is not converted to MARC21
             # if "*740$a" in normarc_line_comment:
             #     normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #40): {normarc_line}")
