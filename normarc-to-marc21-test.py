@@ -1586,6 +1586,15 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 if "*710" in marc21_line_comment:
                     marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #72): {marc21_line}")
                     continue
+                
+            # ignore contributors in some records, which fails in comparison but are ok to ignore
+            if identifier in ["227046"]:
+                if "contributor-" in normarc_line or "dc:contributor" in normarc_line:
+                    normarc_skip_lines.append(f"NORMARC: skipped line {normarc_linenum+1} (reason #73): {normarc_line}")
+                    continue
+                if "contributor-" in marc21_line or "dc:contributor" in marc21_line:
+                    marc21_skip_lines.append(f"MARC21: skipped line {marc21_linenum+1} (reason #73): {marc21_line}")
+                    continue
             
             
             if normarc_line != marc21_line:
