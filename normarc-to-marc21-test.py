@@ -1074,8 +1074,8 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
             if marc21_line_property == "dc:title.subTitle":
                 marc21_line = marc21_line.replace(" : ", " ; ")
             
-            # Handle known differences in the authority registry
-            authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix", "dc:contributor", "dc:contributor."]
+            # Handle known differences in the authority registry and similar fields
+            authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix", "dc:contributor", "dc:contributor.", "dc:title.series"]
             normarc_authority_registry_field_match = [True for field in authority_registry_fields if field == normarc_line_property or field.endswith(".") and normarc_line_property.startswith(field)]
             marc21_authority_registry_field_match = [True for field in authority_registry_fields if field == marc21_line_property or field.endswith(".") and marc21_line_property.startswith(field)]
             

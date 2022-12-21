@@ -1598,8 +1598,8 @@
     
     <xsl:function name="nlb:serialized-series" as="xs:string">
         <xsl:param name="datafield-490-or-830" as="element()"/>
-        <xsl:variable name="a" select="string-join($datafield-490-or-830/*:subfield[@code='a']/replace(text(), '\(([^)]*)\)', '/$1'), '.')" as="xs:string"/>
-        <xsl:variable name="p" select="string-join($datafield-490-or-830/*:subfield[@code='p']/text(),'.')" as="xs:string"/>
+        <xsl:variable name="a" select="string-join($datafield-490-or-830/*:subfield[@code='a']/replace(upper-case(normalize-space(text())), '\(([^)]*)\)', '/$1'), '.')" as="xs:string"/>
+        <xsl:variable name="p" select="string-join($datafield-490-or-830/*:subfield[@code='p']/upper-case(normalize-space(text())),'.')" as="xs:string"/>
         <xsl:variable name="ap">
             <xsl:choose>
                 <xsl:when test="$p = ''">
@@ -1614,7 +1614,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="values" select="$datafield-490-or-830/*:subfield[not(@code=('a','n','p','v','_'))]" as="element()*"/>
-        <xsl:variable name="values" select="($ap, $values/text())" as="xs:string*"/>
+        <xsl:variable name="values" select="($ap, $values/upper-case(normalize-space(text())))" as="xs:string*"/>
         <xsl:value-of select="string-join($values, '.')"/>
     </xsl:function>
 
