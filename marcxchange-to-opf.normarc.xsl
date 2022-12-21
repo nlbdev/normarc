@@ -2150,7 +2150,7 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('newspaper')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:if>
 
-            <xsl:for-each select="*:subfield[@code='0']">
+            <xsl:for-each select="*:subfield[@code=('0','x')]">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$subject-id"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='1']">
