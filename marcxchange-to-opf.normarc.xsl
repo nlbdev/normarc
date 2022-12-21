@@ -2431,6 +2431,18 @@
         <xsl:value-of select="concat($actor-role, $actor-name, $actor-bibliofil-id)"/>
     </xsl:function>
     
+    <xsl:function name="nlb:sortable-string" as="xs:string">
+        <xsl:param name="value" as="xs:string"/>
+        <xsl:value-of select="
+            replace(replace(replace(replace(
+            upper-case($value),
+            'Ö', 'OE'),
+            'Æ', 'AE'),
+            'Ø', 'OE'),
+            'Å', 'AA')
+        "/>
+    </xsl:function>
+    
     <xsl:template match="*:datafield[@tag='700']">
         <xsl:variable name="debug-context" select="."/>
         <!-- when we find the first *700 -->
@@ -2447,7 +2459,7 @@
                 </xsl:variable>
                 <xsl:variable name="datafields-without-role-subfield" select="../*:datafield[@tag='700' and not(*:subfield = $role-subfields)]" as="element()*"/>
                 <xsl:for-each select="$role-subfields | $datafields-without-role-subfield">
-                    <xsl:sort select="string-join(((.|..)/*:subfield[@code='a']/text(), (.|..)/*:subfield[@code='d']/text(), (.|..)/*:subfield[@code='e']/text()), '')"/>
+                    <xsl:sort select="string-join(((.|..)/*:subfield[@code='a']/nlb:sortable-string(text()), (.|..)/*:subfield[@code='d']/text(), (.|..)/*:subfield[@code='e']/text()), '')"/>
                     <xsl:call-template name="datafield700">
                         <xsl:with-param name="position" select="position()"/>
                     </xsl:call-template>

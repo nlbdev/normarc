@@ -1075,8 +1075,11 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = marc21_line.replace(" : ", " ; ")
             
             # Handle known differences in the authority registry
-            authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix"]
-            if normarc_line_property in authority_registry_fields:
+            authority_registry_fields = ["sortingKey", "dc:creator", "dc:subject", "dc:subject.keyword", "honorificPrefix", "dc:contributor", "dc:contributor."]
+            normarc_authority_registry_field_match = [True for field in authority_registry_fields if field == normarc_line_property or field.endswith(".") and normarc_line_property.startswith(field)]
+            marc21_authority_registry_field_match = [True for field in authority_registry_fields if field == marc21_line_property or field.endswith(".") and marc21_line_property.startswith(field)]
+            
+            if normarc_authority_registry_field_match:
                 [prefix, suffix] = normarc_line.split("</", 1)
                 [prefix, name] = prefix.split(">", 1)
                 prefix = prefix + ">"
@@ -1094,7 +1097,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 name = name.replace("-", " ")
                 name = remove_accents(name)
                 normarc_line = prefix + name + suffix
-            if marc21_line_property in authority_registry_fields:
+            if marc21_authority_registry_field_match:
                 [prefix, suffix] = marc21_line.split("</", 1)
                 [prefix, name] = prefix.split(">", 1)
                 prefix = prefix + ">"
@@ -1114,7 +1117,7 @@ def compare(identifier, normarc_path, marc21_path, normarc_source_path, marc21_s
                 marc21_line = prefix + name + suffix
             
             # Handle unknown differences in the authority registry using fuzzy string matching
-            if marc21_line_property in authority_registry_fields and marc21_line_property == normarc_line_property:
+            if marc21_authority_registry_field_match and marc21_line_property == normarc_line_property:
                 normarc_name = normarc_line.split("</", 1)[0].split(">", 1)[1]
                 [marc21_prefix, marc21_suffix] = marc21_line.split("</", 1)
                 [marc21_prefix, marc21_name] = marc21_prefix.split(">", 1)
