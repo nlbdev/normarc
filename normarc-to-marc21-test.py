@@ -805,8 +805,9 @@ records = os.path.join(target, "records")
 normarc_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.normarc.xsl")
 marc21_xslt_path = os.path.join(current_directory, "marcxchange-to-opf.xsl")
 
-already_handled_file = os.path.join(target, "already-handled.txt")
+handled_in_this_run = []
 already_handled = []
+already_handled_file = os.path.join(target, "already-handled.txt")
 if os.path.isfile(already_handled_file):
     with open(already_handled_file) as f:
         already_handled = f.readlines()
@@ -817,10 +818,12 @@ def mark_as_handled(identifier):
     global lock
     global already_handled_file
     global already_handled
+    global handled_in_this_run
     with lock:
         with open(already_handled_file, "a") as f:
             f.write(identifier + "\n")
         already_handled.append(identifier)
+        handled_in_this_run.append(identifier)
 
 
 def writefile(outdir, identifier, lines, source_lines):
@@ -1685,7 +1688,6 @@ os.makedirs(marc21_target_dir, exist_ok=True)
 
 successful = len(already_handled)
 failed = 0
-handled_in_this_run = 0
 error_has_occured = False
 
 def handle(identifier, detailed_comparison=False):
@@ -1743,40 +1745,28 @@ def handle(identifier, detailed_comparison=False):
                 print(f"{(successful + failed)} of {len(identifiers)} processed. {successful} ({int(10000 * successful / len(identifiers)) / 100}%) successful and {failed} ({int(10000 * failed / len(identifiers)) / 100}%) failed so far. {len(identifiers) - successful - failed} remaining. Last: {identifier})")
             return True
 
-remaining_file = os.path.join(target, "remaining.txt")
-remaining_lines = [f"{identifier}\n" for identifier in identifiers if identifier not in already_handled and identifier not in skip_records]
-with open(remaining_file, "w") as f:
-    f.writelines(remaining_lines)
+remaining = list(sorted(list(set(identifiers) - set(already_handled) - set(skip_records))))
+with open(os.path.join(target, "remaining.txt"), "w") as f:
+    f.writelines([f"{identifier}\n" for identifier in remaining])
 
 detailed_comparison = "--detailed-comparison" in sys.argv
-for identifier in identifiers:
-    if identifier in already_handled:
-        continue
-
-    if identifier in skip_records:
-        continue
-
+for identifier in remaining:
     success = False
     success = handle(identifier, detailed_comparison=detailed_comparison)
     
-    if success:
-        handled_in_this_run += 1
-    elif exit_on_error:
+    if not success and exit_on_error:
         sys.exit(1)
     
-    if handled_in_this_run >= 3:
+    if len(handled_in_this_run) >= 3:
         break
-    
-if handled_in_this_run >= 3:
+
+remaining = [identifier for identifier in identifiers if identifier not in handled_in_this_run]
+if len(handled_in_this_run) >= 3:
     print("Processed three records synchronously, now switching to parallel processing")
     thread_pool = []
-    for identifier in identifiers:
+    for identifier in remaining:
         if error_has_occured and exit_on_error:
             sys.exit(1)
-        if identifier in already_handled:
-            continue
-        if identifier in skip_records:
-            continue
         while len(thread_pool) >= 10:
             if error_has_occured and exit_on_error:
                 sys.exit(1)
