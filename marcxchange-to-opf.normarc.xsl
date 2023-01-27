@@ -370,8 +370,8 @@
         <xsl:param name="property" as="xs:string" select="nlb:prefixed-property('bibliofil-id')"/>
         <xsl:param name="refines" as="xs:string?" select="()"/>
         
-        <xsl:variable name="subfield" select="$context/*:subfield[@code='_']"/>
-        <xsl:variable name="subfield" select="if (count($subfield) = 0) then $context/*:subfield[@code='3'] else $subfield"/>
+        <xsl:variable name="subfield" select="$context/*:subfield[@code='_' and matches(., '^\d+$')]"/>
+        <xsl:variable name="subfield" select="if (count($subfield) = 0) then $context/*:subfield[@code='3' and matches(., '^\d+$')] else $subfield"/>
         <xsl:variable name="subfield" select="$subfield[1]"/>
         
         <xsl:for-each select="$subfield">
