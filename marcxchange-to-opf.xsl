@@ -370,7 +370,7 @@
         <xsl:param name="property" as="xs:string" select="nlb:prefixed-property('bibliofil-id')"/>
         <xsl:param name="refines" as="xs:string?" select="()"/>
         
-        <xsl:variable name="subfield" select="($context/*:subfield[@code='_'], $context[@tag='260']/*:subfield[@code='3'])[1]"/>
+        <xsl:variable name="subfield" select="($context/*:subfield[@code='_'], $context/*:subfield[@code='3'])[1]"/>
         
         <xsl:for-each select="$subfield">
             <xsl:call-template name="meta">
@@ -2270,7 +2270,7 @@
 
         <xsl:if test="*:subfield[@code='a']">
             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:subject.keyword'"/><xsl:with-param name="value" select="*:subfield[@code='a']/text()"/><xsl:with-param name="id" select="$subject-id"/></xsl:call-template>
-
+            
             <xsl:call-template name="bibliofil-id">
                 <xsl:with-param name="context" select="."/>
                 <xsl:with-param name="refines" select="$subject-id"/>
