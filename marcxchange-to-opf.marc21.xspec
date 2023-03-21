@@ -614,6 +614,27 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="Regresjonstest: tolking av nasjonalitet for bidragsyter #2">
+        <x:context>
+            <marcxchange:datafield tag="100" ind1="1" ind2=" ">
+                <marcxchange:subfield code="a">Hunter, Erin</marcxchange:subfield>
+                <marcxchange:subfield code="6">(NO-LaBS)627958-1</marcxchange:subfield>
+                <marcxchange:subfield code="_">23242700</marcxchange:subfield>
+            </marcxchange:datafield>
+            <marcxchange:datafield tag="386" ind1=" " ind2=" ">
+                <marcxchange:subfield code="m">Nasjonalitet/regional gruppe</marcxchange:subfield>
+                <marcxchange:subfield code="b">eng.</marcxchange:subfield>
+                <marcxchange:subfield code="0">(NO-LaBS)627958-1</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <dc:creator id="creator-1">Hunter, Erin</dc:creator>
+            <meta property="nationality" refines="#creator-1">gb</meta>
+            <meta property="bibliofil-id" refines="#creator-1">23242700</meta>
+        </x:expect>
+    </x:scenario>
+
     <x:scenario label="Forfatter(e)">
         <x:context xml:space="preserve">
             <marcxchange:record>
