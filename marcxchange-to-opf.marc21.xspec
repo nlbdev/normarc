@@ -673,5 +673,18 @@
             <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="Regression test for literary form" focus="">
+        <x:context>
+            <datafield tag="019" ind1="0" ind2="0">
+                <subfield code="d">D</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:type.literaryForm" id="...">Dikt</meta>
+            <meta property="normarc-id" refines="...">D</meta>
+        </x:expect>
+    </x:scenario>
 
 </x:description>
