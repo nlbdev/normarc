@@ -574,5 +574,38 @@
             <meta property="sortingKey">Ringenes herre</meta>
         </x:expect>
     </x:scenario>
-    
+
+    <x:scenario label="Forfatter(e)">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="100" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Dalai Lama</marcxchange:subfield>
+                    <marcxchange:subfield code="q">Hans Hellighet Dalai Lama</marcxchange:subfield>
+                    <marcxchange:subfield code="b">XIV</marcxchange:subfield>
+                    <marcxchange:subfield code="d">1935-</marcxchange:subfield>
+                    <marcxchange:subfield code="j">tib.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">18927000</marcxchange:subfield>
+                </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="110" ind1="0" ind2="0">
+                    <marcxchange:subfield code="a">NLB</marcxchange:subfield>
+                    <marcxchange:subfield code="q">Norsk Lyd- og blindeskriftbibliotek</marcxchange:subfield>
+                    <marcxchange:subfield code="_">18158500</marcxchange:subfield>
+                </marcxchange:datafield>
+                
+                <marcxchange:datafield tag="245" ind1=" " ind2=" "/>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:creator id="creator-1">Hans Hellighet Dalai Lama</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-1">18927000</meta>
+            <meta property="birthDate" refines="#creator-1">1935</meta>
+            <meta property="honorificSuffix" refines="#creator-1">XIV</meta>
+            <meta property="nationality" refines="#creator-1">tib</meta>
+            <dc:creator id="creator-2">NLB</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
+        </x:expect>
+    </x:scenario>
+
 </x:description>
