@@ -1121,40 +1121,40 @@
                     <xsl:choose>
                         <xsl:when test=".='R'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Roman'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='N'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Novelle'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='D'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Dikt'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='S'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Skuespill'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='T'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Tegneserie'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='A'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Antologi'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='L'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Lærebok'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('educationalUse')"/><xsl:with-param name="value" select="'true'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='P'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Pekebok'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='B'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Billedbok'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('normarc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
@@ -3485,7 +3485,7 @@
             <xsl:when test="not($prefix-everything)">
                 <xsl:value-of select="$property"/>
             </xsl:when>
-            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','normarc-id','pseudonym','epub-nr','sortingKey','exclude-from-recommendations')">
+            <xsl:when test="$property = ('series.issn','series.position','periodical','periodicity','magazine','newspaper','watermark','external-production','websok.url','websok.type','bibliofil-id','bibliofil-id.reference','marc-id','pseudonym','epub-nr','sortingKey','exclude-from-recommendations')">
                 <xsl:value-of select="concat('nlbbib:', $property)"/>
             </xsl:when>
             <xsl:otherwise>
