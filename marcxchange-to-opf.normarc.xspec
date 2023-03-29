@@ -607,5 +607,2812 @@
             <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #1)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB| -->
+            <!-- 1736 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #2)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY| -->
+            <!-- 1088 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #3)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY| -->
+            <!-- 975 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #4)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: DD/MM/YYYY| -->
+            <!-- 491 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #5)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:DD.MM.YYYY| -->
+            <!-- 252 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #6)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: DD.MM.YYYY| -->
+            <!-- 182 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #7)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig DD/MM/YYYY| -->
+            <!-- 153 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #8)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:| -->
+            <!-- 144 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #9)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:DD/MM/YYYY| -->
+            <!-- 112 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #10)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! Ferdig DD/MM/YYYY| -->
+            <!-- 61 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #11)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: Ferdig YYYY| -->
+            <!-- 58 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: Ferdig 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #12)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig DD/MM/YYYY| -->
+            <!-- 54 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #13)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT| -->
+            <!-- 53 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #14)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:DD/MM/YYYY| -->
+            <!-- 36 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #15)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT : Ferdig DD/MM/YYYY| -->
+            <!-- 31 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT : Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #16)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: Ferdig DD/MM/YYYY| -->
+            <!-- 27 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #17)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT.| -->
+            <!-- 24 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT.</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #18)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: ferdig DD/MM/YYYY| -->
+            <!-- 21 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #19)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig: DD/MM/YYYY| -->
+            <!-- 19 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #20)">
+        <x:context>
+            <!-- PARSEME:INNKJøPT FRA RNIB| -->
+            <!-- 18 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJøPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #21)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig D/MM/YYYY| -->
+            <!-- 11 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 8/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #22)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:| -->
+            <!-- 10 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #23)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT!| -->
+            <!-- 10 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT!</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #24)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig: DD/MM/YYYY| -->
+            <!-- 6 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #25)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD.MM.YYYY| -->
+            <!-- 6 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #26)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB DD/MM/YYYY| -->
+            <!-- 5 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #27)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig:DD/MM/YYYY| -->
+            <!-- 5 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #28)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Fedig DD/MM/YYYY| -->
+            <!-- 5 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Fedig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #29)">
+        <x:context>
+            <!-- PARSEME:INTERN BESKJED:INNKJØPT FRA RNIB: DD/MM/YYYY| -->
+            <!-- 4 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INTERN BESKJED:INNKJØPT FRA RNIB: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #30)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig : DD/MM/YYYY| -->
+            <!-- 4 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig : 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #31)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. ferdig DD/MM/YYYY| -->
+            <!-- 3 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #32)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:  Ferdig DD/MM/YYYY| -->
+            <!-- 3 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:  Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #33)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET FRA TIGAR| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET FRA TIGAR</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #34)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB : DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB : 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #35)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: 28.02/.2017| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08.03/.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #36)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD.MM.YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #37)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT.Ferdig DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT.Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #38)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig: DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #39)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT Ferdig DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #40)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT :Ferdig DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT :Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #41)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/23</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #42)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! DD/MM/YYYY| -->
+            <!-- 2 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #43)">
+        <x:context>
+            <!-- PARSEME:INTERN BESKJED:INNKJØPT. Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INTERN BESKJED:INNKJØPT. Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #44)">
+        <x:context>
+            <!-- PARSEME:INNKJ_PT FRA RNIB| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJ_PT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #45)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT RNIB| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #46)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ny wips DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ny wips 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #47)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:INNKJØPT: Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #48)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Fredig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Fredig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #49)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #50)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: ferdig YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: ferdig 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #51)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB. Ferdig YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB. Ferdig 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #52)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB Ferdig YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB Ferdig 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #53)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #54)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #55)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: Ferdig DD/MM/YY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: Ferdig 08/03/23</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #56)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: Ferdig| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: Ferdig</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #57)">
+        <x:context>
+            <!-- PARSEME:INNKJØPt FRA RNIB| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPt FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #58)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT fra Dedicon| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT fra Dedicon</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">Dedicon</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #59)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: ferig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: ferig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #60)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig D/M/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 8/3/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #61)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig D/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig 8/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #62)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: ferdig DD/M/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: ferdig 08/3/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #63)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig DD/MM/YYYY (OBS! Dårlig lyd fra forlaget)| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 08/03/2023 (OBS! Dårlig lyd fra forlaget)</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #64)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY8| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/20238</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #65)">
+        <x:context>
+            <!-- PARSEME:INNKJøPT! Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJøPT! Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #66)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #67)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig:DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #68)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig  DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig  08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #69)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig DD.MM.YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #70)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! Ferdig DD.MM.YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! Ferdig 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #71)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT : Ferdig : DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT : Ferdig : 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #72)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT !Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT !Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #73)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT ! Ferdig DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT ! Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #74)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT Ferdig: DD/MM/YY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT Ferdig: 08/03/23</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <!--
+    Date is too badly formatted. We won't handle this.
+    <x:scenario label="handle books from external libraries (case #75)">
+        <x:context>
+            <!-\- PARSEME:INNKJØPT : Ferdig 31705/2016| -\->
+            <!-\- 1 occurences -\->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT : Ferdig 31705/2016</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    -->
+    
+    <!--
+    Date is too badly formatted. We won't handle this.
+    <x:scenario label="handle books from external libraries (case #76)">
+        <x:context>
+            <!-\- PARSEME:INNKJØPT: Ferdig:18/010/2017| -\->
+            <!-\- 1 occurences -\->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig:18/010/2017</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    -->
+    
+    <x:scenario label="handle books from external libraries (case #77)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig 10/05/201| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 10/05/201</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #78)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Feilrettet nov. YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Feilrettet nov. 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #79)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:DD.MM.YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #80)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #81)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #82)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: 9 t. 53 min.| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 9 t. 53 min.</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #83)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:$zh$25$25| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:$zh$25$25</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #84)">
+        <x:context>
+            <!-- PARSEME:INNKJØP: DD/MM/YYYY| -->
+            <!-- 1 occurences -->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØP: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <!--
+    Too badly formatted. We won't handle this.
+    <x:scenario label="handle books from external libraries (case #85)">
+        <x:context>
+            <!-\- PARSEME:INNINNKJØPT FRA RNIB: DD/MM/YYYY| -\->
+            <!-\- 1 occurences -\->
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNINNKJØPT FRA RNIB: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    -->
+    
+    <x:scenario label="handle books from external libraries (case #86)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET:DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 116 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #87)">
+        <x:context>
+            <!-- PARSEME:NEDLASTED:DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 91 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTED:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #88)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Musikkinnslag -->
+            <!-- 71 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #89)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET:|Accessible Books Consortium -->
+            <!-- 41 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #90)">
+        <x:context>
+            <!-- PARSEME:NEDLASTED: DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 23 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTED: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #91)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET: DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 21 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #92)">
+        <x:context>
+            <!-- PARSEME:NEDLASTED:|Accessible Books Consortium -->
+            <!-- 19 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTED:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #93)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Lettleste bøker -->
+            <!-- 18 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #94)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT|Musikkinnslag -->
+            <!-- 11 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #95)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|Musikkinnslag -->
+            <!-- 11 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #96)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT|Lettleste bøker -->
+            <!-- 8 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #97)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|TIGAR -->
+            <!-- 8 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #98)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY|Følebøker -->
+            <!-- 8 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Følebøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #99)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|Lettleste bøker -->
+            <!-- 5 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #100)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:|Lettleste bøker -->
+            <!-- 5 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #101)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Accessible Books Consortium -->
+            <!-- 5 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #102)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT fra Dedicon|TIGAR -->
+            <!-- 5 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT fra Dedicon</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">Dedicon</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #103)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET FRA TIGAR/ABC|TIGAR -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET FRA TIGAR/ABC</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #104)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|XHTML -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">XHTML</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #105)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT.|Lettlest -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettlest</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT.</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #106)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Åpen linjeavstand -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Åpen linjeavstand</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:format.linespacing">double</meta>
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #107)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT : Ferdig DD/MM/YYYY|Musikkinnslag -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT : Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #108)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! Ferdig DD/MM/YYYY|Lettleste bøker -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #109)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Følebøker -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Følebøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #110)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY|TIGAR -->
+            <!-- 4 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #111)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET FRA ABC|TIGAR -->
+            <!-- 3 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET FRA ABC</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #112)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|XHTML -->
+            <!-- 3 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">XHTML</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #113)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 3 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #114)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig DD/MM/YYYY|Lettleste bøker -->
+            <!-- 3 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #115)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:DD/MM/YYYY|Lettleste bøker -->
+            <!-- 3 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #116)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|Åpen linjeavstand -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Åpen linjeavstand</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:format.linespacing">double</meta>
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #117)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT.|Musikkinnslag -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT.</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #118)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT!|Musikkinnslag -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT!</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #119)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT.|Lettleste bøker -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT.</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #120)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Lettleste bøker -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #121)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Taktile bøker -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Taktile bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #122)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig DD/MM/YYYY|Musikkinnslag -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #123)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT! Ferdig DD/MM/YYYY|Musikkinnslag -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT! Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #124)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig DD/MM/YYYY|Lettleste bøker -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #125)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY|Musikkinnslag -->
+            <!-- 2 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #126)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET FRA TIGAR|TIGAR -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET FRA TIGAR</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #127)">
+        <x:context>
+            <!-- PARSEME:NEDLASTET FRA ABC/TIGAR|TIGAR -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTET FRA ABC/TIGAR</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">TIGAR</meta>
+            <meta property="external-production">TIGAR</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #128)">
+        <x:context>
+            <!-- PARSEME:NEDLASTED: D/MM/YYYY|Accessible Books Consortium -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">NEDLASTED: 8/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">DOWNLOADED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #129)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: YYYY|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #130)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT|WORD -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">WORD</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #131)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT|Skriveleir for synshemmet ungdom -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Skriveleir for synshemmet ungdom</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #132)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|Skriveleir for synshemmet ungdom -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Skriveleir for synshemmet ungdom</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #133)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:|Lydeffekter -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lydeffekter</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #134)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT!|Lettleste bøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT!</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #135)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Vg3 -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Vg3</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #136)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #137)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #138)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Lettlest -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettlest</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #139)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB|Følebøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Følebøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #140)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: DD/MM/YYYY|Åpen linjeavstand -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Åpen linjeavstand</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:format.linespacing">double</meta>
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #141)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: DD.MM.YYYY|XHTML -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">XHTML</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #142)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB:DD.MM.YYYY|Accessible Books Consortium -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB:08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #143)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA RNIB: DD.MM.YYYY|Accessible Books Consortium -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA RNIB: 08.03.2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">RNIB</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">RNIB</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #144)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT FRA Dedicon|TIGAR -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">TIGAR</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT FRA Dedicon</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">Dedicon</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #145)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig YYYY|Lettleste bøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-01-01</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #146)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Åpen linjeavstand$9nob$2Bokbasen AS -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Åpen linjeavstand$9nob$2Bokbasen AS</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #147)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Skriveleir for synshemmet ungdom -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Skriveleir for synshemmet ungdom</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #148)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. Ferdig DD/MM/YYYY|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #149)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT Ferdig DD/MM/YYYY|Lettleste bøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #150)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Lettlest -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettlest</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #151)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:Ferdig DD/MM/YYYY|Fulltekst, innlest, talesyntese -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Fulltekst, innlest, talesyntese</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #152)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|DD/MM/YYYY -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">08/03/2023</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #153)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: Ferdig DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #154)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY|Åpen linjeavstand -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Åpen linjeavstand</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:format.linespacing">double</meta>
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #155)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:DD/MM/YYYY|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #156)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT : DD/MM/YYYY|Musikkinnslag -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT : 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #157)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT: DD/MM/YYYY|Lettleste bøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #158)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT. DD/MM/YYYY|Lettleste bøker -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Lettleste bøker</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT. 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">WIPS</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="handle books from external libraries (case #159)">
+        <x:context>
+            <!-- PARSEME:INNKJØPT:DD/MM/YYYY|Accessible Books Consortium -->
+            <!-- 1 occurences -->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Accessible Books Consortium</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT:08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-type">PURCHASED</meta>
+            <meta property="external-organization">ABC</meta>
+            <meta property="external-date">2023-03-08</meta>
+            <meta property="external-production">ABC</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <!--
+    Badly formatted, we won't handle this.
+    <x:scenario label="handle books from external libraries (case #160)">
+        <x:context>
+            <!-\- PARSEME:598 : INNKJØPT: Ferdig DD/MM/YYYY|Musikkinnslag -\->
+            <!-\- 1 occurences -\->
+            <datafield tag="594" ind1=" " ind2=" ">
+                <subfield code="a">Musikkinnslag</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">598 : INNKJØPT: Ferdig 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="external-date">2023-03-08</meta>  
+        </x:expect>
+    </x:scenario>
+    -->
 
 </x:description>

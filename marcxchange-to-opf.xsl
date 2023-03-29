@@ -446,7 +446,7 @@
             <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.registered'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
 
             <xsl:variable name="available" as="element()*">
-                <xsl:apply-templates select="(../*:datafield[@tag=('592','598')])"/>
+                <xsl:apply-templates select="(../*:datafield[@tag=('592')])"/>
             </xsl:variable>
             <xsl:if test="count($available[@property='dc:date.available']) = 0 and matches($year,'^19..$')">
                 <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
@@ -1946,33 +1946,38 @@
 
     <xsl:template match="*:datafield[@tag='598']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:choose>
-                <xsl:when test="contains(text(),'RNIB')">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'RNIB'"/></xsl:call-template>
-                </xsl:when>
-                <xsl:when test="contains(text(),'TIGAR')">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'TIGAR'"/></xsl:call-template>
-                </xsl:when>
-                <xsl:when test="contains(text(),'INNKJØPT')">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'WIPS'"/></xsl:call-template>
-                </xsl:when>
-                <xsl:when test="contains(text(),'NEDLASTET')">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="'ABC'"/></xsl:call-template>
-                </xsl:when>
-            </xsl:choose>
+            <xsl:variable name="text" select="normalize-space(replace(replace(text(), '^INTERN BESKJED:', ''), 'Ferdig', ' ', 'i'))" as="xs:string"/>
+            <xsl:variable name="text594" select="(../../*[@tag='594']/*[@code='a']/text())[1]" as="xs:string?"/>
+            <xsl:variable name="type" select="if (matches($text, '^INNKJ.PT?!?.*', 'i')) then 'PURCHASED' else if (matches($text, '^NEDLASTE[DT].*', 'i')) then 'DOWNLOADED' else ()" as="xs:string?"/>
+            <xsl:variable name="organization" select="if (matches($text, '^(INNKJ.PT?!?|NEDLASTE[DT]?)(( FRA)? ([\w].*?))(:.*|$)', 'i')) then normalize-space(replace(replace($text, '^(INNKJ.PT?!?|NEDLASTE[DT]?)(( FRA)? ([\w].*?))(:.*|$)', '$4', 'i'), ' \d.*', '')) else ()" as="xs:string?"/>
+            <xsl:variable name="organization" select="if (matches($organization, '^[\d./]+$')) then () else $organization" as="xs:string?"/>
+            <xsl:variable name="organization" select="if ($organization) then replace($organization, '(^[^\w]+|[^\w]+$)', '') else $organization" as="xs:string?"/>
+            <xsl:variable name="organization" select="if (not($organization) and $text594 = ('Accessible Books Consortium', 'TIGAR')) then $text594 else $organization" as="xs:string?"/>
+            <xsl:variable name="organization" select="if ($organization = 'Accessible Books Consortium') then 'ABC' else $organization" as="xs:string?"/>
+            <xsl:variable name="organization" select="if ($organization = ('TIGAR/ABC', 'ABC/TIGAR')) then 'TIGAR' else $organization" as="xs:string?"/>
+            <xsl:variable name="date" select="if (matches($text, '.*\d\d?[\./]+\d\d?[\./]+\d\d(\d\d.*|[^\d].*|$)', 'i')) then replace($text, '.*(\d\d?)[\./]+(\d\d?)[\./]+(\d\d\d\d|\d\d([^\d]|$)).*', '$3-$2-$1', 'i') else ()" as="xs:string?"/>
+            <xsl:variable name="date" select="if ($date) then replace(replace(replace($date,
+                                                                '-(\d)$', '-0$1'),
+                                                                '-(\d)-', '-0$1-'),
+                                                                '^(\d\d)-', '20$1-')
+                                                         else $date"  as="xs:string?"/>
+            <xsl:variable name="date" select="if (not($date) and matches($text, '(^|[^\d])\d\d\d\d([^\d]|$)')) then replace($text, '(^|.*[^\d])(\d\d\d\d)([^\d].*|$)', '$2-01-01') else $date" as="xs:string?"/>
+            <xsl:if test="$type">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-type')"/><xsl:with-param name="value" select="$type"/></xsl:call-template>
+                <xsl:if test="$organization">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-organization')"/><xsl:with-param name="value" select="$organization"/></xsl:call-template>
+                </xsl:if>
+                <xsl:if test="$date">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-date')"/><xsl:with-param name="value" select="$date"/></xsl:call-template>
+                </xsl:if>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/>
+                    <xsl:with-param name="value" select="if ($organization = 'ABC') then 'ABC' else if ($organization = 'RNIB') then 'RNIB' else if ($organization = 'TIGAR') then 'TIGAR' else if ($type = 'PURCHASED') then 'WIPS' else $type"/>
+                </xsl:call-template>
+            </xsl:if>
             
             <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('exclude-from-recommendations')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
-            </xsl:if>
-            
-            <xsl:variable name="tag592">
-                <xsl:apply-templates select="../../*:datafield[@tag='592']"/>
-            </xsl:variable>
-            <xsl:if test="not($tag592/meta[@property='dc:date.available'])">
-                <xsl:variable name="available" select="nlb:parseDate(text())"/>
-                <xsl:if test="$available">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$available"/></xsl:call-template>
-                </xsl:if>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>

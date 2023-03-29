@@ -1934,21 +1934,6 @@
     </metadata></x:expect>
     </x:scenario>
     
-    <x:scenario label="'NEDLASTET' in *598$a">
-        <x:context xml:space="preserve">
-            <marcxchange:record>
-                <marcxchange:datafield tag="598" ind1=" " ind2=" ">
-                    <marcxchange:subfield code="a">NEDLASTET: 22/11/2021</marcxchange:subfield>
-                </marcxchange:datafield>
-            </marcxchange:record>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
-        <meta property="dc:date.available">2021-11-22</meta>
-        <meta property="external-production">ABC</meta>
-    </metadata></x:expect>
-    </x:scenario>
-    
     <x:scenario label="Både $_ og $3">
         <x:context>
             <marcxchange:datafield tag="655" ind1=" " ind2="1">
