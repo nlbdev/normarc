@@ -698,6 +698,24 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="Support Normarc nationality syntax as well">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="100" ind1=" " ind2="0">
+                    <marcxchange:subfield code="a">Dalai Lama</marcxchange:subfield>
+                    <marcxchange:subfield code="j">tib.</marcxchange:subfield>
+                    <marcxchange:subfield code="_">18927000</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*">
+            <dc:creator id="creator-1">Dalai Lama</dc:creator>
+            <meta property="bibliofil-id" refines="#creator-1">18927000</meta>
+            <meta property="nationality" refines="#creator-1">tib</meta>
+        </x:expect>
+    </x:scenario>
+    
     <x:scenario label="test for literary form">
         <x:context>
             <datafield tag="019" ind1="0" ind2="0">

@@ -2769,13 +2769,19 @@
         </xsl:variable>
         
         <!-- parse all nationalities -->
+        <!-- note that we also support the Normarc syntax for nationalities which uses $j. This is a workaround needed to be able to import from the authority registry in our datawarehouse. -->
         <xsl:variable name="nationalities" as="element()*">
-            <xsl:for-each select="$nationalities/*:subfield[@code='b']">
+            <xsl:for-each select="$nationalities/*:subfield[@code='b'] | $context/*:subfield[@code='j']">
                 <xsl:variable name="context" select="."/>
                 <xsl:for-each select="tokenize(replace(text(),'[\.,? ]',''), '-')">
                     <xsl:variable name="nationality" select="nlb:parseNationality(.)"/>
                     <xsl:if test="$nationality != ''">
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/><xsl:with-param name="value" select="$nationality"/><xsl:with-param name="refines" select="$refines"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                        <xsl:call-template name="meta">
+                            <xsl:with-param name="property" select="nlb:prefixed-property('nationality')"/>
+                            <xsl:with-param name="value" select="$nationality"/>
+                            <xsl:with-param name="refines" select="$refines"/>
+                            <xsl:with-param name="context" select="$context"/>
+                        </xsl:call-template>
                     </xsl:if>
                 </xsl:for-each>
             </xsl:for-each>
