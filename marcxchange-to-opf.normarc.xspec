@@ -608,5 +608,21 @@
             <meta property="bibliofil-id" refines="#creator-2">18158500</meta>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="test for dewey number">
+        <x:context>
+            <datafield tag="650" ind1=" " ind2=" ">
+                <subfield code="a">Deweys desimalklassifikasjon</subfield>
+                <subfield code="1">025.431</subfield>
+                <subfield code="_">20254310</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:subject.keyword" id="...">Deweys desimalklassifikasjon</meta>
+            <meta property="dc:subject.dewey" refines="...">025.431</meta>
+            <meta property="bibliofil-id" refines="...">20254310</meta>
+        </x:expect>
+    </x:scenario>
 
 </x:description>
