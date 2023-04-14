@@ -1459,7 +1459,7 @@
         <xsl:variable name="publisher-id" select="concat('publisher-260-',1+count(preceding-sibling::*:datafield[@tag='260']))"/>
         <xsl:variable name="issued" select="(*:subfield[@code='c' and nlb:parseYear(text(), false())])[1]/nlb:parseYear(text(), false())" as="xs:string?"/>
         <xsl:variable name="first-issued" select="min(../*:datafield[@tag='260']/*:subfield[@code='c']/nlb:parseYear(text(), false()))" as="xs:string?"/>
-        <xsl:variable name="first-publisher" select="(../*:datafield[@tag='260' and *:subfield[@code='c']/nlb:parseYear(text(), false()) = $first-issued])[1]"/>
+        <xsl:variable name="first-publisher" select="if ($first-issued) then (../*:datafield[@tag='260' and *:subfield[@code='c']/nlb:parseYear(text(), false()) = $first-issued])[1] else (../*:datafield[@tag='260'])[1]"/>
         <xsl:variable name="primary" select=". intersect $first-publisher"/>
 
         <xsl:if test="*:subfield[@code='b']">
@@ -1958,44 +1958,87 @@
 
     <xsl:template match="*:datafield[@tag='598']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:variable name="text" select="normalize-space(replace(replace(text(), '^INTERN BESKJED:', ''), 'Ferdig', ' ', 'i'))" as="xs:string"/>
-            <xsl:variable name="text594" select="(../../*[@tag='594']/*[@code='a']/text())[1]" as="xs:string?"/>
-            <xsl:variable name="type" select="if (matches($text, '^INNKJ.PT?!?.*', 'i')) then 'PURCHASED' else if (matches($text, '^NEDLASTE[DT].*', 'i')) then 'DOWNLOADED' else ()" as="xs:string?"/>
-            <xsl:variable name="organization" select="if (matches($text, '^(INNKJ.PT?!?|NEDLASTE[DT]?)(( FRA)? ([\w].*?))(:.*|$)', 'i')) then normalize-space(replace(replace($text, '^(INNKJ.PT?!?|NEDLASTE[DT]?)(( FRA)? ([\w].*?))(:.*|$)', '$4', 'i'), ' \d.*', '')) else ()" as="xs:string?"/>
-            <xsl:variable name="organization" select="if (matches($organization, '^[\d./]+$')) then () else $organization" as="xs:string?"/>
-            <xsl:variable name="organization" select="if ($organization) then replace($organization, '(^[^\w]+|[^\w]+$)', '') else $organization" as="xs:string?"/>
-            <xsl:variable name="organization" select="if (not($organization) and $text594 = ('Accessible Books Consortium', 'TIGAR')) then $text594 else $organization" as="xs:string?"/>
-            <xsl:variable name="organization" select="if ($organization = 'Accessible Books Consortium') then 'ABC' else $organization" as="xs:string?"/>
-            <xsl:variable name="organization" select="if ($organization = ('TIGAR/ABC', 'ABC/TIGAR')) then 'TIGAR' else $organization" as="xs:string?"/>
-            <xsl:variable name="date" select="if (matches($text, '.*\d\d?[\./]+\d\d?[\./]+\d\d(\d\d.*|[^\d].*|$)', 'i')) then replace($text, '.*(\d\d?)[\./]+(\d\d?)[\./]+(\d\d\d\d|\d\d([^\d]|$)).*', '$3-$2-$1', 'i') else ()" as="xs:string?"/>
-            <xsl:variable name="date" select="if ($date) then replace(replace(replace($date,
-                '-(\d)$', '-0$1'),
-                '-(\d)-', '-0$1-'),
-                '^(\d\d)-', '20$1-')
-                else $date"  as="xs:string?"/>
-            <xsl:variable name="date" select="if (not($date) and matches($text, '(^|[^\d])\d\d\d\d([^\d]|$)')) then replace($text, '(^|.*[^\d])(\d\d\d\d)([^\d].*|$)', '$2-01-01') else $date" as="xs:string?"/>
-            <xsl:if test="$type">
-                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-type')"/><xsl:with-param name="value" select="$type"/></xsl:call-template>
-                <xsl:if test="$organization">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-organization')"/><xsl:with-param name="value" select="$organization"/></xsl:call-template>
-                </xsl:if>
-                <xsl:if test="$date">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-date')"/><xsl:with-param name="value" select="$date"/></xsl:call-template>
-                </xsl:if>
-                <xsl:call-template name="meta">
-                    <xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/>
-                    <xsl:with-param name="value" select="if ($organization = 'ABC') then 'ABC' else if ($organization = 'RNIB') then 'RNIB' else if ($organization = 'TIGAR') then 'TIGAR' else if ($type = 'PURCHASED') then 'WIPS' else $type"/>
-                </xsl:call-template>
-            </xsl:if>
+            <xsl:call-template name="external-production">
+                <xsl:with-param name="tag598a" select="text()"/>
+                <xsl:with-param name="tag594a" select="(../../*[@tag='594']/*[@code='a']/text())[1]"/>
+                <xsl:with-param name="tag260b" select="(../../*[@tag='260']/*[@code='b']/text())[1]"/>
+            </xsl:call-template>
             
             <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('exclude-from-recommendations')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:if>
-            
-            <xsl:variable name="tag592">
-                <xsl:apply-templates select="../../*:datafield[@tag='592']"/>
-            </xsl:variable>
         </xsl:for-each>
+    </xsl:template>
+    
+    <xsl:function name="nlb:clean-598" as="xs:string?">
+        <xsl:param name="tag598a" as="text()?"/>
+        <xsl:variable name="text" select="$tag598a" as="xs:string?"/>
+        <xsl:choose>
+            <xsl:when test="not($text) or not(matches($text, '^(INTERN BESKJED:\s*)?(INNKJ.PT?!?|NEDLASTE[DT]?|Ferdig|([\w].*)-([a-zA-Z0-9]+)(:|$)).*', 'i'))">
+                <xsl:sequence select="()"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:variable name="text" select="replace($text, '^INTERN BESKJED:\s*', '', 'i')" as="xs:string"/>
+                <xsl:variable name="text" select="replace($text, 'Ferdig', ' ', 'i')" as="xs:string"/>
+                <xsl:variable name="text" select="normalize-space($text)" as="xs:string"/>
+                <xsl:variable name="text" select="replace($text, '^INNKJ.PT?!?( FRA)?', 'INNKJØPT FRA', 'i')" as="xs:string"/>
+                <xsl:variable name="text" select="replace($text, '^NEDLASTE[DT]?( FRA)?', 'NEDLASTET FRA', 'i')" as="xs:string"/>
+                <xsl:variable name="text" select="replace($text, '^:', 'FERDIG:')"/>
+                <xsl:variable name="text" select="replace($text, '^([\w].*)-([a-zA-Z0-9]+)', 'FERDIG FRA $1-$2')"/>
+                
+                <!-- clean date part if present -->
+                <xsl:variable name="retrieved" select="if (matches($text, '.*\d\d?[\./]+\d\d?[\./]+\d\d(\d\d.*|[^\d].*|$)', 'i'))
+                    then replace($text, '.*(\d\d?)[\./]+(\d\d?)[\./]+(\d\d\d\d|\d\d([^\d]|$)).*', '$3-$2-$1', 'i') 
+                    else ()" as="xs:string?"/>
+                <xsl:variable name="retrieved" select="if ($retrieved) then replace(replace(replace($retrieved,
+                    '-(\d)$', '-0$1'),
+                    '-(\d)-', '-0$1-'),
+                    '^(\d\d)-', '20$1-')
+                    else $retrieved"  as="xs:string?"/>
+                <xsl:variable name="text" select="replace($text, ':.*', '')" as="xs:string"/>
+                <xsl:variable name="text" select="if ($retrieved) then concat($text, ': ', $retrieved) else $text" as="xs:string"/>
+                
+                <xsl:sequence select="$text"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:function>
+    
+    <xsl:template name="external-production">
+        <xsl:param name="tag260b" as="text()?"/>
+        <xsl:param name="tag594a" as="text()?"/>
+        <xsl:param name="tag598a" as="text()?"/>
+        
+        <xsl:variable name="text" select="nlb:clean-598($tag598a)" as="xs:string?"/>
+        <!--<xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('dirty-598')"/><xsl:with-param name="value" select="string($tag598a)"/></xsl:call-template>
+        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('clean-598')"/><xsl:with-param name="value" select="string($text)"/></xsl:call-template>-->
+        <xsl:variable name="agreement" select="if ($tag594a = ('Accessible Books Consortium', 'TIGAR', 'TIGAR/ABC', 'ABC/TIGAR')) then 'Accessible Books Consortium' else ()" as="xs:string?"/>
+        <xsl:variable name="category" select="if (starts-with($text, 'INNKJØPT')) then 'WIPS' else if (starts-with($text, 'NEDLASTET')) then 'NEDLASTET' else ()" as="xs:string?"/>
+        <xsl:variable name="category-context" select="if ($category) then $tag598a else $tag594a" as="text()?"/>
+        <xsl:variable name="category" select="if (not($category) and $agreement = 'Accessible Books Consortium') then 'NEDLASTET' else $category" as="xs:string?"/>
+        <xsl:variable name="source" select="if (matches($text, '^(INNKJØPT|NEDLASTET|FERDIG) FRA ([\w].*?)(:.*)?$')) then normalize-space(replace(replace($text, '^(INNKJØPT|NEDLASTET|FERDIG) FRA ([\w].*?)(:.*)?$', '$2'), ' \d.*', '')) else ()" as="xs:string?"/>
+        <xsl:variable name="source-identifier-regex" select="'([\w].*?)-([a-zA-Z0-9-]*\d[a-zA-Z0-9-]*)'" as="xs:string"/>
+        <xsl:variable name="source-identifier" select="if (matches($source, $source-identifier-regex)) then replace($source, $source-identifier-regex, '$2') else ()" as="xs:string?"/>
+        <xsl:variable name="source" select="if (matches($source, $source-identifier-regex)) then replace($source, $source-identifier-regex, '$1') else $source" as="xs:string?"/>
+        <xsl:variable name="source" select="if (matches($source, '^[\d./]+$')) then () else $source" as="xs:string?"/>
+        <xsl:variable name="source" select="if ($source) then replace($source, '(^[^\w]+|[^\w]+$)', '') else $source" as="xs:string?"/>
+        <xsl:variable name="source-context" select="if ($source) then $tag598a else $tag260b" as="text()?"/>
+        <xsl:variable name="source" select="if ($source) then $source else $tag260b" as="xs:string?"/>
+        <xsl:variable name="retrieved" select="if (contains($text, ': ')) then substring-after($text, ': ') else ()" as="xs:string?"/>
+        <xsl:if test="$category">
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-production')"/><xsl:with-param name="value" select="$category"/><xsl:with-param name="context" select="$tag598a/parent::*"/></xsl:call-template>
+            <xsl:if test="$source">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-source')"/><xsl:with-param name="value" select="$source"/><xsl:with-param name="context" select="$source-context/parent::*"/></xsl:call-template>
+            </xsl:if>
+            <xsl:if test="$source-identifier">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-identifier')"/><xsl:with-param name="value" select="$source-identifier"/><xsl:with-param name="context" select="$source-context/parent::*"/></xsl:call-template>
+            </xsl:if>
+            <xsl:if test="$agreement">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-agreement')"/><xsl:with-param name="value" select="$agreement"/><xsl:with-param name="context" select="$tag594a/parent::*"/></xsl:call-template>
+            </xsl:if>
+            <xsl:if test="$retrieved">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('external-retrieved')"/><xsl:with-param name="value" select="$retrieved"/><xsl:with-param name="context" select="$tag598a/parent::*"/></xsl:call-template>
+            </xsl:if>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='599']">

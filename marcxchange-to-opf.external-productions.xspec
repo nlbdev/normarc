@@ -2306,7 +2306,7 @@
             <dc:publisher id="...">ACME Inc.</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">CA34397</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2726,7 +2726,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">CA18115</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2750,7 +2750,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA17431</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2774,7 +2774,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">C86415</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2857,7 +2857,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">C07828</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2960,7 +2960,7 @@
             <dc:publisher id="...">ACME Inc.</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">6</meta>
+            <meta property="external-identifier">CA13866</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -2984,7 +2984,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">6</meta>
+            <meta property="external-identifier">CA13866</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4141,7 +4141,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">CA28313</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4165,7 +4165,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">CA21239</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4189,7 +4189,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C18112</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4213,7 +4213,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">C30813</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4237,7 +4237,7 @@
             <dc:publisher id="...">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">C92035</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4261,7 +4261,7 @@
             <dc:publisher id="...">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">C46331</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4284,7 +4284,8 @@
         <x:expect label="the metadata should be as expected" test="*">
             <dc:publisher id="...">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
-            <meta property="external-source">Norsk lyd- og blindeskriftbibliotek</meta>
+            <meta property="external-source">MTM</meta>
+            <meta property="external-identifier">C46355</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4308,7 +4309,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">CA05635</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4331,8 +4332,8 @@
         <x:expect label="the metadata should be as expected" test="*">
             <dc:publisher id="...">ACME Inc.</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
-            <meta property="external-source">Nota-4</meta>
-            <meta property="external-identifier">4</meta>
+            <meta property="external-source">Nota</meta>
+            <meta property="external-identifier">4-34054</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4356,7 +4357,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">C19649</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4380,7 +4381,7 @@
             <dc:publisher id="...">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">CA15089</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4404,7 +4405,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">C97853</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4470,7 +4471,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">C80741</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4494,7 +4495,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">C68479</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4518,7 +4519,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">C66410</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4542,7 +4543,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA11011</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4566,7 +4567,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">C15315</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4590,7 +4591,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">4</meta>
+            <meta property="external-identifier">CA04144</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4614,7 +4615,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C30102</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4638,7 +4639,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">CA05852</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4662,7 +4663,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">C97097</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4686,7 +4687,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">CA01322</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4710,7 +4711,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">CA10072</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4734,7 +4735,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">4</meta>
+            <meta property="external-identifier">C77834</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4758,7 +4759,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">C11510</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4782,7 +4783,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">C55583</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4806,7 +4807,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">CA09583</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4830,7 +4831,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA10801</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4854,7 +4855,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">CA03617</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4878,7 +4879,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">C16730</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4902,7 +4903,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">C88468</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4926,7 +4927,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">CA20938</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4950,7 +4951,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">C09498</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4974,7 +4975,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">C97021</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -4998,7 +4999,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA08341</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5022,7 +5023,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">CA00988</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5046,7 +5047,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">C64145</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5070,7 +5071,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">C87287</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5094,7 +5095,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">6</meta>
+            <meta property="external-identifier">CA05636</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5118,7 +5119,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">C91719</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5142,7 +5143,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">C18195</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5166,7 +5167,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">CA07913</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5190,7 +5191,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA10701</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5214,7 +5215,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">CA10803</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5238,7 +5239,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">4</meta>
+            <meta property="external-identifier">CA10894</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5262,7 +5263,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">CA10892</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5286,7 +5287,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">CA10979</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5310,7 +5311,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">CA08237</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5334,7 +5335,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">CA10820</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5358,7 +5359,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">CA02949</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5382,7 +5383,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">3</meta>
+            <meta property="external-identifier">C92433</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5406,7 +5407,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C98562</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5430,7 +5431,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">8</meta>
+            <meta property="external-identifier">CA08648</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5454,7 +5455,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">CA05952</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5478,7 +5479,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C87232</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5502,7 +5503,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">C26760</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5526,7 +5527,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C64522</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5550,7 +5551,7 @@
             <dc:publisher id="...">ACME Inc.</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C87542</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5597,7 +5598,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">CA10977</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5621,7 +5622,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">4</meta>
+            <meta property="external-identifier">CA069864</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5645,7 +5646,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">6</meta>
+            <meta property="external-identifier">CA01906</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5669,7 +5670,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">9</meta>
+            <meta property="external-identifier">C95049</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5693,7 +5694,7 @@
             <dc:publisher id="...">MTM</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">7</meta>
+            <meta property="external-identifier">CA08577</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5717,7 +5718,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">0</meta>
+            <meta property="external-identifier">C96370</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5741,7 +5742,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">TPB</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C81822</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5765,7 +5766,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">MTM</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C88092</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5789,7 +5790,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">TPB</meta>
-            <meta property="external-identifier">1</meta>
+            <meta property="external-identifier">CA02181</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5813,7 +5814,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">TPB</meta>
-            <meta property="external-identifier">2</meta>
+            <meta property="external-identifier">C97802</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
@@ -5837,7 +5838,7 @@
             <dc:publisher id="...">TPB</dc:publisher>
             <meta property="external-production">NEDLASTET</meta>
             <meta property="external-source">TPB</meta>
-            <meta property="external-identifier">5</meta>
+            <meta property="external-identifier">CA02945</meta>
             <meta property="external-agreement">Accessible Books Consortium</meta>
         </x:expect>
     </x:scenario>
