@@ -1832,25 +1832,32 @@
     </xsl:template>
     
     <xsl:template match="*:datafield[@tag='582']">
-        <xsl:variable name="position" select="xs:string(1+count(preceding-sibling::*:datafield[@tag='582']))"/>
-        <xsl:variable name="deliveryFormat-id" select="concat('deliveryFormat-582-',$position)"/>
-        <xsl:variable name="identifier" select="string-join((*:subfield[@code='d'][1]/text(), *:subfield[@code='a'][1]/text()), '_')"/>
-        
-        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('hasDeliveryMethod')"/><xsl:with-param name="value" select="$identifier"/><xsl:with-param name="id" select="$deliveryFormat-id"/></xsl:call-template>
-        
-        <xsl:for-each select="*:subfield[@code='a'][1]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deliveryMethod')"/><xsl:with-param name="value" select="substring(text(), 1, 2)"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
-        </xsl:for-each>
-        
-        <xsl:for-each select="*:subfield[@code='d'][1]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
-        </xsl:for-each>
-        
-        <xsl:for-each select="*:subfield[@code='f'][1]">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('name')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
-        </xsl:for-each>
-        
-        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="$position"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+        <xsl:if test="not(preceding-sibling::*:datafield[@tag='582'])">
+            <xsl:for-each select="../*:datafield[@tag='582']">
+                <xsl:sort select="*:subfield[@code='p']"/>
+                
+                <xsl:variable name="deliveryFormat-id" select="concat('deliveryFormat-582-', position())"/>
+                <xsl:variable name="identifier" select="string-join((*:subfield[@code='d'][1]/text(), *:subfield[@code='a'][1]/text()), '_')"/>
+                
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('hasDeliveryMethod')"/><xsl:with-param name="value" select="$identifier"/><xsl:with-param name="id" select="$deliveryFormat-id"/></xsl:call-template>
+                
+                <xsl:for-each select="*:subfield[@code='d'][1]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='a'][1]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('deliveryMethod')"/><xsl:with-param name="value" select="substring(text(), 1, 2)"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='f'][1]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('name')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+                </xsl:for-each>
+                
+                <xsl:for-each select="*:subfield[@code='p'][1]">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('position')"/><xsl:with-param name="value" select="text()"/><xsl:with-param name="refines" select="$deliveryFormat-id"/></xsl:call-template>
+                </xsl:for-each>
+            </xsl:for-each>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:datafield[@tag='590']">
