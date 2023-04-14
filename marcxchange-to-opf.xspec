@@ -1944,19 +1944,4 @@
         </x:expect>
     </x:scenario>
     
-    <x:scenario label="Flere $e og $4 på samme *700">
-        <x:context>
-            <marcxchange:datafield tag="700" ind1="1" ind2="1">
-                <marcxchange:subfield code="a">Jacobsen, Knut A.</marcxchange:subfield>
-                <marcxchange:subfield code="e">redaktør</marcxchange:subfield>
-                <marcxchange:subfield code="4">edt</marcxchange:subfield>
-                <marcxchange:subfield code="e">medf.</marcxchange:subfield>
-            </marcxchange:datafield>
-        </x:context>
-        
-        <x:expect label="the metadata should be extracted as expected" test="*">
-            <meta property="dc:contributor.editor" id="...">Jacobsen, Knut A.</meta>
-            <dc:creator id="...">Jacobsen, Knut A.</dc:creator>
-        </x:expect>
-    </x:scenario>
 </x:description>

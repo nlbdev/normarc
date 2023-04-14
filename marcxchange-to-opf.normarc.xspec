@@ -400,7 +400,7 @@
         </x:expect>
     </x:scenario>
 
-    <x:scenario label="Flere $e og $4 på samme *700">
+    <x:scenario label="Flere $e og $4 på samme *700" pending="corner case that we won't handle in Normarc">
         <x:context>
             <marcxchange:datafield tag="700" ind1=" " ind2="1">
                 <marcxchange:subfield code="a">Jacobsen, Knut A.</marcxchange:subfield>

@@ -2516,9 +2516,9 @@
                 <xsl:variable name="role-subfields" as="element()*">
                     <xsl:for-each select="../*:datafield[@tag='700']">
                         <xsl:sequence select="(*:subfield[@code='4' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
-                            *:subfield[@code='e' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
-                            *:subfield[@code='r' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
-                            *:subfield[@code='x' and not(nlb:parseRole(text()) = 'dc:contributor.other')])[1]"/>
+                                               *:subfield[@code='e' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
+                                               *:subfield[@code='r' and not(nlb:parseRole(text()) = 'dc:contributor.other')],
+                                               *:subfield[@code='x' and not(nlb:parseRole(text()) = 'dc:contributor.other')])[1]"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="datafields-without-role-subfield" select="../*:datafield[@tag='700' and not(*:subfield = $role-subfields)]" as="element()*"/>

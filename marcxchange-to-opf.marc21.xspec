@@ -405,12 +405,15 @@
                 <marcxchange:subfield code="e">redaktør</marcxchange:subfield>
                 <marcxchange:subfield code="4">edt</marcxchange:subfield>
                 <marcxchange:subfield code="e">medf.</marcxchange:subfield>
+                <marcxchange:subfield code="_">17264600</marcxchange:subfield>
             </marcxchange:datafield>
         </x:context>
         
         <x:expect label="the metadata should be extracted as expected" test="*">
-            <meta property="dc:contributor.editor" id="...">Jacobsen, Knut A.</meta>
-            <dc:creator id="...">Jacobsen, Knut A.</dc:creator>
+            <meta property="dc:contributor.editor" id="contributor-700-1">Jacobsen, Knut A.</meta>
+            <meta property="bibliofil-id" refines="#contributor-700-1">17264600</meta>
+            <dc:creator id="contributor-700-3">Jacobsen, Knut A.</dc:creator>
+            <meta property="bibliofil-id" refines="#contributor-700-3">17264600</meta>
         </x:expect>
     </x:scenario>
     
