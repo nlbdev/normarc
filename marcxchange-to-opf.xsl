@@ -1828,7 +1828,7 @@
     
     <xsl:template match="*:datafield[@tag='582']">
         <xsl:if test="not(preceding-sibling::*:datafield[@tag='582'])">
-            <xsl:for-each select="../*:datafield[@tag='582']">
+            <xsl:for-each select="../*:datafield[@tag='582' and count(*:subfield[@code='p']) = 1 and *:subfield[@code='p']/matches(text(), '\d+')]">
                 <xsl:sort select="*:subfield[@code='p']"/>
                 
                 <xsl:variable name="deliveryFormat-id" select="concat('deliveryFormat-582-', position())"/>
