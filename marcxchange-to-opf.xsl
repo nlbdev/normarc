@@ -445,12 +445,32 @@
 
             <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.registered'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
 
-            <xsl:variable name="available" as="element()*">
+            <xsl:variable name="available" as="node()*">
                 <xsl:apply-templates select="(../*:datafield[@tag=('592')])"/>
             </xsl:variable>
-            <xsl:if test="count($available[@property='dc:date.available']) = 0 and matches($year,'^19..$')">
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'00-05'"/><xsl:with-param name="property" select="'dc:date.available'"/><xsl:with-param name="value" select="$registered"/></xsl:call-template>
-            </xsl:if>
+            <xsl:variable name="external" as="node()*">
+                <xsl:apply-templates select="(../*:datafield[@tag=('598', '594')])"/>
+            </xsl:variable>
+            <xsl:choose>
+                <xsl:when test="count($available[@property='dc:date.available']) ge 1">
+                    <!-- do nothing, dc:date.available is created in template for 592 -->
+                </xsl:when>
+                <xsl:when test="count($external[@property=nlb:prefixed-property('external-retrieved')]) ge 1">
+                    <xsl:variable name="external-retrieved" select="($external[@property=nlb:prefixed-property('external-retrieved')])[1]" as="xs:string"/>
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="'dc:date.available'"/>
+                        <xsl:with-param name="value" select="$external-retrieved"/>
+                        <xsl:with-param name="context" select="(../*:datafield[@tag=('598', '594')])[1]"/>  <!-- most likely context. calculating the correct context with 100% certainty requires too many lines of code -->
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:when test="matches($year,'^19..$')">
+                    <xsl:call-template name="meta">
+                        <xsl:with-param name="property" select="'dc:date.available'"/>
+                        <xsl:with-param name="value" select="$registered"/>
+                        <xsl:with-param name="controlfield_position" select="'00-05'"/>
+                    </xsl:call-template>
+                </xsl:when>
+            </xsl:choose>
         </xsl:if>
         
         <xsl:choose>

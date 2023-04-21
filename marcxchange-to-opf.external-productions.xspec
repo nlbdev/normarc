@@ -4,9 +4,10 @@
                xmlns:marcxchange="info:lc/xmlns/marcxchange-v1"
                xmlns:dc="http://purl.org/dc/elements/1.1/"
                xmlns:opf="http://www.idpf.org/2007/opf"
-               xmlns="http://www.idpf.org/2007/opf">
+               xmlns="http://www.idpf.org/2007/opf"
+               stylesheet="marcxchange-to-opf.xsl">
 
-        <x:scenario label="handle books from external libraries (case #1)">
+    <x:scenario label="handle books from external libraries (case #1)">
         <x:context>
             <!-- 598$a|594$a|260$b = INNKJØPT FRA RNIB||RNIB -->
             <!-- 1705 occurences -->
@@ -5997,6 +5998,53 @@
             <dc:publisher id="...">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
             <meta property="external-production">WIPS</meta>
             <meta property="external-source">Norsk lyd- og blindeskriftbibliotek</meta>
+            <meta property="external-retrieved">2023-03-08</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="dc:date.available from external productions (without *592)">
+        <x:context>
+            <controlfield tag="008">171220b        xx     e          1 nob d</controlfield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:date.registered">2017-12-20</meta>
+            <meta property="dc:date.available">2023-03-08</meta>
+            <meta property="typicalAgeRange">18-</meta>
+            <meta property="audience">Adult</meta>
+            <meta property="dc:type.fiction">true</meta>
+            <meta property="dc:type.genre">Fiction</meta>
+            <meta property="dc:type.genre">Non-biography</meta>
+            <dc:language>nob</dc:language>
+            <meta property="external-production">WIPS</meta>
+            <meta property="external-retrieved">2023-03-08</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="dc:date.available from external productions (with *592)">
+        <x:context>
+            <controlfield tag="008">171220b        xx     e          1 nob d</controlfield>
+            <datafield tag="592" ind1=" " ind2=" ">
+                <subfield code="a">2016-10-04</subfield>
+            </datafield>
+            <datafield tag="598" ind1=" " ind2=" ">
+                <subfield code="a">INNKJØPT: 08/03/2023</subfield>
+            </datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*">
+            <meta property="dc:date.registered">2017-12-20</meta>
+            <meta property="typicalAgeRange">18-</meta>
+            <meta property="audience">Adult</meta>
+            <meta property="dc:type.fiction">true</meta>
+            <meta property="dc:type.genre">Fiction</meta>
+            <meta property="dc:type.genre">Non-biography</meta>
+            <dc:language>nob</dc:language>
+            <meta property="dc:date.available">2016-10-04</meta>
+            <meta property="external-production">WIPS</meta>
             <meta property="external-retrieved">2023-03-08</meta>
         </x:expect>
     </x:scenario>
