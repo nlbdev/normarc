@@ -2012,8 +2012,9 @@
                 <xsl:variable name="text" select="replace($text, '^([\w].*)-([a-zA-Z0-9]+)', 'FERDIG FRA $1-$2')"/>
                 
                 <!-- clean date part if present -->
-                <xsl:variable name="retrieved" select="if (matches($text, '.*\d\d?[\./]+\d\d?[\./]+\d\d(\d\d.*|[^\d].*|$)', 'i'))
-                                                        then replace($text, '.*(\d\d?)[\./]+(\d\d?)[\./]+(\d\d\d\d|\d\d([^\d]|$)).*', '$3-$2-$1', 'i') 
+                <xsl:variable name="date-cleaning-regex" select="'^.*?(\d\d?)[\./]+(\d\d?)[\./]+(\d\d\d\d|\d\d)([^\d].*?$|$)'" as="xs:string"/>
+                <xsl:variable name="retrieved" select="if (matches($text, $date-cleaning-regex, 'i'))
+                                                        then replace($text, $date-cleaning-regex, '$3-$2-$1', 'i')
                                                         else ()" as="xs:string?"/>
                 <xsl:variable name="retrieved" select="if ($retrieved) then replace(replace(replace($retrieved,
                     '-(\d)$', '-0$1'),

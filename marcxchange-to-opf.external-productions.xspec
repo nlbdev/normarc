@@ -2639,7 +2639,6 @@
             <dc:publisher id="...">ACME Inc.</dc:publisher>
             <meta property="external-production">WIPS</meta>
             <meta property="external-source">ACME Inc.</meta>
-            <meta property="external-retrieved">2023-03-08</meta>
         </x:expect>
     </x:scenario>
     
@@ -6046,6 +6045,18 @@
             <meta property="dc:date.available">2016-10-04</meta>
             <meta property="external-production">WIPS</meta>
             <meta property="external-retrieved">2023-03-08</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="regression test (parsing as 7th April instead of 17th April)">
+        <x:context>
+            <marcxchange:datafield tag="598" ind1=" " ind2=" ">
+                <marcxchange:subfield code="a">INNKJØPT: 17/04/2023</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be as expected" test="*[@property='external-retrieved']">
+            <meta property="external-retrieved">2023-04-17</meta>
         </x:expect>
     </x:scenario>
 
