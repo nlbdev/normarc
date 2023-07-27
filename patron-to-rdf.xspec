@@ -325,6 +325,8 @@
                         <nlbbib:lnel_nr rdf:name="12345"/>
                         <nlbbib:lnel_epost rdf:name="name@nlb.no"/>
                         <nlbbib:lnel_pin rdf:name=""/>
+                        <nlbbib:lmarc_enable_cd_distribution rdf:name="true" />
+                        <nlbbib:lmarc_enable_cd_distribution_for_periodicals rdf:name="false" />
                         <nlbbib:lmarc_nr rdf:name="12345"/>
                         <nlbbib:lmarc_test_patron rdf:name="true"/>
                         <nlbbib:lmarc_institution rdf:name="Andre"/>
@@ -819,6 +821,8 @@
                         <nlbbib:lnel_nr rdf:name="12345"/>
                         <nlbbib:lnel_epost rdf:name="navn@nlb.no"/>
                         <nlbbib:lnel_pin rdf:name=""/>
+                        <nlbbib:lmarc_enable_cd_distribution rdf:name="false" />
+                        <nlbbib:lmarc_enable_cd_distribution_for_periodicals rdf:name="true" />
                         <nlbbib:lmarc_nr rdf:name="12345"/>
                         <nlbbib:lmarc_institution rdf:name="Ingen"/>
                         <nlbbib:lmarc_disability rdf:name="Dysleksi"/>
@@ -1025,15 +1029,8 @@
                 </row>
             </laaner>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-            <laaner>
-                <rdf:RDF>
-                    <rdf:Description rdf:ID="">
-                        <rdf:type rdf:resource="http://schema.org/Person"/>
-                        <nlbbib:lmarc_braille_patron rdf:name="true"/>
-                    </rdf:Description>
-                </rdf:RDF>
-            </laaner>
+        <x:expect label="the metadata should be extracted as expected" test="laaner/rdf:RDF/rdf:Description/nlbbib:lmarc_braille_patron">
+            <nlbbib:lmarc_braille_patron rdf:name="true"/>
         </x:expect>
     </x:scenario>
     
@@ -1051,15 +1048,8 @@
                 </row>
             </laaner>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-            <laaner>
-                <rdf:RDF>
-                    <rdf:Description rdf:ID="">
-                        <rdf:type rdf:resource="http://schema.org/Person"/>
-                        <nlbbib:lmarc_production_right rdf:name="true"/>
-                    </rdf:Description>
-                </rdf:RDF>
-            </laaner>
+        <x:expect label="the metadata should be extracted as expected" test="laaner/rdf:RDF/rdf:Description/nlbbib:lmarc_production_right">
+            <nlbbib:lmarc_production_right rdf:name="true"/>
         </x:expect>
     </x:scenario>
     
@@ -1077,15 +1067,8 @@
                 </row>
             </laaner>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-            <laaner>
-                <rdf:RDF>
-                    <rdf:Description rdf:ID="">
-                        <rdf:type rdf:resource="http://schema.org/Person"/>
-                        <nlbbib:lmarc_automated_loans rdf:name="true"/>
-                    </rdf:Description>
-                </rdf:RDF>
-            </laaner>
+        <x:expect label="the metadata should be extracted as expected" test="laaner/rdf:RDF/rdf:Description/nlbbib:lmarc_automated_loans">
+            <nlbbib:lmarc_automated_loans rdf:name="true"/>
         </x:expect>
     </x:scenario>
     
@@ -1103,16 +1086,9 @@
                 </row>
             </laaner>
         </x:context>
-        <x:expect label="the metadata should be extracted as expected">
-            <laaner>
-                <rdf:RDF>
-                    <rdf:Description rdf:ID="">
-                        <rdf:type rdf:resource="http://schema.org/Person"/>
-                        <nlbbib:lmarc_library rdf:name="NLB"/>
-                        <nlbbib:lmarc_student rdf:name="true"/>
-                    </rdf:Description>
-                </rdf:RDF>
-            </laaner>
+        <x:expect label="the metadata should be extracted as expected" test="laaner/rdf:RDF/rdf:Description/(nlbbib:lmarc_library | nlbbib:lmarc_student)">
+            <nlbbib:lmarc_library rdf:name="NLB"/>
+            <nlbbib:lmarc_student rdf:name="true"/>
         </x:expect>
     </x:scenario>
     
@@ -1186,8 +1162,85 @@
             <x:call function="f:parse-name"><x:param name="name" select="'Trailing Comma,'"/></x:call>
             <x:expect label="the result should be as expected" select="('Trailing Comma,', '', '')"/>
         </x:scenario>
-        
-        
+    </x:scenario>
+    
+    <x:scenario label="Patron with CD loans (implicit)">
+        <x:context>
+            <laaner>
+                <row>
+                    <lmarc>
+                        <record/>
+                    </lmarc>
+                </row>
+            </laaner>
+        </x:context>
+        <x:expect label="the metadata should be extracted as expected">
+            <laaner>
+                <rdf:RDF>
+                    <rdf:Description rdf:ID="">
+                        <rdf:type rdf:resource="http://schema.org/Person"/>
+                        <nlbbib:lmarc_enable_cd_distribution rdf:name="true"/>
+                        <nlbbib:lmarc_enable_cd_distribution_for_periodicals rdf:name="true"/>
+                    </rdf:Description>
+                </rdf:RDF>
+            </laaner>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Patron without CD loans (explicit)">
+        <x:context>
+            <laaner>
+                <row>
+                    <lmarc>
+                        <record>
+                            <datafield tag="465" ind1=" " ind2=" ">
+                                <subfield code="c" type="VARCHAR(1)">1</subfield>
+                                <subfield code="i" type="VARCHAR(1)">1</subfield>
+                            </datafield>
+                        </record>
+                    </lmarc>
+                </row>
+            </laaner>
+        </x:context>
+        <x:expect label="the metadata should be extracted as expected">
+            <laaner>
+                <rdf:RDF>
+                    <rdf:Description rdf:ID="">
+                        <rdf:type rdf:resource="http://schema.org/Person"/>
+                        <nlbbib:lmarc_enable_cd_distribution rdf:name="true"/>
+                        <nlbbib:lmarc_enable_cd_distribution_for_periodicals rdf:name="true"/>
+                    </rdf:Description>
+                </rdf:RDF>
+            </laaner>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Patron without CD loans">
+        <x:context>
+            <laaner>
+                <row>
+                    <lmarc>
+                        <record>
+                            <datafield tag="465" ind1=" " ind2=" ">
+                                <subfield code="c" type="VARCHAR(1)">0</subfield>
+                                <subfield code="i" type="VARCHAR(1)">0</subfield>
+                            </datafield>
+                        </record>
+                    </lmarc>
+                </row>
+            </laaner>
+        </x:context>
+        <x:expect label="the metadata should be extracted as expected">
+            <laaner>
+                <rdf:RDF>
+                    <rdf:Description rdf:ID="">
+                        <rdf:type rdf:resource="http://schema.org/Person"/>
+                        <nlbbib:lmarc_enable_cd_distribution rdf:name="false"/>
+                        <nlbbib:lmarc_enable_cd_distribution_for_periodicals rdf:name="false"/>
+                    </rdf:Description>
+                </rdf:RDF>
+            </laaner>
+        </x:expect>
     </x:scenario>
     
 </x:description>

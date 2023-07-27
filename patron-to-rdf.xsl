@@ -38,7 +38,7 @@
                         <xsl:attribute name="rdf:name" select="."/>
                     </xsl:element>
                 </xsl:for-each>
-                <xsl:apply-templates select="lmarc/record/*" mode="lmarc"/>
+                <xsl:apply-templates select="lmarc/record | lmarc/record/*" mode="lmarc"/>
                 <xsl:for-each select="res/row">
                     <nlbbib:res>
                         <xsl:for-each select="@*[starts-with(local-name(), 'res_')]">
@@ -103,6 +103,48 @@
             <xsl:with-param name="lmarc465d" select="../datafield[@tag='465']/subfield[@code='d']/text()"/>
             <xsl:with-param name="lmarc466a" select="../datafield[@tag='466']/subfield[@code='a']/text()"/>
         </xsl:call-template>
+    </xsl:template>
+    
+    <xsl:template match="record" mode="lmarc">
+        <!-- enable_cd_distribution from *465$c -->
+        <xsl:choose>
+            <xsl:when test="not(exists(datafield[@tag='465']/subfield[@code='c']))">
+                <xsl:call-template name="lmarc">
+                    <xsl:with-param name="name" select="'enable_cd_distribution'"/>
+                    <xsl:with-param name="value" select="'true'"/>
+                    <xsl:with-param name="context" select="."/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="datafield[@tag='465']/subfield[@code='c']">
+                    <xsl:call-template name="lmarc">
+                        <xsl:with-param name="name" select="'enable_cd_distribution'"/>
+                        <xsl:with-param name="value" select="if (. = '0') then 'false' else 'true'"/>
+                        <xsl:with-param name="context" select="."/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        <!-- enable_cd_distribution_for_periodicals from *465$i -->
+        <xsl:choose>
+            <xsl:when test="not(exists(datafield[@tag='465']/subfield[@code='i']))">
+                <xsl:call-template name="lmarc">
+                    <xsl:with-param name="name" select="'enable_cd_distribution_for_periodicals'"/>
+                    <xsl:with-param name="value" select="'true'"/>
+                    <xsl:with-param name="context" select="."/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:for-each select="datafield[@tag='465']/subfield[@code='i']">
+                    <xsl:call-template name="lmarc">
+                        <xsl:with-param name="name" select="'enable_cd_distribution_for_periodicals'"/>
+                        <xsl:with-param name="value" select="if (. = '0') then 'false' else 'true'"/>
+                        <xsl:with-param name="context" select="."/>
+                    </xsl:call-template>
+                </xsl:for-each>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template match="datafield[@tag='140']" mode="lmarc">
@@ -219,6 +261,7 @@
                 </xsl:when>
                 
                 <!-- NOTE: 465$d handled by the template "institution-and-disability" -->
+                <!-- NOTE: 465$c and 465$i handled by template matching 'record' and mode=lmarc -->
             </xsl:choose>
         </xsl:for-each>
     </xsl:template>
