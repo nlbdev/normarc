@@ -1234,6 +1234,7 @@
         <dc:identifier id="pub-id">500000</dc:identifier>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_500000</meta>
         <meta property="library">NLB</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -1250,6 +1251,7 @@
         <dc:identifier id="pub-id">500000</dc:identifier>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_500000</meta>
         <meta property="library">StatPed</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -1597,6 +1599,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Arv og gjeld. Nye veier</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1665,6 +1668,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Utvalgte noveller</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1702,6 +1706,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Kleopatra</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1729,6 +1734,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Trash Bazooka</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1759,6 +1765,7 @@
         <meta property="library">NLB</meta>
         <meta property="position">16</meta>
         <meta property="sortingKey">Animorphs</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1784,6 +1791,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Radio Moskva</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1813,6 +1821,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="sortingKey">Tvillingfeber</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1845,6 +1854,7 @@
         <meta property="library">NLB</meta>
         <meta property="position">1</meta>
         <meta property="sortingKey">Tørk aldri tårer uten hansker</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1877,6 +1887,7 @@
         <meta property="library">NLB</meta>
         <meta property="position">1</meta>
         <meta property="sortingKey">Alle tiders kjærlighet</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
 
@@ -1909,6 +1920,7 @@
         <meta property="library">KABB</meta>
         <meta property="position">3</meta>
         <meta property="sortingKey">Merlin</meta>
+        <meta property="watermark">true</meta>
     </metadata></x:expect>
         </x:scenario>
     </x:scenario>
@@ -1944,15 +1956,58 @@
         </x:expect>
     </x:scenario>
     
-    <x:scenario label="Vannmerking">
+    <x:scenario label="Vannmerking - *260$9n">
         <x:context>
-            <marcxchange:datafield tag="260" ind1=" " ind2="1">
-                <marcxchange:subfield code="9">n</marcxchange:subfield>
-            </marcxchange:datafield>
+            <marcxchange:record>
+                <marcxchange:controlfield tag="001">1</marcxchange:controlfield>
+                <marcxchange:datafield tag="260" ind1=" " ind2="1">
+                    <marcxchange:subfield code="9">n</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" test="*">
+        <x:expect label="the metadata should be extracted as expected" test="*/*[@property='watermark']">
             <meta property="watermark">false</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Vannmerking - *260$9_">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:controlfield tag="001">1</marcxchange:controlfield>
+                <marcxchange:datafield tag="260" ind1=" " ind2="1">
+                    <marcxchange:subfield code="9"><![CDATA[]]></marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*[@property='watermark']">
+            <meta property="watermark">true</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Vannmerking - ingen *260$9">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:controlfield tag="001">1</marcxchange:controlfield>
+                <marcxchange:datafield tag="260" ind1=" " ind2="1"/>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*[@property='watermark']">
+            <meta property="watermark">true</meta>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Vannmerking - ingen *260">
+        <x:context>
+            <marcxchange:record>
+                <marcxchange:controlfield tag="001">1</marcxchange:controlfield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*[@property='watermark']">
+            <meta property="watermark">true</meta>
         </x:expect>
     </x:scenario>
     

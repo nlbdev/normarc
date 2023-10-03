@@ -417,6 +417,16 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.issued.original'"/><xsl:with-param name="value" select="$year"/></xsl:call-template>
             </xsl:if>
         </xsl:if>
+        
+        <!-- checking this here makes sure that the field is always defined. *260$9 is usually not present. -->
+        <xsl:choose>
+            <xsl:when test="../*:datafield[@tag='260']/*:subfield[@code='9']/text() = 'n'">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'false'"/></xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="*:controlfield[@tag='003']">
@@ -1545,9 +1555,6 @@
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.issued'"/><xsl:with-param name="value" select="string($issued)"/><xsl:with-param name="refines" select="if ($primary) then () else $publisher-id"/></xsl:call-template>
             </xsl:for-each>
         </xsl:if>
-        <xsl:for-each select="*:subfield[@code='9' and text()='n']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'false'"/></xsl:call-template>
-        </xsl:for-each>
     </xsl:template>
 
     <!-- 3XX FYSISK BESKRIVELSE -->
