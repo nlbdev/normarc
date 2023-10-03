@@ -1944,4 +1944,16 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="Vannmerking">
+        <x:context>
+            <marcxchange:datafield tag="260" ind1=" " ind2="1">
+                <marcxchange:subfield code="9">n</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <meta property="watermark">true</meta>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>

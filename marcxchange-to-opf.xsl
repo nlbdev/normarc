@@ -1546,7 +1546,7 @@
             </xsl:for-each>
         </xsl:if>
         <xsl:for-each select="*:subfield[@code='9' and text()='n']">
-            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'false'"/></xsl:call-template>
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('watermark')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
