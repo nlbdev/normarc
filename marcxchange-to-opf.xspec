@@ -1952,7 +1952,7 @@
         </x:context>
         
         <x:expect label="the metadata should be extracted as expected" test="*">
-            <meta property="watermark">true</meta>
+            <meta property="watermark">false</meta>
         </x:expect>
     </x:scenario>
     
