@@ -351,6 +351,23 @@
                 <meta property="typicalAgeRange">0-15</meta>
             </x:expect>
         </x:scenario>
+        
+        <x:scenario label="default adult">
+            <x:context xml:space="preserve">
+                <marcxchange:record format="normarc" type="Bibliographic">
+                    <marcxchange:controlfield tag="008">171220                           10nob</marcxchange:controlfield>
+                </marcxchange:record>
+            </x:context>
+            
+            <x:expect label="the metadata should be extracted as expected" test="*/*">
+                <dc:language>nob</dc:language>
+                <meta property="dc:date.registered">2017-12-20</meta>
+                <meta property="dc:type.fiction">true</meta>
+                <meta property="dc:type.genre">Fiction</meta>
+                <meta property="dc:type.genre">Non-biography</meta>
+                <meta property="audience">Adult</meta>
+            </x:expect>
+        </x:scenario>
     </x:scenario>
     
     <x:scenario label="date sent to production / ordered">

@@ -537,6 +537,36 @@
                 </xsl:choose>
             </xsl:for-each>
         </xsl:variable>
+        <xsl:variable name="audienceFrom385sub0" as="xs:string*">
+            <xsl:for-each select="$tag385sub0">
+                <xsl:choose>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1000'">
+                        <xsl:sequence select="'Child'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1001'">
+                        <xsl:sequence select="'Child'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1002'">
+                        <xsl:sequence select="'Child'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1003'">
+                        <xsl:sequence select="'Child'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1004'">
+                        <xsl:sequence select="'Child'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1005'">
+                        <xsl:sequence select="'Adolescent'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1015'">
+                        <xsl:sequence select="'Adolescent'"/>
+                    </xsl:when>
+                    <xsl:when test=".='https://schema.nb.no/Bibliographic/Values/TG1016'">
+                        <xsl:sequence select="'Adult'"/>
+                    </xsl:when>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:variable>
         <xsl:variable name="ageRangesFrom008POS22" as="xs:string*">
             <xsl:for-each select="$POS22">
                 <xsl:choose>
@@ -588,6 +618,30 @@
                 </xsl:for-each>
             </xsl:if>
         </xsl:variable>
+        <xsl:variable name="audienceFrom019a" as="xs:string*">
+            <!-- *019$a is a remnant from NORMARC. If there's no *385$0, let's fall back to this instead -->
+            <xsl:if test="count($tag385sub0) = 0">
+                <xsl:for-each select="$tag019a">
+                    <xsl:choose>
+                        <xsl:when test=".='a'">
+                            <xsl:sequence select="'Child'"/>
+                        </xsl:when>
+                        <xsl:when test=".='b'">
+                            <xsl:sequence select="'Child'"/>
+                        </xsl:when>
+                        <xsl:when test=".='bu'">
+                            <xsl:sequence select="'Child'"/>
+                        </xsl:when>
+                        <xsl:when test=".='u'">
+                            <xsl:sequence select="'Child'"/>
+                        </xsl:when>
+                        <xsl:when test=".='mu'">
+                            <xsl:sequence select="'Adolescent'"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:variable>
         <xsl:variable name="ageRanges" select="if (count($ageRangesFrom385sub0)) then $ageRangesFrom385sub0 else if (count($ageRangesFrom019a)) then $ageRangesFrom019a else $ageRangesFrom008POS22"/>
         <xsl:variable name="ageRangeFrom" select="if (count($ageRanges) = 0) then '' else xs:integer(min(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[1])))"/>
         <xsl:variable name="ageMax" select="if (count($ageRanges) = 0) then '' else max(for $range in ($ageRanges) return xs:double(tokenize($range,'-')[2]))"/>
@@ -603,19 +657,77 @@
         </xsl:if>
 
         <!--
-            - if 008 POS 22 is 'e', then use "Adult"
-            - else if OO8 POS 22 is 'd', then use "Adolescent"
-            - else, use "Child"
+            - if *008/22 is 'e', then use "Adult"
+            - else if *OO8/22 is 'd', then use "Adolescent"
+            - else if *008/22 is 'j' and *385$0 points to adult (https://schema.nb.no/Bibliographic/Values/TG1016), then use "Adolescent"
+            - else if *385$0 points to an audience, then use that (vu/mu=Adolescent, u/bu/b/a/aa=Child)
+            - else if *019$a points to an audience, then use that (mu=Adolescent, u/bu/b/a=Child)
+            - else if *008/22 is 'j', then use "Child"
+            - else use "Adult"
         -->
         <xsl:choose>
             <xsl:when test="$POS22='e'">
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adult'"/></xsl:call-template>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="controlfield_position" select="'22'"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adult'"/>
+                </xsl:call-template>
             </xsl:when>
-            <xsl:when test="$POS22='d' or $tag385sub0 = ('https://schema.nb.no/Bibliographic/Values/TG1005', 'https://schema.nb.no/Bibliographic/Values/TG1015')">
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Adolescent'"/></xsl:call-template>
+            <xsl:when test="$POS22='d'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="controlfield_position" select="'22'"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adolescent'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$POS22='j' and $audienceFrom385sub0 = 'Adult'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="context" select="$tag385sub0_contexts[1]"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adolescent'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$audienceFrom385sub0 = 'Adolescent'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="context" select="$tag385sub0_contexts[1]"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adolescent'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$audienceFrom385sub0 = 'Child'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="context" select="$tag385sub0_contexts[1]"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Child'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$audienceFrom019a = 'Adolescent'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="context" select="$tag019a_context"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adolescent'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$audienceFrom019a = 'Child'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="context" select="$tag019a_context"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Child'"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="$POS22='j'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="controlfield_position" select="'22'"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Child'"/>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:call-template name="meta"><xsl:with-param name="controlfield_position" select="'22'"/><xsl:with-param name="property" select="nlb:prefixed-property('audience')"/><xsl:with-param name="value" select="'Child'"/></xsl:call-template>
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="controlfield_position" select="'22'"/>
+                    <xsl:with-param name="property" select="nlb:prefixed-property('audience')"/>
+                    <xsl:with-param name="value" select="'Adult'"/>
+                </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
 

@@ -28,6 +28,7 @@
         <meta nlb:metadata-source="Bibliofil@612345 *596" property="bookEdition.original">1</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *596$f" property="issn.original">0018-2842</meta>
         <meta nlb:metadata-source="Bibliofil@612345 *001" property="library">NLB</meta>
+        <meta nlb:metadata-source="Bibliofil@612345 *001" property="watermark">true</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -37,7 +38,7 @@
                 <marcxchange:leader>00542nam  2200217   4500</marcxchange:leader>
                 <marcxchange:controlfield tag="000">     c</marcxchange:controlfield>
                 <marcxchange:controlfield tag="001">611823</marcxchange:controlfield>
-                <marcxchange:controlfield tag="008">980611               na          00nob</marcxchange:controlfield>
+                <marcxchange:controlfield tag="008">980611               ne          00nob</marcxchange:controlfield>
                 <marcxchange:datafield tag="015" ind1=" " ind2=" ">
                     <marcxchange:subfield code="a">10480207</marcxchange:subfield>
                     <marcxchange:subfield code="b">BibliofilID</marcxchange:subfield>
@@ -97,15 +98,15 @@
         <dc:identifier nlb:metadata-source="Bibliofil@611823 *001 + dc:identifier" id="pub-id">612345022018</dc:identifier>
         <dc:title nlb:metadata-source="Bibliofil@611823 *245$a + dc:identifier">Aftenposten, 2/2018</dc:title>
         <dc:format nlb:metadata-source="Bibliofil@611823 *019$b">DAISY 2.02</dc:format>
-        <dc:language nlb:metadata-source="Bibliofil@611823 *008">nob</dc:language>
+        <dc:language nlb:metadata-source="Bibliofil@611823 *008/35-37">nob</dc:language>
         <dc:publisher nlb:metadata-source="Bibliofil@611823 *260$b" id="publisher-260-1">Norsk lyd- og blindeskriftbibliotek</dc:publisher>
         <meta nlb:metadata-source="Bibliofil@611823 *260$_" property="bibliofil-id" refines="#publisher-260-1">17192400</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *511$a" property="dc:contributor.narrator" id="contributor-511-1">Brage Talesyntese</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *511$_" property="bibliofil-id" refines="#contributor-511-1">19209900</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="dc:date.available">1998-06-11</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/00-05" property="dc:date.available">1998-06-11</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *260$c" property="dc:date.issued">2016</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *001" property="dc:date.issued.original">2018</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="dc:date.registered">1998-06-11</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/00-05" property="dc:date.registered">1998-06-11</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *019$b" property="dc:format.other">Serial</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *019$b" property="dc:format.other">Newspaper</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *019$b" property="dc:format.other">Audio recording</meta>
@@ -121,20 +122,21 @@
         <meta nlb:metadata-source="Bibliofil@611823 *650" property="dc:subject.keyword" id="subject-650-1">Avis</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *650$_" property="bibliofil-id" refines="#subject-650-1">20168800</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *511$a" property="dc:type.audio">true</meta>
-        <meta property="dc:type.fiction">false</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="dc:type.genre">Non-fiction</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="dc:type.genre">Non-biography</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/33" property="dc:type.fiction">false</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/33" property="dc:type.genre">Non-fiction</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/34" property="dc:type.genre">Non-biography</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *511$a" property="dc:type.text">true</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *511$a" property="dc:type.tts">true</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="audience">Adult</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/22" property="audience">Adult</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *245" property="bookEdition">1</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *856$s" property="fileSize">84515237</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *856$s" property="fileSize">98877287</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *850$a" property="library">NLB</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *650" property="newspaper">true</meta>
         <meta nlb:metadata-source="Bibliofil@611823 *650" property="periodical">true</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *245$a" property="sortingKey">Aftenposten, 2018-2</meta>
-        <meta nlb:metadata-source="Bibliofil@611823 *008" property="typicalAgeRange">17-</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *245$a" property="sortingKey">Aftenposten, 2/2018</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *008/22" property="typicalAgeRange">18-</meta>
+        <meta nlb:metadata-source="Bibliofil@611823 *001" property="watermark">true</meta>
     </metadata></x:expect>
     </x:scenario>
 
