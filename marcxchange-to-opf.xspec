@@ -2011,4 +2011,24 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="Navn fra autoritetsregisteret må hentes fra riktig delfelt">
+        <x:context>
+            <marcxchange:datafield tag="700" ind1="1" ind2="#">
+                <marcxchange:subfield code="a">Lane, Miriam C.</marcxchange:subfield>
+                <marcxchange:subfield code="d">1978-</marcxchange:subfield>
+                <marcxchange:subfield code="q">(Miriam Claire)</marcxchange:subfield>
+                <marcxchange:subfield code="e">oversetter</marcxchange:subfield>
+                <marcxchange:subfield code="4">trl</marcxchange:subfield>
+                <marcxchange:subfield code="6">(NO-LaBS)685129-2</marcxchange:subfield>
+                <marcxchange:subfield code="_">22379100</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <meta property="dc:contributor.translator" id="contributor-700-1">Lane, Miriam C.</meta>
+            <meta property="birthDate" refines="#contributor-700-1">1978</meta>
+            <meta property="bibliofil-id" refines="#contributor-700-1">22379100</meta>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>

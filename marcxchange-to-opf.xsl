@@ -1362,7 +1362,7 @@
 
     <xsl:template match="*:datafield[@tag='100']">
         <xsl:variable name="creator-id" select="concat('creator-',1+count(preceding-sibling::*:datafield[@tag='100' or @tag='110' or @tag='111']))"/>
-        <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
+        <xsl:variable name="name" select="(*:subfield[@code='a'], *:subfield[@code='q'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
         <xsl:variable name="sortingKey" select="(*:subfield[@code='w'][normalize-space(.)])[1]"/>
         
         <!-- strip and normalize space -->
@@ -2228,7 +2228,7 @@
         </xsl:for-each>
 
         <xsl:variable name="subject-id" select="concat('subject-600-',string($position))"/>
-        <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
+        <xsl:variable name="name" select="(*:subfield[@code='a'], *:subfield[@code='q'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:if test="not($name='')">
 
@@ -2678,7 +2678,7 @@
         <xsl:variable name="datafield" select="if (self::*:subfield) then parent::* else ." as="element()"/>
         
         <xsl:for-each select="$datafield"> <!-- set the datafield as the context for xpath expressions -->
-            <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
+            <xsl:variable name="name" select="(*:subfield[@code='a'], *:subfield[@code='q'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
             <xsl:if test="$name">
                 <xsl:variable name="role" select="nlb:parseRole(concat('',$role-element/text()))"/>
     
@@ -2873,7 +2873,7 @@
 
     <xsl:template match="*:datafield[@tag='800']">
         <xsl:variable name="creator-id" select="concat('series-creator-',1+count(preceding-sibling::*:datafield[@tag='800']))"/>
-        <xsl:variable name="name" select="(*:subfield[@code='q'], *:subfield[@code='a'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
+        <xsl:variable name="name" select="(*:subfield[@code='a'], *:subfield[@code='q'], *:subfield[@code='w'])[normalize-space(.)][1]/text()"/>
 
         <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:creator.series'"/><xsl:with-param name="value" select="$name"/><xsl:with-param name="id" select="$creator-id"/></xsl:call-template>
 
