@@ -1386,8 +1386,6 @@
         </x:context>
         
         <x:expect label="the metadata should be extracted as expected" test="*/*">
-            <meta property="dc:subject.keyword" id="subject-697-1">Lydbok med tekst</meta>
-            <meta property="bibliofil-id" refines="#subject-697-1">21203600</meta>
             <meta property="dc:type.audio">true</meta>
             <meta property="dc:type.text">true</meta>
         </x:expect>
