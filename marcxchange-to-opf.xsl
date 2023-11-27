@@ -1567,6 +1567,11 @@
                     - if there's no part number in *740, then use this as the part number (nlbbib:position)
                     - if there's a part number in *740, then use this as an alternative part number (nlbbib:position.other)
                 -->
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('positionStatement')"/>
+                    <xsl:with-param name="value" select="text()"/>
+                </xsl:call-template>
+                
                 <xsl:variable name="position" select="replace(text(),'^.*?(\d+).*$','$1')"/>
                 <xsl:if test="matches($position, '^\d+$')">
                     <xsl:call-template name="meta">

@@ -1559,16 +1559,19 @@
                 </marcxchange:record>
             </x:context>
             
-            <x:expect label="the metadata should be extracted as expected" test="*" xml:space="preserve"><metadata>
-        <dc:title>*245$a - main title</dc:title>
-        <meta property="dc:title.part">*740$a - part title</meta>
-        <meta property="dc:title.part.other">*245$p</meta>
-        <meta property="dc:title.subTitle">*245$b</meta>
-        <meta property="bookEdition">1</meta>
-        <meta property="position">456</meta>
-        <meta property="position.other">123</meta>
-        <meta property="sortingKey">*245$a - main title</meta>
-    </metadata></x:expect>
+            <x:expect label="the metadata should be extracted as expected" test="*/*" select="*/*">
+                <metadata>
+                    <dc:title>*245$a - main title</dc:title>
+                    <meta property="dc:title.part">*740$a - part title</meta>
+                    <meta property="dc:title.part.other">*245$p</meta>
+                    <meta property="dc:title.subTitle">*245$b</meta>
+                    <meta property="bookEdition">1</meta>
+                    <meta property="position">456</meta>
+                    <meta property="position.other">123</meta>
+                    <meta property="positionStatement">Part 123</meta>
+                    <meta property="sortingKey">*245$a - main title</meta>
+                </metadata>
+            </x:expect>
         </x:scenario>
         
         <x:scenario label="Real example: 3222">
@@ -1762,6 +1765,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="position">16</meta>
+        <meta property="positionStatement">16</meta>
         <meta property="sortingKey">Animorphs</meta>
         <meta property="watermark">true</meta>
     </metadata></x:expect>
@@ -1851,6 +1855,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="position">1</meta>
+        <meta property="positionStatement">1</meta>
         <meta property="sortingKey">Tørk aldri tårer uten hansker</meta>
         <meta property="watermark">true</meta>
     </metadata></x:expect>
@@ -1884,6 +1889,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
         <meta property="position">1</meta>
+        <meta property="positionStatement">1</meta>
         <meta property="sortingKey">Alle tiders kjærlighet</meta>
         <meta property="watermark">true</meta>
     </metadata></x:expect>
@@ -1917,6 +1923,7 @@
         <meta property="bookEdition">1</meta>
         <meta property="library">KABB</meta>
         <meta property="position">3</meta>
+        <meta property="positionStatement">3</meta>
         <meta property="sortingKey">Merlin</meta>
         <meta property="watermark">true</meta>
     </metadata></x:expect>
