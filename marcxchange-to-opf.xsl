@@ -1694,6 +1694,8 @@
             <xsl:variable name="extent" select="lower-case(replace(text(),'[\[\]]',''))"/>
             <xsl:variable name="numberOfPages" select="(if (matches($extent,'^.*?(\d+)\s*s.*$')) then replace($extent,'^.*?(\d+)\s*s.*$','$1') else ())[1]"/>
             <xsl:variable name="numberOfVolumes" select="(if (matches($extent,'^.*?(\d+)\s*(heft|b).*$')) then replace($extent,'^.*?(\d+)\s*(heft|b).*$','$1') else ())[1]"/>
+            
+            <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
 
             <xsl:choose>
                 <xsl:when test="matches(text(),'^.*?\d+ *t+\.? *\d+ *min\.?.*?$')">
@@ -1711,9 +1713,6 @@
                     </xsl:if>
                     <xsl:if test="$numberOfVolumes">
                         <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.volumes'"/><xsl:with-param name="value" select="$numberOfVolumes"/></xsl:call-template>
-                    </xsl:if>
-                    <xsl:if test="not($numberOfPages) and not($numberOfVolumes)">
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
                     </xsl:if>
                 </xsl:otherwise>
             </xsl:choose>
