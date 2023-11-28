@@ -2037,4 +2037,22 @@
         </x:expect>
     </x:scenario>
     
+    <x:scenario label="Flere språk">
+        <x:context>
+            <marcxchange:datafield tag="041" ind1=" " ind2=" ">
+                <marcxchange:subfield code="a">nor</marcxchange:subfield>
+                <marcxchange:subfield code="a">dan</marcxchange:subfield>
+                <marcxchange:subfield code="a">swe</marcxchange:subfield>
+                <marcxchange:subfield code="a">eng</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <dc:language>nor</dc:language>
+            <dc:language>dan</dc:language>
+            <dc:language>swe</dc:language>
+            <dc:language>eng</dc:language>
+        </x:expect>
+    </x:scenario>
+    
 </x:description>
