@@ -300,9 +300,7 @@
             </marcxchange:record>
         </x:context>
         
-        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata>
-        <meta property="bookEdition.original">1</meta>
-    </metadata></x:expect>
+        <x:expect label="the metadata should be extracted as expected" xml:space="preserve">    <metadata/></x:expect>
     </x:scenario>
     
     <x:scenario label="For oversatte bøker: Navn på oversetter(e)">
@@ -1156,7 +1154,6 @@
         <meta property="dc:date.issued.original">1995</meta>
         <meta property="dc:publisher.location.original">Oslo</meta>
         <meta property="dc:publisher.original">Cappelen</meta>
-        <meta property="bookEdition.original">1</meta>
     </metadata></x:expect>
     </x:scenario>
     
@@ -2052,6 +2049,20 @@
             <dc:language>dan</dc:language>
             <dc:language>swe</dc:language>
             <dc:language>eng</dc:language>
+        </x:expect>
+    </x:scenario>
+    
+    <x:scenario label="Antall sider og utgavenummer for originalen">
+        <x:context>
+            <marcxchange:datafield tag="596" ind1=" " ind2=" ">
+                <marcxchange:subfield code="d">originalens utgave</marcxchange:subfield>
+                <marcxchange:subfield code="e">antall sider i originalboka</marcxchange:subfield>
+            </marcxchange:datafield>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*">
+            <meta property="bookEdition.original">originalens utgave</meta>
+            <meta property="dc:format.extent.original">antall sider i originalboka</meta>
         </x:expect>
     </x:scenario>
     

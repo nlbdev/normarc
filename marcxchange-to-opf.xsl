@@ -2070,25 +2070,14 @@
                     <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:date.issued.original'"/><xsl:with-param name="value" select="string($issued-year)"/></xsl:call-template>
                 </xsl:if>
             </xsl:for-each>
-            <xsl:choose>
-                <xsl:when test="count(*:subfield[@code='d']) = 0">
-                    <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bookEdition.original')"/><xsl:with-param name="value" select="'1'"/></xsl:call-template>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:for-each select="*:subfield[@code='d']">
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bookEdition.original')"/><xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/></xsl:call-template>
-                    </xsl:for-each>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:for-each select="*:subfield[@code='d']">
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('bookEdition.original')"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
+            </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='e']">
-                <xsl:choose>
-                    <xsl:when test="matches(text(),'^\s*\d+\s*s?[\.\s]*$') and string-length(replace(text(),'[^\d]','')) lt 10">
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.pages.original'"/><xsl:with-param name="value" select="replace(text(),'[^\d]','')"/></xsl:call-template>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.original'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:if test="matches(text(),'^\s*\d+\s*s?[\.\s]*$') and string-length(replace(text(),'[^\d]','')) lt 10">
+                    <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.pages.original'"/><xsl:with-param name="value" select="replace(text(),'[^\d]','')"/></xsl:call-template>
+                </xsl:if>
+                <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.extent.original'"/><xsl:with-param name="value" select="text()"/></xsl:call-template>
             </xsl:for-each>
             <xsl:for-each select="*:subfield[@code='f']">
                 <xsl:variable name="isbn-issn" select="replace(upper-case(text()),'[^\dX-]','')" as="xs:string"/>
