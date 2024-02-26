@@ -81,15 +81,22 @@
             <dc:title>Tommy flytter</dc:title>
             <meta property="dc:title.subTitle">Tigergjengen</meta>
             <meta property="dc:title.part">Tittel for del av verk</meta>
+            <meta property="positionStatement">2</meta>
             <meta property="position">2</meta>
             <meta property="nlbbib:responsibilityStatement">Nina Skauge</meta>
             <meta property="sortingKey">Sorteringsnøkkel for tittel for del av verk</meta>
             
             <meta property="bookEdition">3. utgave</meta>
             
+            <meta property="dc:format.extent">387 s.</meta>
             <meta property="dc:format.extent.pages">387</meta>
+            
+            <meta property="dc:format.extent">25 b.</meta>
             <meta property="dc:format.extent.volumes">25</meta>
+            
+            <meta property="dc:format.extent">11 t 18 min</meta>
             <meta property="dc:format.extent.duration">11 t. 18 min.</meta>
+            
             <meta property="dc:format.extent.cd">2</meta>
             
             <meta property="isbn">82-02-02743-8</meta>
@@ -160,6 +167,7 @@
         
         <x:expect label="the metadata should be extracted as expected" test="*/*">
             <meta property="dc:date.issued.original">2017</meta>
+            <meta property="dc:format.extent.original">414 s.</meta>
             <meta property="dc:format.extent.pages.original">414</meta>
             <meta property="dc:language.original">tib</meta>
             <meta property="dc:language.original.intermediary">eng</meta>
@@ -607,6 +615,7 @@
             <meta property="dc:title.subTitle">To tårn</meta>
             <meta property="nlbbib:responsibilityStatement">J.R.R. Tolkien ; til norsk ved Torstein Bugge Høverstad</meta>
             <meta property="bookEdition">1</meta>
+            <meta property="positionStatement">Andre del</meta>
             <meta property="sortingKey">Ringenes herre</meta>
         </x:expect>
     </x:scenario>
@@ -708,7 +717,7 @@
         </x:context>
         
         <x:expect label="the metadata should be extracted as expected" test="*/*">
-            <dc:creator id="creator-1">Hans Hellighet Dalai Lama</dc:creator>
+            <dc:creator id="creator-1">Dalai Lama</dc:creator>
             <meta property="bibliofil-id" refines="#creator-1">18927000</meta>
             <meta property="birthDate" refines="#creator-1">1935</meta>
             <meta property="honorificSuffix" refines="#creator-1">XIV</meta>
