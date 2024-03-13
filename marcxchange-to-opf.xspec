@@ -1560,8 +1560,8 @@
             <x:expect label="the metadata should be extracted as expected" test="*/*" select="*/*">
                 <metadata>
                     <dc:title>*245$a - main title</dc:title>
-                    <meta property="dc:title.part">*740$a - part title</meta>
-                    <meta property="dc:title.part.other">*245$p</meta>
+                    <meta property="dc:title.part">*245$p</meta>
+                    <meta property="dc:title.part.other">*740$a - part title</meta>
                     <meta property="dc:title.subTitle">*245$b</meta>
                     <meta property="bookEdition">1</meta>
                     <meta property="position">456</meta>
@@ -1592,7 +1592,7 @@
         <dc:identifier id="pub-id">3222</dc:identifier>
         <dc:title>Arv og gjeld. Nye veier</dc:title>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_3222</meta>
-        <meta property="dc:title.part">Nye veier</meta>
+        <meta property="dc:title.part.other">Nye veier</meta>
         <meta property="dc:title.subTitle">bind 3</meta>
         <meta property="nlbbib:responsibilityStatement">Karin Bang</meta>
         <meta property="bookEdition">1</meta>
@@ -1661,7 +1661,7 @@
         <dc:identifier id="pub-id">4682</dc:identifier>
         <dc:title>Utvalgte noveller</dc:title>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_4682</meta>
-        <meta property="dc:title.part" id="title-740-1">Achtung gnädiges Fräulein</meta>
+        <meta property="dc:title.part.other" id="title-740-1">Achtung gnädiges Fräulein</meta>
         <meta property="sortingKey" refines="#title-740-1">Achtung gnædiges Fræulein</meta>
         <meta property="nlbbib:responsibilityStatement">Torborg Nedreaas</meta>
         <meta property="bookEdition">1</meta>
