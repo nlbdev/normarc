@@ -1758,7 +1758,7 @@
         <dc:identifier id="pub-id">108763</dc:identifier>
         <dc:title>Animorphs</dc:title>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_108763</meta>
-        <meta property="dc:title.subTitle">Advarselen</meta>
+        <meta property="dc:title.part">Advarselen</meta>
         <meta property="nlbbib:responsibilityStatement">K.A. Applegate ; oversatt av Jørn Roeim</meta>
         <meta property="bookEdition">1</meta>
         <meta property="library">NLB</meta>
@@ -1915,7 +1915,7 @@
         <dc:identifier id="pub-id">802093</dc:identifier>
         <dc:title>Merlin</dc:title>
         <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_802093</meta>
-        <meta property="dc:title.part">Pendragons krøniker</meta>
+        <meta property="dc:title.part">[Pendragons krøniker]</meta>
         <meta property="dc:title.subTitle">Legenden om Atlantis</meta>
         <meta property="nlbbib:responsibilityStatement">Oversatt av Lars-Toralf Storstrand</meta>
         <meta property="bookEdition">1</meta>

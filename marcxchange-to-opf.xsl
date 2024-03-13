@@ -1550,13 +1550,9 @@
             </xsl:variable>
             
             <xsl:for-each select="(*:subfield[@code='p'])[1]">
-                <!--
-                    - if there's a $p but not a $b, then treat $p as a subtitle (dc:title.subTitle)
-                    - if there's both a $p and a $b, then treat $p as a part title (dc:title.part)
-                -->
                 <xsl:call-template name="meta">
-                    <xsl:with-param name="property" select="if (count($subtitle) eq 0) then 'dc:title.subTitle' else 'dc:title.part'"/>
-                    <xsl:with-param name="value" select="replace(text(),'[\[\]]','')"/>
+                    <xsl:with-param name="property" select="'dc:title.part'"/>
+                    <xsl:with-param name="value" select="text()"/>
                 </xsl:call-template>
             </xsl:for-each>
             
