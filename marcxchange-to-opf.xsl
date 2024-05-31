@@ -85,8 +85,8 @@
                     <xsl:for-each select="$with-duplicates">
                         <xsl:variable name="position" select="position()"/>
                         <xsl:choose>
-                            <xsl:when test="@id">
-                                <!-- don't remove duplicates if the duplicate has an id attribute  -->
+                            <xsl:when test="exists(@id | @refines)">
+                                <!-- don't remove duplicates if the duplicate has an id or refines attribute -->
                                 <xsl:copy exclude-result-prefixes="#all">
                                     <xsl:copy-of select="@*" exclude-result-prefixes="#all"/>
                                     <xsl:copy-of select="node()" exclude-result-prefixes="#all"/>
@@ -113,45 +113,64 @@
                         </xsl:choose>
                     </xsl:for-each>
                 </xsl:variable>
+                <xsl:variable name="without-duplicate-role-and-id" as="element()*">
+                    <xsl:for-each select="$without-duplicates">
+                        <xsl:choose>
+                            <xsl:when test="@property = 'bibliofil-id'">
+                                <xsl:variable name="position" as="xs:integer" select="position()"/>
+                                <xsl:variable name="bibliofil-id" as="xs:string" select="text()"/>
+                                <xsl:variable name="target-role" as="xs:string?" select="($without-duplicates[concat('#', @id) = current()/@refines]/string((@property, name())[1]))[1]"/>
+                                <xsl:variable name="preceding-bibliofil-id" as="element()*" select="$without-duplicates[position() lt $position and @property = 'bibliofil-id' and text() = $bibliofil-id]"/>
+                                <xsl:variable name="preceding-bibliofil-id-target-roles" as="xs:string*" select="$without-duplicates[concat('#', @id) = $preceding-bibliofil-id/@refines]/(string((@property, name())[1]))"/>
+                                <xsl:if test="not($target-role = $preceding-bibliofil-id-target-roles)">
+                                    <xsl:sequence select="."/>
+                                </xsl:if>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:sequence select="."/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:for-each>
+                </xsl:variable>
 
                 <xsl:variable name="sorted" as="element()*">
-                    <xsl:for-each select="$without-duplicates[self::dc:*[not(@refines)]]">
+                    <xsl:for-each select="$without-duplicate-role-and-id[self::dc:*[not(@refines)]]">
                         <xsl:sort
                             select="if (not(contains('dc:identifier dc:title dc:creator dc:format',name()))) then 100 else count(tokenize(substring-before('dc:identifier dc:title dc:creator dc:format',name()),' '))"/>
                         <xsl:copy-of select="." exclude-result-prefixes="#all"/>
                         <xsl:if test="@id">
                             <xsl:call-template name="copy-meta-refines">
-                                <xsl:with-param name="meta-set" select="$with-duplicates"/>
+                                <xsl:with-param name="meta-set" select="$without-duplicate-role-and-id"/>
                                 <xsl:with-param name="id" select="string(@id)"/>
                             </xsl:call-template>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:for-each select="$without-duplicates[self::meta[starts-with(@property,'dc:') and not(@refines)]]">
+                    <xsl:for-each select="$without-duplicate-role-and-id[self::meta[starts-with(@property,'dc:') and not(@refines)]]">
                         <xsl:sort select="@property"/>
                         <xsl:copy-of select="." exclude-result-prefixes="#all"/>
                         <xsl:if test="@id">
                             <xsl:call-template name="copy-meta-refines">
-                                <xsl:with-param name="meta-set" select="$with-duplicates"/>
+                                <xsl:with-param name="meta-set" select="$without-duplicate-role-and-id"/>
                                 <xsl:with-param name="id" select="string(@id)"/>
                             </xsl:call-template>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:for-each select="$without-duplicates[self::meta[not(starts-with(@property,'dc:')) and contains(@property,':') and not(@refines)]]">
+                    <xsl:for-each select="$without-duplicate-role-and-id[self::meta[not(starts-with(@property,'dc:')) and contains(@property,':') and not(@refines)]]">
                         <xsl:sort select="@property"/>
                         <xsl:copy-of select="." exclude-result-prefixes="#all"/>
                         <xsl:if test="@id">
                             <xsl:call-template name="copy-meta-refines">
-                                <xsl:with-param name="meta-set" select="$with-duplicates"/>
+                                <xsl:with-param name="meta-set" select="$without-duplicate-role-and-id"/>
                                 <xsl:with-param name="id" select="string(@id)"/>
                             </xsl:call-template>
                         </xsl:if>
                     </xsl:for-each>
-                    <xsl:for-each select="$without-duplicates[self::meta[not(contains(@property,':')) and not(@refines)]]">
+                    <xsl:for-each select="$without-duplicate-role-and-id[self::meta[not(contains(@property,':')) and not(@refines)]]">
                         <xsl:sort select="@property"/>
                         <xsl:copy-of select="." exclude-result-prefixes="#all"/>
                         <xsl:if test="@id">
                             <xsl:call-template name="copy-meta-refines">
-                                <xsl:with-param name="meta-set" select="$with-duplicates"/>
+                                <xsl:with-param name="meta-set" select="$without-duplicate-role-and-id"/>
                                 <xsl:with-param name="id" select="string(@id)"/>
                             </xsl:call-template>
                         </xsl:if>
@@ -290,7 +309,7 @@
         <xsl:param name="id" required="yes" as="xs:string"/>
         <xsl:variable name="idref" select="concat('#',$id)"/>
         <xsl:for-each select="$meta-set[self::*[@refines=$idref]]">
-            <xsl:sort select="(@property, name())[1]"/>
+            <xsl:sort select="string((@property, name())[1])"/>
             <xsl:copy-of select="." exclude-result-prefixes="#all"/>
             <xsl:if test="@id">
                 <xsl:call-template name="copy-meta-refines">
