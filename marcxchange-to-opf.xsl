@@ -2206,6 +2206,26 @@
                 <!--<xsl:message select="'NORMARC-felt ignorert: 599 LOKALE NOTER'"/>-->
             </xsl:otherwise>
         </xsl:choose>
+
+        <xsl:if test="exists(*:subfield[@code='a']) and *:subfield[@code='a']/text() = 'statpedintern'">
+            <xsl:call-template name="meta">
+                <xsl:with-param name="property" select="nlb:prefixed-property('in-production')"/>
+                <xsl:with-param name="value" select="'false'"/>
+                <xsl:with-param name="context" select="."/>
+            </xsl:call-template>
+
+            <!-- hack solution while waiting for https://github.com/nlbdev/normarc/issues/34 -->
+            <xsl:variable name="tag009" as="element()*">
+                <xsl:apply-templates select="../*:controlfield[@tag='009']"/>
+            </xsl:variable>
+            <xsl:if test="not($tag009)">  <!-- template for controlfield *009 creates one element if the record is deleted, otherwise none -->
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('availability')"/>
+                    <xsl:with-param name="value" select="'deleted'"/>
+                    <xsl:with-param name="context" select="."/>
+                </xsl:call-template>
+            </xsl:if>
+        </xsl:if>
     </xsl:template>
 
     <!-- 6XX EMNEINNFØRSLER -->
