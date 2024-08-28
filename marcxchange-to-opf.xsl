@@ -1035,6 +1035,7 @@
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other'"/><xsl:with-param name="value" select="'Electronic resource'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="'EPUB'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('is-for-distribution')"/><xsl:with-param name="value" select="'false'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='h'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format.other.no'"/><xsl:with-param name="value" select="'Tredimensjonal gjenstand'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
@@ -1261,6 +1262,7 @@
                         <xsl:when test=".='gt'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="'EPUB'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.text'"/><xsl:with-param name="value" select="'true'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
+                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('is-for-distribution')"/><xsl:with-param name="value" select="'false'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='ge'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:format'"/><xsl:with-param name="value" select="'XHTML'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>

@@ -2134,4 +2134,24 @@
         </x:expect>
     </x:scenario>
 
+    <x:scenario label="EPUB master er aldri ment for distribusjon">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="019" ind1=" " ind2=" ">
+                    <marcxchange:subfield code="b">gt</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        
+        <x:expect label="the metadata should be extracted as expected" test="*/*" select="*/*">
+            <metadata>
+                <dc:format>EPUB</dc:format>
+                <meta property="dc:format.other">Electronic resource</meta>
+                <meta property="dc:format.other.no">Elektronisk ressurs</meta>
+                <meta property="dc:type.text">true</meta>
+                <meta property="is-for-distribution">false</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
+
 </x:description>
