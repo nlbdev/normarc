@@ -2206,6 +2206,14 @@
                 <!--<xsl:message select="'NORMARC-felt ignorert: 599 LOKALE NOTER'"/>-->
             </xsl:otherwise>
         </xsl:choose>
+
+        <xsl:if test="exists(*:subfield[@code='a']) and *:subfield[@code='a']/lower-case(text()) = ('ikke til utlån', 'statpedintern')">
+            <xsl:call-template name="meta">
+                <xsl:with-param name="property" select="nlb:prefixed-property('is-for-distribution')"/>
+                <xsl:with-param name="value" select="'false'"/>
+                <xsl:with-param name="context" select="."/>
+            </xsl:call-template>
+        </xsl:if>
     </xsl:template>
 
     <!-- 6XX EMNEINNFØRSLER -->
