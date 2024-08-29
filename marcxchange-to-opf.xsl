@@ -1924,7 +1924,7 @@
         <xsl:for-each select="*:subfield[@code='a']">
             <xsl:variable name="contributor-name" select="text()"/>
             
-            <xsl:if test="$contributor-name != 'NLB'">
+            <xsl:if test="$contributor-name != ('NLB', 'Tibi')">
                 <xsl:call-template name="meta">
                     <xsl:with-param name="property" select="'dc:contributor.narrator'"/>
                     <xsl:with-param name="value" select="$contributor-name"/>
@@ -2925,7 +2925,7 @@
 
     <xsl:template match="*:datafield[@tag='850']">
         <xsl:for-each select="*:subfield[@code='a']">
-            <xsl:if test="text()=('NLB/S')">
+            <xsl:if test="text()=('NLB/S', 'Tibi/S')">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.genre'"/><xsl:with-param name="value" select="'Textbook'"/></xsl:call-template>
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('educationalUse')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>
             </xsl:if>
@@ -3806,6 +3806,7 @@
         <xsl:param name="tag001" as="element()"/>
         
         <xsl:variable name="library" select="string(($tag001/../*:datafield[@tag='850']/*:subfield[@code='a'])[1])" as="xs:string"/>
+        <xsl:variable name="library" select="replace($library, 'Tibi', 'NLB')" as="xs:string"/>
         <xsl:choose>
             <xsl:when test="contains(upper-case($library), 'NLB')">
                 <xsl:value-of select="'NLB'"/>

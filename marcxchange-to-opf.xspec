@@ -1081,6 +1081,22 @@
             </x:context>
             <x:expect label="the metadata should be extracted as expected" test="*[@property='library']"><meta property="library">StatPed</meta></x:expect>
         </x:scenario>
+        <x:scenario label="Tibi/S">
+            <x:context xml:space="preserve">
+                <marcxchange:controlfield tag="001">600000</marcxchange:controlfield>
+                <marcxchange:datafield tag="850" ind1=" " ind2=" "><marcxchange:subfield code="a">Tibi/S</marcxchange:subfield></marcxchange:datafield>
+            </x:context>
+            <x:expect label="the metadata should be extracted as expected" test="*" select="*/*">
+                <metadata>
+                    <dc:identifier id="pub-id">600000</dc:identifier>
+                    <meta property="dc:source.urn-nbn">urn:nbn:no-nb_nlb_600000</meta>
+                    <meta property="library">NLB</meta>
+                    <meta property="watermark">true</meta>
+                    <meta property="dc:type.genre">Textbook</meta>
+                    <meta property="educationalUse">true</meta>
+                </metadata>
+            </x:expect>
+        </x:scenario>
     </x:scenario>
     
     <x:scenario label="Bidragsyter med flere roller">
