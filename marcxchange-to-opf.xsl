@@ -1309,7 +1309,6 @@
                         <xsl:when test=".='L'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Lærebok'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('marc-id')"/><xsl:with-param name="value" select="."/><xsl:with-param name="context" select="$context"/><xsl:with-param name="refines" select="$literary-form-id"/></xsl:call-template>
-                            <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('educationalUse')"/><xsl:with-param name="value" select="'true'"/><xsl:with-param name="context" select="$context"/></xsl:call-template>
                         </xsl:when>
                         <xsl:when test=".='P'">
                             <xsl:call-template name="meta"><xsl:with-param name="property" select="'dc:type.literaryForm'"/><xsl:with-param name="value" select="'Pekebok'"/><xsl:with-param name="context" select="$context"/><xsl:with-param name="id" select="$literary-form-id"/></xsl:call-template>
