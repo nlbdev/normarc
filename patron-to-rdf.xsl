@@ -344,6 +344,9 @@
             if ($lmarc466a = 'MH') then 'Multihandikap' else
             if ($lmarc466a = 'PU') then 'Psykisk utviklingshemming' else
             if ($lmarc466a = 'A') then 'Afasi' else
+            if ($lmarc466a = 'ADHD') then 'ADHD' else
+            if ($lmarc466a = 'KU') then 'Kognitive utfordringer og/eller språkvansker' else
+            if ($lmarc466a = 'UH') then 'Utviklingshemming' else
 
             if ($lmarc465d = 'ME') then 'ME - utmattelsessyndrom' else
             if ($lmarc465d = 'S') then 'Synshemmet' else
