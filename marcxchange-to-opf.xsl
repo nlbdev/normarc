@@ -2114,6 +2114,14 @@
                 <xsl:with-param name="tag594a" select="(../../*[@tag='594']/*[@code='a']/text())[1]"/>
                 <xsl:with-param name="tag260b" select="(../../*[@tag='260']/*[@code='b']/text())[1]"/>
             </xsl:call-template>
+
+            <xsl:if test="lower-case(text()) = 'produksjonsrett'">
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('is-for-distribution')"/>
+                    <xsl:with-param name="value" select="'false'"/>
+                    <xsl:with-param name="context" select="."/>
+                </xsl:call-template>
+            </xsl:if>
             
             <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
                 <xsl:call-template name="meta"><xsl:with-param name="property" select="nlb:prefixed-property('exclude-from-recommendations')"/><xsl:with-param name="value" select="'true'"/></xsl:call-template>

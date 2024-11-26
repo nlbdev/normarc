@@ -2169,5 +2169,20 @@
             </metadata>
         </x:expect>
     </x:scenario>
+    
+    <x:scenario label="Test for å håndtere *598$aProduksjonsrett på samme måte som *599$aIkke til utlån">
+        <x:context xml:space="preserve">
+            <marcxchange:record>
+                <marcxchange:datafield tag="598" ind1="0" ind2=" ">
+                    <marcxchange:subfield code="a">Produksjonsrett</marcxchange:subfield>
+                </marcxchange:datafield>
+            </marcxchange:record>
+        </x:context>
+        <x:expect label="the metadata should be extracted as expected" test="*/*" select="*/*">
+            <metadata>
+                <meta property="is-for-distribution">false</meta>
+            </metadata>
+        </x:expect>
+    </x:scenario>
 
 </x:description>
