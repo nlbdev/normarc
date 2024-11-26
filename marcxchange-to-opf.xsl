@@ -2121,6 +2121,12 @@
                     <xsl:with-param name="value" select="'false'"/>
                     <xsl:with-param name="context" select="."/>
                 </xsl:call-template>
+
+                <xsl:call-template name="meta">
+                    <xsl:with-param name="property" select="nlb:prefixed-property('isAccessibleVersionCommerciallyAvailable')"/>
+                    <xsl:with-param name="value" select="'true'"/>
+                    <xsl:with-param name="context" select="."/>
+                </xsl:call-template>
             </xsl:if>
             
             <xsl:if test="normalize-space(lower-case(text())) = 'anbefales ikke automatisk'">
